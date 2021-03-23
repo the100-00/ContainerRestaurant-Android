@@ -1,4 +1,4 @@
-package com.tak8997.github.containerrestaurant_android
+package container.restaurant.android
 
 import org.junit.Assert.*
 import org.junit.Test
