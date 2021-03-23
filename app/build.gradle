@@ -10,7 +10,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.tak8997.github.containerrestaurant_android"
+        applicationId "container.restaurant.android"
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 1
