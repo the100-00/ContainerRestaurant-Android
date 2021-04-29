@@ -10,4 +10,11 @@
     values-round/strings.xml for round devices.
     -->
     <string name="hello_world">Hello Square World!</string>
+    <string name="home_toolbar_title">모두의 용기</string>
+    <string name="home_intro_title">뭐든 처음이\n어려운 법이죠</string>
+    <string name="my_container">나의 용기</string>
+    <string name="all_container">모두의 용기</string>
+    <string name="home_container_history">용기낸 특별한 경험들</string>
+    <string name="more_feed_history">더 보러가기</string>
+    <string name="app_mail">용기낸 식당 %s</string>
 </resources>

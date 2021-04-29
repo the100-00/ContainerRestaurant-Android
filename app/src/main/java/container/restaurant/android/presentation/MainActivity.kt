@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.annotation.IdRes
 import androidx.annotation.MenuRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import container.restaurant.android.R
 import container.restaurant.android.databinding.ActivityMainBinding
@@ -36,6 +37,7 @@ internal class MainActivity : AppCompatActivity() {
     }
 
     private fun setupBottomNav(savedInstanceState: Bundle?) {
+        binding.bottomNav.itemIconTintList = null
         binding.bottomNav.setOnNavigationItemSelectedListener {
             val navItem = BottomNavItem.forId(it.itemId)
             navItem.navigate(navigationController)

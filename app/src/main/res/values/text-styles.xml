@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TextAppearance.App" parent="TextAppearance.AppCompat">
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <!-- regular -->
+    <style name="TextAppearance.App.R" parent="TextAppearance.App">
+        <item name="android:fontFamily">@font/spoqa_hans_sans_regular</item>
+    </style>
+
+    <!-- regular black -->
+    <style name="TextAppearance.App.R.Black">
+        <item name="color">@color/black</item>
+    </style>
+
+    <!-- regular gray -->
+    <style name="TextAppearance.App.R.Gray00">
+        <item name="color">@color/gray_00</item>
+    </style>
+
+    <style name="TextAppearance.App.R.Gray01">
+        <item name="color">@color/gray_01</item>
+    </style>
+
+    <style name="TextAppearance.App.R.Gray06">
+        <item name="color">@color/gray_06</item>
+    </style>
+
+    <style name="TextAppearance.App.R.Gray07">
+        <item name="color">@color/gray_07</item>
+    </style>
+
+
+
+    <!-- bold -->
+    <style name="TextAppearance.App.B" parent="TextAppearance.App">
+        <item name="android:fontFamily">@font/spoqa_hans_sans_bold</item>
+    </style>
+
+    <!-- bold black -->
+    <style name="TextAppearance.App.B.Black">
+        <item name="color">@color/black</item>
+    </style>
+
+    <!-- bold gray -->
+    <style name="TextAppearance.App.B.Gray01">
+        <item name="color">@color/gray_01</item>
+    </style>
+
+    <style name="TextAppearance.App.B.Gray07">
+        <item name="color">@color/gray_07</item>
+    </style>
+
+
+
+    <!-- light -->
+    <style name="TextAppearance.App.L" parent="TextAppearance.App">
+        <item name="android:fontFamily">@font/spoqa_hans_sans_light</item>
+    </style>
+
+
+
+
+    <!-- thin -->
+    <style name="TextAppearance.App.T" parent="TextAppearance.App">
+        <item name="android:fontFamily">@font/spoqa_hans_sans_thin</item>
+    </style>
+
+</resources>

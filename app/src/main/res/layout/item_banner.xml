@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/bg_gray02_r14">
+
+        <TextView
+            style="@style/TextAppearance.App.B.Gray07"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="17dp"
+            android:layout_marginRight="18dp"
+            android:text="@{item.title}"
+            android:textSize="16dp"
+            tools:text="컨텐츠 타이틀 컨텐츠 타이틀 컨텐츠 타이틀"/>
+
+        <TextView
+            style="@style/TextAppearance.App.R.Gray07"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="30dp"
+            android:text="@{item.content}"
+            android:textSize="12dp"
+            tools:text="컨텐츠 내용 컨텐츠 내용 컨텐츠 내용 컨텐츠 내용 컨텐츠 내용"/>
+    </LinearLayout>
+
+    <data>
+        <variable
+            name="item"
+            type="com.tak8997.github.domain.BannerContent" />
+    </data>
+</layout>

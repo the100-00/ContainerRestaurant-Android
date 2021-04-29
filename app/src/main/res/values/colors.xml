@@ -5,6 +5,41 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+
+    <!-- gray -->
+    <color name="gray_00">#424242</color>
+    <color name="gray_01">#757575</color>
+    <color name="gray_02">#F5F5F5</color>
+    <color name="gray_03">#ECECEC</color>
+    <color name="gray_04">#CECECE</color>
+    <color name="gray_05">#F5F5F5</color>
+    <color name="gray_06">#757575</color>
+    <color name="gray_07">#242424</color>
+
+    <!-- green -->
+    <color name="green_00">#12A075</color>
+    <color name="green_01">#14AF80</color>
+    <color name="green_02">#18C08D</color>
+    <color name="green_03">#51D4AD</color>
+    <color name="green_04">#ADE3D3</color>
+
+    <!-- yellow -->
+    <color name="yellow_00">#E7B800</color>
+    <color name="yellow_01">#F3C200</color>
+    <color name="yellow_02">#FFCC05</color>
+    <color name="yellow_03">#FFDE5B</color>
+    <color name="yellow_04">#FFECA4</color>
+
+    <!-- red -->
+    <color name="red_00">#E84918</color>
+    <color name="red_01">#F45B2C</color>
+    <color name="red_02">#F48766</color>
+
+    <!-- blue -->
+    <color name="blue_00">#0064E5</color>
+    <color name="blue_01">#1877F2</color>
+    <color name="blue_02">#599CF1</color>
 </resources>
