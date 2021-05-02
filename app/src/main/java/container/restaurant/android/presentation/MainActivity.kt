@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.annotation.IdRes
 import androidx.annotation.MenuRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import container.restaurant.android.R
 import container.restaurant.android.databinding.ActivityMainBinding
@@ -58,6 +57,8 @@ internal class MainActivity : AppCompatActivity() {
         }),
         FEED(R.id.feed, {
             navigateToFeed()
+        }),
+        HIDDEN(R.id.hidden, {
         }),
         MAP(R.id.map, {
             navigateToMap()
