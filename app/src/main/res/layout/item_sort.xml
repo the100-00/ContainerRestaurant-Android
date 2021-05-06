@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:id="@+id/lyt_sort_bg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/selector_feed_sort"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_sort_title"
+            style="@style/TextAppearance.App.R.Gray06"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:paddingStart="16dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="8dp"
+            android:text="@{item}"
+            android:textColor="@drawable/selector_feed_sort_text"
+            tools:text="최신순"
+            tools:textColor="@color/gray_06" />
+    </LinearLayout>
+
+    <data>
+
+        <variable
+            name="item"
+            type="String" />
+    </data>
+</layout>

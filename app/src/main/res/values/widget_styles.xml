@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="BaseButtonStyle" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
+    </style>
+
+    <style name="AppTabLayout">
+        <item name="tabTextColor">@color/gray_06</item>
+        <item name="tabSelectedTextColor">@color/gray_07</item>
+        <item name="tabMode">scrollable</item>
+        <item name="tabIndicatorHeight">2dp</item>
+        <item name="tabIndicatorColor">@color/gray_07</item>
+        <item name="elevation">0dp</item>
+        <item name="background">@android:color/transparent</item>
+        <item name="tabIndicatorFullWidth">false</item>
+        <item name="tabTextAppearance">@style/TextAppearance.App.R.Gray06</item>
     </style>
 </resources>

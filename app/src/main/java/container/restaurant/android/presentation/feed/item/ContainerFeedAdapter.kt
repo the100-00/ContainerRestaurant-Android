@@ -1,4 +1,4 @@
-package container.restaurant.android.presentation.home.item
+package container.restaurant.android.presentation.feed.item
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,14 +6,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.tak8997.github.domain.ContainerFeedHistory
-import container.restaurant.android.databinding.ItemContainerFeedHistoryBinding
+import container.restaurant.android.databinding.ItemContainerFeedBinding
 
 internal class ContainerFeedAdapter : ListAdapter<ContainerFeedHistory , ContainerFeedViewHolder>(
     ContainerFeedDiffUtilCallback()
 ) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContainerFeedViewHolder {
-        val binding = ItemContainerFeedHistoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemContainerFeedBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ContainerFeedViewHolder(binding)
     }
 
@@ -23,7 +23,7 @@ internal class ContainerFeedAdapter : ListAdapter<ContainerFeedHistory , Contain
 }
 
 class ContainerFeedViewHolder(
-    private val binding: ItemContainerFeedHistoryBinding
+    private val binding: ItemContainerFeedBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(containerFeedHistory: ContainerFeedHistory) {

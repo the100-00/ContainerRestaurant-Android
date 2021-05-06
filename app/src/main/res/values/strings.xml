@@ -17,4 +17,5 @@
     <string name="home_container_history">용기낸 특별한 경험들</string>
     <string name="more_feed_history">더 보러가기</string>
     <string name="app_mail">용기낸 식당 %s</string>
+    <string name="feed_search">피드탐색</string>
 </resources>

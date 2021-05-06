@@ -1,43 +1,42 @@
-package container.restaurant.android.presentation.home
+package container.restaurant.android.presentation.feed.category
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import com.google.android.material.tabs.TabLayoutMediator
-import com.tak8997.github.domain.BannerContent
 import com.tak8997.github.domain.ContainerFeedHistory
-import container.restaurant.android.databinding.FragmentHomeBinding
-import container.restaurant.android.presentation.home.item.BannerAdapter
+import container.restaurant.android.databinding.FragmentFeedCategoryBinding
 import container.restaurant.android.presentation.feed.item.ContainerFeedAdapter
 
-internal class HomeFragment : Fragment() {
+internal class FeedCategoryFragment : Fragment() {
 
-    private val bannerAdapter by lazy {
-        BannerAdapter()
+    private lateinit var binding: FragmentFeedCategoryBinding
+
+    private val containerFeedAdapter = ContainerFeedAdapter()
+
+    private var feedCategory: FeedCategory? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        feedCategory = arguments?.getSerializable(KEY_FEED_CATEGORY) as? FeedCategory
     }
-
-    private val containerFeedAdapter by lazy {
-        ContainerFeedAdapter()
-    }
-
-    private lateinit var binding: FragmentHomeBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
+        binding = FragmentFeedCategoryBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupBannerPager()
         setupContainerFeedRecycler()
+
     }
 
     private fun setupContainerFeedRecycler() {
-        with(binding.rvContainerFeedHistory) {
+        with(binding.rvContainerFeed) {
             layoutManager = GridLayoutManager(context ?: return, 2)
             adapter = containerFeedAdapter
         }
@@ -60,21 +59,12 @@ internal class HomeFragment : Fragment() {
         )
     }
 
-    private fun setupBannerPager() {
-        binding.pagerIntroBanner.adapter = bannerAdapter
-        TabLayoutMediator(binding.tablayoutIndicator, binding.pagerIntroBanner) { _, _ ->
-        }.attach()
-        // test dummy
-        bannerAdapter.addItems(
-            listOf(
-                BannerContent("this is title", "this is content"),
-                BannerContent("this is title", "this is content"),
-                BannerContent("this is title", "this is content")
-            )
-        )
-    }
-
     companion object {
-        fun newInstance(): HomeFragment = HomeFragment()
+        private const val KEY_FEED_CATEGORY = "KEY_FEED_CATEGORY"
+
+        fun newInstance(feedCategory: FeedCategory) = FeedCategoryFragment()
+            .apply {
+                arguments = bundleOf(KEY_FEED_CATEGORY to feedCategory)
+            }
     }
 }
