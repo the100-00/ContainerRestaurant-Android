@@ -254,6 +254,284 @@
                 android:src="@drawable/line_gray03"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/radio_group" />
+
+            <TextView
+                android:id="@+id/tv_detail"
+                style="@style/TextAppearance.App.B.Gray07"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="34dp"
+                android:text="@string/detail_list"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/line_gray_1" />
+
+            <ImageView
+                android:id="@+id/ic_main_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="12dp"
+                android:src="@drawable/ic_main_menu_outline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_detail" />
+
+            <TextView
+                android:id="@+id/tv_main_menu"
+                style="@style/TextAppearance.App.B.Gray07"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:text="@string/main_menu"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@id/ic_main_menu"
+                app:layout_constraintTop_toTopOf="@id/ic_main_menu" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_main_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/shadow_box"
+                android:padding="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_main_menu">
+
+                <TextView
+                    android:id="@+id/tv_main_food"
+                    style="@style/TextAppearance.App.B.Gray07"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="23.5dp"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/food"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/et_main_menu"
+                    android:layout_width="229dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="17dp"
+                    android:layout_marginRight="30.5dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:hint="@string/write_main_menu_hint"
+                    android:textCursorDrawable="@color/green_02"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_main_food"
+                    app:layout_constraintStart_toEndOf="@id/tv_main_food"
+                    app:layout_constraintTop_toTopOf="@id/tv_main_food" />
+
+                <ImageView
+                    android:id="@+id/line_gray_main"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="19dp"
+                    android:layout_marginTop="9dp"
+                    android:layout_marginRight="15dp"
+                    android:src="@color/gray_03"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/et_main_menu" />
+
+                <TextView
+                    android:id="@+id/tv_main_container"
+                    style="@style/TextAppearance.App.B.Gray07"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="23.5dp"
+                    android:layout_marginTop="15.5dp"
+                    android:text="@string/container"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/line_gray_main" />
+
+                <EditText
+                    android:layout_width="229dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="17dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:hint="@string/write_main_menu_container_hint"
+                    android:textCursorDrawable="@color/green_02"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_main_container"
+                    app:layout_constraintStart_toEndOf="@id/tv_main_container"
+                    app:layout_constraintTop_toTopOf="@id/tv_main_container" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_add_main_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cl_main_menu">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    android:src="@drawable/ic_add_outline"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_add_main_menu"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_add_main_menu"
+                    app:layout_constraintTop_toTopOf="@id/tv_add_main_menu" />
+
+                <TextView
+                    android:id="@+id/tv_add_main_menu"
+                    style="@style/TextAppearance.App.B.Gray07"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add_menu"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <ImageView
+                android:id="@+id/iv_side_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="32dp"
+                android:src="@drawable/ic_side_menu_outline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cl_add_main_menu" />
+
+            <TextView
+                android:id="@+id/tv_side_menu"
+                style="@style/TextAppearance.App.B.Gray07"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:text="@string/side_menu"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/iv_side_menu"
+                app:layout_constraintStart_toEndOf="@id/iv_side_menu"
+                app:layout_constraintTop_toTopOf="@id/iv_side_menu" />
+
+            <TextView
+                style="@style/TextAppearance.App.R.Gray06"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:text="@string/optional_input"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_side_menu"
+                app:layout_constraintStart_toEndOf="@id/tv_side_menu"
+                app:layout_constraintTop_toTopOf="@+id/tv_side_menu" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_side_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/shadow_box"
+                android:padding="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_side_menu">
+
+                <TextView
+                    android:id="@+id/tv_side_count"
+                    style="@style/TextAppearance.App.B.Gray07"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24.5dp"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/count"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/et_side_menu"
+                    android:layout_width="229dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="17dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:hint="@string/write_side_menu_count_hint"
+                    android:textCursorDrawable="@color/green_02"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_side_count"
+                    app:layout_constraintStart_toEndOf="@id/tv_side_count"
+                    app:layout_constraintTop_toTopOf="@id/tv_side_count" />
+
+                <ImageView
+                    android:id="@+id/line_gray_side"
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="19dp"
+                    android:layout_marginTop="9dp"
+                    android:layout_marginRight="15dp"
+                    android:src="@color/gray_03"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/et_side_menu" />
+
+                <TextView
+                    android:id="@+id/tv_side_container"
+                    style="@style/TextAppearance.App.B.Gray07"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="23.5dp"
+                    android:layout_marginTop="15.5dp"
+                    android:text="@string/container"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/line_gray_side" />
+
+                <EditText
+                    android:layout_width="229dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="17dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:hint="@string/write_side_menu_container_hint"
+                    android:textCursorDrawable="@color/green_02"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_side_container"
+                    app:layout_constraintStart_toEndOf="@id/tv_side_container"
+                    app:layout_constraintTop_toTopOf="@id/tv_side_container" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_add_side_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cl_side_menu">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    android:src="@drawable/ic_add_outline"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_add_side_menu"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_add_side_menu"
+                    app:layout_constraintTop_toTopOf="@id/tv_add_side_menu" />
+
+                <TextView
+                    android:id="@+id/tv_add_side_menu"
+                    style="@style/TextAppearance.App.B.Gray07"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/add_menu"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <ImageView
+                android:id="@+id/line_gray_2"
+                android:layout_width="match_parent"
+                android:layout_height="7dp"
+                android:layout_marginTop="37dp"
+                android:src="@drawable/line_gray03"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cl_add_side_menu" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>
