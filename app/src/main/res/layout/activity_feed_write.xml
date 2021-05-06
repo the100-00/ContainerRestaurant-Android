@@ -15,16 +15,245 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:theme="@style/BaseTheme"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </androidx.appcompat.widget.Toolbar>
+
+            <TextView
+                android:id="@+id/tv_container_name"
+                style="@style/TextAppearance.App.B.Gray07"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="33.9dp"
+                android:text="@string/restaurant_name"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@id/et_search_container"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/et_search_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="46dp"
+                android:hint="@string/search_restaurant_name_hint"
+                android:textColorHint="@color/gray_05"
+                app:boxBackgroundColor="@color/white"
+                app:boxStrokeColor="@android:color/transparent"
+                app:endIconDrawable="@drawable/ic_icon_close"
+                app:endIconMode="clear_text"
+                app:layout_constraintTop_toBottomOf="@id/tv_container_name">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    style="@style/TextAppearance.App.B.Gray07"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/ic_search_outline"
+                app:layout_constraintBottom_toBottomOf="@id/et_search_container"
+                app:layout_constraintStart_toEndOf="@id/et_search_container"
+                app:layout_constraintTop_toTopOf="@id/et_search_container" />
+
+            <ImageView
+                android:id="@+id/line_gray_0"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:src="@drawable/line_gray04"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_search_container" />
+
+            <TextView
+                android:id="@+id/tv_category"
+                style="@style/TextAppearance.App.B.Gray07"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="37dp"
+                android:text="@string/food_category"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_search_container" />
+
+            <worker8.com.github.radiogroupplus.RadioGroupPlus
+                android:id="@+id/radio_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="16dp"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_category">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="6dp"
+                        android:background="@drawable/category_bg_selector"
+                        android:button="@android:color/transparent"
+                        android:gravity="center"
+                        android:paddingLeft="16dp"
+                        android:paddingTop="7dp"
+                        android:paddingRight="16dp"
+                        android:paddingBottom="7dp"
+                        android:text="@string/korean_food"
+                        android:textColor="@drawable/category_text_selector"
+                        android:textStyle="bold" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="6dp"
+                        android:background="@drawable/category_bg_selector"
+                        android:button="@android:color/transparent"
+                        android:gravity="center"
+                        android:paddingLeft="16dp"
+                        android:paddingTop="7dp"
+                        android:paddingRight="16dp"
+                        android:paddingBottom="7dp"
+                        android:text="@string/midnight_snack"
+                        android:textColor="@drawable/category_text_selector"
+                        android:textStyle="bold" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="6dp"
+                        android:background="@drawable/category_bg_selector"
+                        android:button="@android:color/transparent"
+                        android:gravity="center"
+                        android:paddingLeft="16dp"
+                        android:paddingTop="7dp"
+                        android:paddingRight="16dp"
+                        android:paddingBottom="7dp"
+                        android:text="@string/chinese_food"
+                        android:textColor="@drawable/category_text_selector"
+                        android:textStyle="bold" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="6dp"
+                        android:background="@drawable/category_bg_selector"
+                        android:button="@android:color/transparent"
+                        android:gravity="center"
+                        android:paddingLeft="16dp"
+                        android:paddingTop="7dp"
+                        android:paddingRight="16dp"
+                        android:paddingBottom="7dp"
+                        android:text="@string/snack"
+                        android:textColor="@drawable/category_text_selector"
+                        android:textStyle="bold" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/category_bg_selector"
+                        android:button="@android:color/transparent"
+                        android:gravity="center"
+                        android:paddingLeft="16dp"
+                        android:paddingTop="7dp"
+                        android:paddingRight="16dp"
+                        android:paddingBottom="7dp"
+                        android:text="@string/fast_food"
+                        android:textColor="@drawable/category_text_selector"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp">
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="6dp"
+                        android:background="@drawable/category_bg_selector"
+                        android:button="@android:color/transparent"
+                        android:gravity="center"
+                        android:paddingLeft="16dp"
+                        android:paddingTop="7dp"
+                        android:paddingRight="16dp"
+                        android:paddingBottom="7dp"
+                        android:text="@string/asian_or_western_food"
+                        android:textColor="@drawable/category_text_selector"
+                        android:textStyle="bold" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="6dp"
+                        android:background="@drawable/category_bg_selector"
+                        android:button="@android:color/transparent"
+                        android:gravity="center"
+                        android:paddingLeft="16dp"
+                        android:paddingTop="7dp"
+                        android:paddingRight="16dp"
+                        android:paddingBottom="7dp"
+                        android:text="@string/cafe_or_dessert"
+                        android:textColor="@drawable/category_text_selector"
+                        android:textStyle="bold" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/category_bg_selector"
+                        android:button="@android:color/transparent"
+                        android:gravity="center"
+                        android:paddingLeft="16dp"
+                        android:paddingTop="7dp"
+                        android:paddingRight="16dp"
+                        android:paddingBottom="7dp"
+                        android:text="@string/cutlet_or_japanese_food"
+                        android:textColor="@drawable/category_text_selector"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/category_bg_selector"
+                    android:button="@android:color/transparent"
+                    android:gravity="center"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="7dp"
+                    android:paddingRight="16dp"
+                    android:paddingBottom="7dp"
+                    android:text="@string/chicken_or_pizza"
+                    android:textColor="@drawable/category_text_selector"
+                    android:textStyle="bold" />
+            </worker8.com.github.radiogroupplus.RadioGroupPlus>
+
+            <ImageView
+                android:id="@+id/line_gray_1"
+                android:layout_width="match_parent"
+                android:layout_height="7dp"
+                android:layout_marginTop="34dp"
+                android:src="@drawable/line_gray03"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/radio_group" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:theme="@style/BaseTheme"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-        </androidx.appcompat.widget.Toolbar>
     </androidx.core.widget.NestedScrollView>
 </layout>
