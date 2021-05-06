@@ -532,6 +532,88 @@
                 android:src="@drawable/line_gray03"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cl_add_side_menu" />
+
+            <TextView
+                android:id="@+id/tv_level"
+                style="@style/TextAppearance.App.B.Gray07"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="34dp"
+                android:text="@string/level"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/line_gray_2" />
+
+            <androidx.appcompat.widget.AppCompatSeekBar
+                android:id="@+id/slider_level"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="27dp"
+                android:backgroundTint="@color/gray_03"
+                android:max="5"
+                android:progressTint="@color/green_04"
+                android:thumb="@drawable/ic_hard_handle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_level" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_is_like"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="23.5dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/shadow_box"
+                android:clickable="true"
+                android:focusable="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/slider_level">
+
+                <ImageView
+                    android:id="@+id/iv_badge_unfilled"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10.6dp"
+                    android:layout_marginRight="7dp"
+                    android:src="@drawable/like_badge_selector"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_is_like"
+                    style="@style/TextAppearance.App.R.Gray07"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/owner_likes_multi_disposable"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_badge_unfilled"
+                    app:layout_constraintStart_toEndOf="@id/iv_badge_unfilled"
+                    app:layout_constraintTop_toTopOf="@id/iv_badge_unfilled" />
+
+                <TextView
+                    style="@style/TextAppearance.App.R.Gray06"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:text="@string/optional_details"
+                    android:textSize="10sp"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_is_like"
+                    app:layout_constraintStart_toEndOf="@id/tv_is_like"
+                    app:layout_constraintTop_toTopOf="@id/tv_is_like" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageView
+                android:id="@+id/line_gray_3"
+                android:layout_width="match_parent"
+                android:layout_height="7dp"
+                android:layout_marginTop="34dp"
+                android:src="@drawable/line_gray03"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cl_is_like" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>
