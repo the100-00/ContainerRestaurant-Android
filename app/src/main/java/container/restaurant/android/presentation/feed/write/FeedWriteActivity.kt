@@ -9,14 +9,13 @@ import container.restaurant.android.databinding.ActivityFeedWriteBinding
 
 class FeedWriteActivity : AppCompatActivity() {
 
-    lateinit var binding: ActivityFeedWriteBinding
+    private lateinit var binding: ActivityFeedWriteBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFeedWriteBinding.inflate(layoutInflater)
 
-        val view = binding.root
-        setContentView(view)
+        setContentView(binding.root)
         setupToolbar()
     }
 
