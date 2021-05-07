@@ -15,16 +15,18 @@
     <color name="gray_02">#F5F5F5</color>
     <color name="gray_03">#ECECEC</color>
     <color name="gray_04">#CECECE</color>
-    <color name="gray_05">#F5F5F5</color>
+    <color name="gray_05">#AEAEAE</color>
     <color name="gray_06">#757575</color>
     <color name="gray_07">#242424</color>
+    <color name="gray_08">#000000</color>
 
     <!-- green -->
     <color name="green_00">#12A075</color>
-    <color name="green_01">#14AF80</color>
-    <color name="green_02">#18C08D</color>
-    <color name="green_03">#51D4AD</color>
-    <color name="green_04">#ADE3D3</color>
+    <color name="green_01">#E8FBF5</color>
+    <color name="green_02">#51D4AD</color>
+    <color name="green_03">#18C08D</color>
+    <color name="green_04">#14AF80</color>
+    <color name="green_05">#12A075</color>
 
     <!-- yellow -->
     <color name="yellow_00">#E7B800</color>

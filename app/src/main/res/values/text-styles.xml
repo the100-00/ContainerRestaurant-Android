@@ -24,6 +24,10 @@
         <item name="color">@color/gray_01</item>
     </style>
 
+    <style name="TextAppearance.App.R.Gray05">
+        <item name="color">@color/gray_05</item>
+    </style>
+
     <style name="TextAppearance.App.R.Gray06">
         <item name="color">@color/gray_06</item>
     </style>
@@ -47,6 +51,10 @@
     <!-- bold gray -->
     <style name="TextAppearance.App.B.Gray01">
         <item name="color">@color/gray_01</item>
+    </style>
+
+    <style name="TextAppearance.App.B.Gray06">
+        <item name="color">@color/gray_06</item>
     </style>
 
     <style name="TextAppearance.App.B.Gray07">

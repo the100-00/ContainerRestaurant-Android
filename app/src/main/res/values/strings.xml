@@ -18,4 +18,46 @@
     <string name="more_feed_history">더 보러가기</string>
     <string name="app_mail">용기낸 식당 %s</string>
     <string name="feed_search">피드탐색</string>
+
+
+
+
+
+
+
+
+
+
+    <string name="feed_write">용기낸 피드쓰기</string>
+    <string name="restaurant_name">식당 이름</string>
+    <string name="search_restaurant_name_hint">식당명 또는 지역 + 식당명 입력</string>
+    <string name="food_category">음식 카테고리</string>
+    <string name="detail_list">상세내역</string>
+    <string name="main_menu">메인 음식</string>
+    <string name="food">음식</string>
+    <string name="container">용기</string>
+    <string name="side_menu">반찬</string>
+    <string name="count">수량</string>
+    <string name="optional_input">(선택입력)</string>
+    <string name="optional_details">(선택사항)</string>
+    <string name="add_menu">음식 추가하기</string>
+    <string name="write_main_menu_hint">제육볶음</string>
+    <string name="write_main_menu_container_hint">1L 스테인리스 용기</string>
+    <string name="write_side_menu_count_hint">ex. 5개</string>
+    <string name="write_side_menu_container_hint">ex. 3칸 칸막이 1개</string>
+    <string name="level">난이도</string>
+    <string name="owner_likes_multi_disposable">사장님이 다회용기를 환영했어요!</string>
+    <string name="write_courageous_experience">용기낸 경험담을 들려주세요</string>
+    <string name="write_content_hint">용기 구성 팁등 타인에게 용기를 줄 수 있는 소감을 적어주세요.</string>
+    <string name="write_content_caption">* 무관한 내용이나 욕설 등 부적절한 내용은 통보 없이 삭제될 수 있습니다.</string>
+    <string name="upload">저장하기</string>
+    <string name="korean_food">한식</string>
+    <string name="midnight_snack">야식</string>
+    <string name="chinese_food">중식</string>
+    <string name="snack">분식</string>
+    <string name="fast_food">패스트푸드</string>
+    <string name="asian_or_western_food">아시안/양식</string>
+    <string name="cafe_or_dessert">카페/디저트</string>
+    <string name="cutlet_or_japanese_food">돈까스/회/일식</string>
+    <string name="chicken_or_pizza">치킨/피자</string>
 </resources>
