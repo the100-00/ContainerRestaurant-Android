@@ -33,7 +33,7 @@
         android:layout_height="22dp"
         android:layout_marginStart="60dp"
         android:layout_marginTop="8dp"
-        android:text="|"
+        android:text="| "
         android:textColor="#cecece"
         android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@+id/imageView4"
