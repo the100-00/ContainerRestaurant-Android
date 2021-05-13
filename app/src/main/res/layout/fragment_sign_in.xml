@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_nickname_title"
+            style="@style/TextAppearance.App.B.Gray07"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="66dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/login_nickname"
+            android:textSize="18dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/edit_nickname"
+            style="@style/TextAppearance.App.R.Gray05"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="59dp"
+            android:layout_marginEnd="16dp"
+            android:hint="닉네임을 입력해주세요."
+            android:textColor="@color/gray_07"
+            android:textCursorDrawable="@drawable/cursor_color"
+            android:textColorHint="@color/gray_05"
+            android:background="@android:color/transparent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_nickname_title" />
+
+        <View
+            android:id="@+id/separator"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="13dp"
+            android:layout_marginEnd="44dp"
+            android:background="@color/gray_04"
+            app:layout_constraintTop_toBottomOf="@+id/edit_nickname"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            style="@style/TextAppearance.App.R.Gray06"
+            android:id="@+id/tv_nickname_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:textSize="12dp"
+            tools:text="한글/영문/숫자만 입력해 주세요"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/separator"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_complete"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:backgroundTint="@color/green_03"
+            android:text="@string/complete"
+            android:textSize="16dp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/spoqa_hans_sans_bold"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:background="?attr/selectableItemBackground"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <data>
+
+    </data>
+</layout>

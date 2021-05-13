@@ -9,9 +9,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.tabs.TabLayoutMediator
 import com.tak8997.github.domain.BannerContent
 import com.tak8997.github.domain.ContainerFeedHistory
+import container.restaurant.android.presentation.auth.KakaoSignInDialogFragment
 import container.restaurant.android.databinding.FragmentHomeBinding
-import container.restaurant.android.presentation.home.item.BannerAdapter
+import container.restaurant.android.presentation.auth.SignInActivity
 import container.restaurant.android.presentation.feed.item.ContainerFeedAdapter
+import container.restaurant.android.presentation.home.item.BannerAdapter
+import container.restaurant.android.util.observe
+import org.koin.android.viewmodel.ext.android.viewModel
 
 internal class HomeFragment : Fragment() {
 
@@ -23,15 +27,31 @@ internal class HomeFragment : Fragment() {
         ContainerFeedAdapter()
     }
 
+    private val viewModel: HomeViewModel by viewModel()
+
     private lateinit var binding: FragmentHomeBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
+            .apply {
+                lifecycleOwner = this@HomeFragment
+                viewModel = this@HomeFragment.viewModel
+            }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        with(viewModel) {
+            navToMyContainerFeed.observe(viewLifecycleOwner) {
+
+            }
+            kakaoLoginDialog.observe(viewLifecycleOwner) {
+//                KakaoSignInDialogFragment().show(childFragmentManager, "KakaoSignInDialogFragment")
+                startActivity(SignInActivity.getIntent(requireContext()))
+            }
+        }
+
         setupBannerPager()
         setupContainerFeedRecycler()
     }

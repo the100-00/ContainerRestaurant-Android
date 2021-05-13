@@ -9,11 +9,14 @@ import container.restaurant.android.R
 import container.restaurant.android.databinding.ActivityMainBinding
 import container.restaurant.android.presentation.feed.write.FeedWriteActivity
 import container.restaurant.android.util.observe
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 internal class MainActivity : AppCompatActivity() {
 
-    private val navigationController = NavigationController(this)
+    private val navigationController: NavigationController by inject { parametersOf(this) }
+
     private val viewModel: MainViewModel by viewModel()
 
     private val binding by lazy {

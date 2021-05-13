@@ -35,9 +35,9 @@
     <color name="yellow_03">#FFDE5B</color>
     <color name="yellow_04">#FFECA4</color>
 
-    <!-- red -->
+    <!-- orange -->
     <color name="red_00">#E84918</color>
-    <color name="red_01">#F45B2C</color>
+    <color name="orange_02">#F45B2C</color>
     <color name="red_02">#F48766</color>
 
     <!-- blue -->

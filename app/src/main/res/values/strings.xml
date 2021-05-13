@@ -18,16 +18,6 @@
     <string name="more_feed_history">더 보러가기</string>
     <string name="app_mail">용기낸 식당 %s</string>
     <string name="feed_search">피드탐색</string>
-
-
-
-
-
-
-
-
-
-
     <string name="feed_write">용기낸 피드쓰기</string>
     <string name="restaurant_name">식당 이름</string>
     <string name="search_restaurant_name_hint">식당명 또는 지역 + 식당명 입력</string>
@@ -60,4 +50,11 @@
     <string name="cafe_or_dessert">카페/디저트</string>
     <string name="cutlet_or_japanese_food">돈까스/회/일식</string>
     <string name="chicken_or_pizza">치킨/피자</string>
+    <string name="need_kakao_signin">선택하신 기능은\n간편로그인 후 이용할 수 있어요!</string>
+    <string name="kakao_login">카카오 로그인</string>
+    <string name="login_nickname">용기낸 식당에 어서오세요!\n닉네임만 정하면 가입이 끝나요 :)</string>
+    <string name="complete">작성 완료</string>
+    <string name="nickname_too_long">16자를 넘을 수 없습니다</string>
+    <string name="nickname_possible">사용 가능한 닉네임 입니다</string>
+    <string name="nickname_not_possiblew">한글/영문/숫자만 입력해 주세요</string>
 </resources>
