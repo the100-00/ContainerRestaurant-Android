@@ -9,13 +9,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.tabs.TabLayoutMediator
 import com.tak8997.github.domain.BannerContent
 import com.tak8997.github.domain.ContainerFeedHistory
-import container.restaurant.android.presentation.auth.KakaoSignInDialogFragment
 import container.restaurant.android.databinding.FragmentHomeBinding
 import container.restaurant.android.presentation.auth.SignInActivity
 import container.restaurant.android.presentation.feed.item.ContainerFeedAdapter
 import container.restaurant.android.presentation.home.item.BannerAdapter
 import container.restaurant.android.util.observe
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 internal class HomeFragment : Fragment() {
 
