@@ -17,7 +17,7 @@ import container.restaurant.android.databinding.TabFeedCategoryBinding
 import container.restaurant.android.presentation.feed.category.FeedCategory
 import container.restaurant.android.presentation.feed.category.FeedCategoryFragment
 import container.restaurant.android.presentation.feed.item.FeedSortAdapter
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 internal class FeedFragment : Fragment() {
 
