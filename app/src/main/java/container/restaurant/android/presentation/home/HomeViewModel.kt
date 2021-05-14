@@ -10,6 +10,7 @@ internal class HomeViewModel(
 ) : ViewModel(), AuthViewModelDelegate by authViewModelDelegate {
 
     val navToMyContainerFeed = MutableLiveData<Event<Unit>>()
+    val navToAllContainerFeed = MutableLiveData<Event<Unit>>()
     val kakaoLoginDialog = MutableLiveData<Event<Unit>>()
 
     fun onClickMyContainerFeed() {
@@ -17,5 +18,9 @@ internal class HomeViewModel(
             kakaoLoginDialog.value = Event(Unit)
             return
         }
+    }
+
+    fun onClickAllContainerFeed() {
+        navToAllContainerFeed.value = Event(Unit)
     }
 }

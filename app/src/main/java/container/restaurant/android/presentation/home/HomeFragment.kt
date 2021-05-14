@@ -11,6 +11,7 @@ import com.tak8997.github.domain.BannerContent
 import com.tak8997.github.domain.ContainerFeedHistory
 import container.restaurant.android.databinding.FragmentHomeBinding
 import container.restaurant.android.presentation.auth.SignInActivity
+import container.restaurant.android.presentation.feed.all.FeedAllActivity
 import container.restaurant.android.presentation.feed.item.ContainerFeedAdapter
 import container.restaurant.android.presentation.home.item.BannerAdapter
 import container.restaurant.android.util.observe
@@ -44,6 +45,9 @@ internal class HomeFragment : Fragment() {
         with(viewModel) {
             navToMyContainerFeed.observe(viewLifecycleOwner) {
 
+            }
+            navToAllContainerFeed.observe(viewLifecycleOwner) {
+                startActivity(FeedAllActivity.getIntent(requireContext()))
             }
             kakaoLoginDialog.observe(viewLifecycleOwner) {
 //                KakaoSignInDialogFragment().show(childFragmentManager, "KakaoSignInDialogFragment")

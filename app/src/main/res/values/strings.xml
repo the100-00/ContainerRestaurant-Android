@@ -57,4 +57,16 @@
     <string name="nickname_too_long">16자를 넘을 수 없습니다</string>
     <string name="nickname_possible">사용 가능한 닉네임 입니다</string>
     <string name="nickname_not_possiblew">한글/영문/숫자만 입력해 주세요</string>
+    <string name="all_feed_title">우주같이 웅장한\n용기를 가진 분</string>
+    <string name="all_feed_sub_title">세상을 바꾸는\n특별한 용기를 가진 분들</string>
+    <string name="confirm">확인</string>
+
+    <string name="all_container_help">우주같이 웅장한 용기를 가진 분은\n
+<b>최근 30일간 피드를 가장 많이 작성한 순</b>\n
+으로 보여지며, 매일 1회 업데이트 됩니다.
+\n\n
+세상을 바꾸는 특별한 용기를 가진 분들은\n
+<b>가장 최근 피드를 작성한 순</b>으로 보여지며,\n
+실시간으로 업데이트 됩니다.</string>
+
 </resources>

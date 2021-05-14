@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:toosl="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:background="@drawable/bg_gray01_r14">
+
+        <TextView
+            style="@style/TextAppearance.App.B.Gray07"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="37dp"
+            android:text="리스트 기준이 궁금하신가요?" />
+
+        <TextView
+            style="@style/TextAppearance.App.R.Gray06"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/all_container_help"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:gravity="center"
+            tools:text="우주같이 웅장한 용기를 가진 분은
+최근 30일간 피드를 가장 많이 작성한 순
+으로 보여지며, 매일 1회 업데이트 됩니다.
+
+세상을 바꾸는 특별한 용기를 가진 분들은
+가장 최근 피드를 작성한 순으로 보여지며,
+실시간으로 업데이트 됩니다."/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_03"
+            android:layout_marginTop="28dp" />
+
+        <TextView
+            android:id="@+id/tv_confirm"
+            style="@style/TextAppearance.App.B.Green03"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="14dp"
+            android:text="@string/confirm"
+            android:background="?attr/selectableItemBackground" />
+    </LinearLayout>
+
+    <data>
+
+        <import type="android.text.Html" />
+
+    </data>
+</layout>

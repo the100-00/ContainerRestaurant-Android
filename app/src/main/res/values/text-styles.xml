@@ -12,28 +12,28 @@
 
     <!-- regular black -->
     <style name="TextAppearance.App.R.Black">
-        <item name="color">@color/black</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <!-- regular gray -->
     <style name="TextAppearance.App.R.Gray00">
-        <item name="color">@color/gray_00</item>
+        <item name="android:textColor">@color/gray_00</item>
     </style>
 
     <style name="TextAppearance.App.R.Gray01">
-        <item name="color">@color/gray_01</item>
+        <item name="android:textColor">@color/gray_01</item>
     </style>
 
     <style name="TextAppearance.App.R.Gray05">
-        <item name="color">@color/gray_05</item>
+        <item name="android:textColor">@color/gray_05</item>
     </style>
 
     <style name="TextAppearance.App.R.Gray06">
-        <item name="color">@color/gray_06</item>
+        <item name="android:textColor">@color/gray_06</item>
     </style>
 
     <style name="TextAppearance.App.R.Gray07">
-        <item name="color">@color/gray_07</item>
+        <item name="android:textColor">@color/gray_07</item>
     </style>
 
 
@@ -45,23 +45,30 @@
 
     <!-- bold black -->
     <style name="TextAppearance.App.B.Black">
-        <item name="color">@color/black</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <!-- bold gray -->
     <style name="TextAppearance.App.B.Gray01">
-        <item name="color">@color/gray_01</item>
+        <item name="android:textColor">@color/gray_01</item>
+    </style>
+
+    <style name="TextAppearance.App.B.Gray05">
+        <item name="android:textColor">@color/gray_05</item>
     </style>
 
     <style name="TextAppearance.App.B.Gray06">
-        <item name="color">@color/gray_06</item>
+        <item name="android:textColor">@color/gray_06</item>
     </style>
 
     <style name="TextAppearance.App.B.Gray07">
-        <item name="color">@color/gray_07</item>
+        <item name="android:textColor">@color/gray_07</item>
     </style>
 
-
+    <!-- bold green -->
+    <style name="TextAppearance.App.B.Green03">
+        <item name="android:textColor">@color/green_03</item>
+    </style>
 
     <!-- light -->
     <style name="TextAppearance.App.L" parent="TextAppearance.App">
