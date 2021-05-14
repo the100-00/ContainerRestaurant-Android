@@ -10,9 +10,11 @@ import container.restaurant.android.presentation.NavigationController
 import container.restaurant.android.presentation.auth.AuthViewModel
 import container.restaurant.android.presentation.auth.AuthViewModelDelegate
 import container.restaurant.android.presentation.feed.FeedViewModel
+import container.restaurant.android.presentation.feed.all.FeedAllViewModel
+import container.restaurant.android.presentation.feed.category.FeedCategoryViewModel
 import container.restaurant.android.presentation.home.HomeViewModel
 import org.koin.android.ext.koin.androidContext
-import org.koin.android.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val dataModule = module {
@@ -29,4 +31,6 @@ val presentationModule = module {
     viewModel { MainViewModel() }
     viewModel { HomeViewModel(get()) }
     viewModel { FeedViewModel() }
+    viewModel { FeedCategoryViewModel() }
+    viewModel { FeedAllViewModel() }
 }

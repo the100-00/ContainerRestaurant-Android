@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="6dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_level_up"
+            android:adjustViewBounds="true" />
+<!--        android:imageUrl="@{item.userImage}"-->
+<!--        android:circleCrop="@{true}"-->
+        <TextView
+            style="@style/TextAppearance.App.B.Gray07"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@{item.nickname}"
+            android:textSize="10dp"
+            tools:text="닉네임" />
+
+        <TextView
+            style="@style/TextAppearance.App.B.Gray05"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{item.level}"
+            android:textSize="10dp"
+            tools:text="LV1. 나무 용기" />
+    </LinearLayout>
+
+    <data>
+
+        <variable
+            name="item"
+            type="container.restaurant.android.presentation.feed.all.FeedUser" />
+    </data>
+</layout>

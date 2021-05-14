@@ -26,5 +26,8 @@
             android:name=".presentation.auth.SignInActivity"
             android:windowSoftInputMode="adjustResize" />
 
+        <activity
+            android:name=".presentation.feed.all.FeedAllActivity"
+            android:theme="@style/AppThemeGreen" />
     </application>
 </manifest>

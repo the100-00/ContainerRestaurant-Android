@@ -110,6 +110,8 @@
                 android:layout_marginTop="4dp"
                 android:padding="3dp"
                 android:src="@drawable/ic_icon_chevron_right_filled_20_px"
+                android:onClick="@{() -> viewModel.onClickAllContainerFeed()}"
+                android:background="?attr/selectableItemBackground"
                 app:layout_constraintTop_toBottomOf="@+id/img_my_container_arrow"
                 app:layout_constraintRight_toLeftOf="@+id/img_home_intro" />
 

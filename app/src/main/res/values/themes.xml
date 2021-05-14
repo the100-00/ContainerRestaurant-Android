@@ -29,4 +29,8 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+    
+    <style name="AppThemeGreen" parent="AppTheme.NoActionBar">
+        <item name="colorPrimaryDark">@color/green_02</item>
+    </style>
 </resources>
