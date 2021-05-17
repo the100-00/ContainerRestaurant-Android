@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="115dp">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="88dp"
+            android:layout_height="88dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/img_level_up" />
+
+        <TextView
+            android:id="@+id/tv_res_hashtag"
+            android:layout_width="111dp"
+            android:layout_height="19dp"
+            android:layout_marginStart="16dp"
+            android:text="@{item.hashtag}"
+            android:textColor="#cecece"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toBottomOf="@+id/tv_res_title"
+            tools:text="#용기낸 식당"/>
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="3dp"
+            android:layout_height="22dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="8dp"
+            android:text="| "
+            android:textColor="#cecece"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/imageView4"
+            app:layout_constraintHorizontal_bias="0.181"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toBottomOf="@+id/tv_res_hashtag" />
+
+        <TextView
+            android:id="@+id/tv_res_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="118dp"
+            android:layout_marginTop="24dp"
+            android:text="@{item.title}"
+            android:textColor="#242424"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="용기낸 식당"/>
+
+        <TextView
+            android:id="@+id/tv_res_rank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="73dp"
+            android:text="@{item.rank}"
+            android:textColor="#242424"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/imageView5"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="2.1"/>
+
+        <TextView
+            android:id="@+id/tv_res_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="73dp"
+            android:text="@{item.count}"
+            android:textColor="#242424"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/imageView4"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="+3회"/>
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="326dp"
+            android:layout_marginTop="13dp"
+            android:layout_marginEnd="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.96"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_favorite_filled" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="74dp"
+            android:layout_marginBottom="13dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:srcCompat="@drawable/ic_feed_outline" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="11dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:srcCompat="@drawable/ic_hard_filled_black" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <data>
+
+        <variable
+            name="item"
+            type="container.restaurant.android.presentation.map.item.NearRestaurant" />
+    </data>
+</layout>
