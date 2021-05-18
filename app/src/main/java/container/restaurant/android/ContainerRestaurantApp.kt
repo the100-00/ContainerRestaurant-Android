@@ -3,6 +3,7 @@ package container.restaurant.android
 import android.app.Application
 import com.kakao.sdk.common.KakaoSdk
 import container.restaurant.android.di.dataModule
+import container.restaurant.android.di.networkModule
 import container.restaurant.android.di.presentationModule
 import container.restaurant.android.di.repositoryModule
 import org.koin.android.ext.koin.androidContext
@@ -33,7 +34,7 @@ class ContainerRestaurantApp : Application() {
     private fun setupKoin() {
         startKoin {
             androidContext(this@ContainerRestaurantApp)
-            modules(listOf(presentationModule, repositoryModule, dataModule))
+            modules(listOf(presentationModule, repositoryModule, dataModule, networkModule))
         }
     }
 }
