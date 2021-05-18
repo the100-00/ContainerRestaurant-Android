@@ -68,5 +68,7 @@
 세상을 바꾸는 특별한 용기를 가진 분들은\n
 <b>가장 최근 피드를 작성한 순</b>으로 보여지며,\n
 실시간으로 업데이트 됩니다.</string>
+    <string name="user_profile">프로필 조회</string>
+    <string name="nickname">닉네임</string>
 
 </resources>

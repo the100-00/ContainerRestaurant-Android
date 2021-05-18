@@ -29,5 +29,7 @@
         <activity
             android:name=".presentation.feed.all.FeedAllActivity"
             android:theme="@style/AppThemeGreen" />
+
+        <activity android:name=".presentation.user.UserProfileActivity" />
     </application>
 </manifest>

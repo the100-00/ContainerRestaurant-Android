@@ -4,12 +4,14 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import container.restaurant.android.R
 import container.restaurant.android.databinding.ActivityFeedAllBinding
+import container.restaurant.android.presentation.user.UserProfileActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 internal class FeedAllActivity : AppCompatActivity() {
@@ -19,11 +21,11 @@ internal class FeedAllActivity : AppCompatActivity() {
     private val viewModel: FeedAllViewModel by viewModel()
 
     private val mostFeedUserAdapter by lazy {
-        MostFeedUserAdapter()
+        MostFeedUserAdapter(viewModel::onClickUser)
     }
 
     private val feedUserAdapter by lazy {
-        FeedUserAdapter()
+        FeedUserAdapter(viewModel::onClickUser)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +42,9 @@ internal class FeedAllActivity : AppCompatActivity() {
             }
             showHelpDialog.observe(this@FeedAllActivity) {
                 FeedAllHelpDialogFragment().show(supportFragmentManager, "FeedAllHelpDialogFragment")
+            }
+            navToUserProfile.observe(this@FeedAllActivity) {
+                startActivity(UserProfileActivity.getIntent(this@FeedAllActivity))
             }
         }
 
@@ -101,7 +106,6 @@ internal class FeedAllActivity : AppCompatActivity() {
     }
 
     companion object {
-
         fun getIntent(context: Context) = Intent(context, FeedAllActivity::class.java)
     }
 }

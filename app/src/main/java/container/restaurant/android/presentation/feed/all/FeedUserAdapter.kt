@@ -5,7 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import container.restaurant.android.databinding.ItemFeedUserBinding
 
-internal class FeedUserAdapter : RecyclerView.Adapter<FeedUserAdapter.ViewHolder>() {
+internal class FeedUserAdapter(
+    private val onClickUser: (user: FeedUser) -> Unit
+) : RecyclerView.Adapter<FeedUserAdapter.ViewHolder>() {
 
     private val items = mutableListOf<FeedUser>()
 
@@ -19,7 +21,7 @@ internal class FeedUserAdapter : RecyclerView.Adapter<FeedUserAdapter.ViewHolder
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(items[position])
+        holder.bind(items[position], onClickUser)
     }
 
     override fun getItemCount(): Int {
@@ -33,10 +35,15 @@ internal class FeedUserAdapter : RecyclerView.Adapter<FeedUserAdapter.ViewHolder
     }
 
     class ViewHolder(
-        private val binding: ItemFeedUserBinding) : RecyclerView.ViewHolder(binding.root) {
+        private val binding: ItemFeedUserBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(feedUser: FeedUser) {
+        fun bind(feedUser: FeedUser, onClickUser: (user: FeedUser) -> Unit) {
+            itemView.setOnClickListener {
+                onClickUser(feedUser)
+            }
             binding.item = feedUser
+            binding.executePendingBindings()
         }
     }
 }
