@@ -4,45 +4,48 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import container.restaurant.android.R
 import container.restaurant.android.databinding.FragmentResNearBinding
 import container.restaurant.android.presentation.map.item.NearRestaurant
 import container.restaurant.android.presentation.map.item.NearResAdapter
 
 internal class NearResFragment : Fragment() {
+    private lateinit var viewModel: MapViewModel
     private lateinit var binding: FragmentResNearBinding
-
-    private val nearResAdapter by lazy {
-        NearResAdapter()
-    }
+    private lateinit var nearResAdapter: NearResAdapter
+    private var nearRestaurant: ArrayList<NearRestaurant> = ArrayList()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentResNearBinding.inflate(layoutInflater, container, false)
-        return binding.root
-    }
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_res_near, container, false)
+        val view = binding.root
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setupNearResRecycler()
-    }
-
-    private fun  setupNearResRecycler() {
-        with(binding.rvNearRes) {
-            adapter = nearResAdapter
+        nearRestaurant.run {
+            add(NearRestaurant(1, "", "abc", "ddd", "111", "21321"))
         }
-
-        nearResAdapter.setItems(
-            listOf(
-                NearRestaurant(1,"","용기낸 식당","#태그","2.1","3회")
-            )
-        )
+        initRecyclerView()
+        return view;
     }
+
+    private fun initRecyclerView() {
+        nearResAdapter = NearResAdapter()
+        binding.rvNearRes.run {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(context)
+            adapter = nearResAdapter
+            nearResAdapter.setItems(nearRestaurant)
+        }
+    }
+
 
     companion object {
         fun newInstance(): NearResFragment = NearResFragment()
+
     }
 }

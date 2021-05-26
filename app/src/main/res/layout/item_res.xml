@@ -26,11 +26,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="28dp"
-        android:text="용기낸 식당"
+        android:text="@{item.title}"
         android:textColor="#242424"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        />
+        tools:text="용기낸 식당"/>
 
     <TextView
         android:id="@+id/res_tag"
@@ -38,12 +38,12 @@
         android:layout_height="19dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
-        android:text="#용기낸 식당 #맛있다"
+        android:text="@{item.hashtag}"
         android:textColor="#cecece"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/res_title"
-        />
+        tools:text="#용기낸 식당"/>
 
     <TextView
         android:id="@+id/res_rank"
@@ -51,12 +51,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
-        android:text="2.1회"
+        android:text="@{item.rank}"
         android:textColor="#242424"
         android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/imageView7"
         app:layout_constraintTop_toBottomOf="@+id/res_tag"
-        />
+        tools:text="2.1"/>
 
     <TextView
         android:id="@+id/res_count"
@@ -64,12 +64,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
-        android:text="+3회"
+        android:text="@{item.count}"
         android:textColor="#242424"
         android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/imageView4"
         app:layout_constraintTop_toBottomOf="@+id/res_tag"
-       />
+        tools:text="+3회"/>
 
     <ImageView
         android:id="@+id/imageView3"
@@ -143,6 +143,21 @@
         app:layout_constraintStart_toEndOf="@+id/imageView6"
         app:layout_constraintTop_toBottomOf="@+id/res_tag"
         app:srcCompat="@drawable/ic_hard_filled_black" />
-</androidx.constraintlayout.widget.ConstraintLayout>
 
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/res_count"
+        tools:src="@drawable/img_level_up" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+    <data>
+
+        <variable
+            name="item"
+            type="container.restaurant.android.presentation.map.item.ContainerRestaurant" />
+    </data>
 </layout>

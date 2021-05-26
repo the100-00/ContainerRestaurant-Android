@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
@@ -20,7 +19,7 @@ internal class MapsFragment : Fragment(), OnMapReadyCallback {
     private lateinit var naverMap: NaverMap
     private lateinit var locationSource: FusedLocationSource
     lateinit var nearResFragment : NearResFragment
- //   private val viewModel: MapViewModel by viewModel
+    //   private val viewModel: MapViewModel by viewModel
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -75,15 +74,15 @@ internal class MapsFragment : Fragment(), OnMapReadyCallback {
         marker.map = naverMap
         marker.icon = OverlayImage.fromResource(R.drawable.ic_map_marker)
         marker.setOnClickListener { overlay ->
-                val resDialogFragment: ResDialogFragment = ResDialogFragment {
-                    when (it) {
-                    }
+            val resDialogFragment: ResDialogFragment = ResDialogFragment {
+                when (it) {
                 }
-                resDialogFragment.show(childFragmentManager, "custom_dialog")
+            }
+            resDialogFragment.show(childFragmentManager, "custom_dialog")
             true
         }
-           naverMap.locationSource = locationSource
-           naverMap.locationTrackingMode = LocationTrackingMode.Follow
+        naverMap.locationSource = locationSource
+        naverMap.locationTrackingMode = LocationTrackingMode.Follow
     }
 
     companion object {
