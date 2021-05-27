@@ -19,6 +19,6 @@ val presentationModule = module {
     viewModel { MainViewModel() }
     viewModel { HomeViewModel(get()) }
     viewModel { FeedViewModel() }
-    viewModel { FeedCategoryViewModel() }
+    viewModel { FeedCategoryViewModel(get(), it[0]) }
     viewModel { FeedAllViewModel() }
 }

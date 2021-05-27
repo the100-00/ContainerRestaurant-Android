@@ -1,6 +1,7 @@
 package container.restaurant.android.di
 
-import container.restaurant.android.data.FeedService
+import container.restaurant.android.BuildConfig
+import container.restaurant.android.data.remote.FeedService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
@@ -8,15 +9,20 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-private const val BASE_URL = "http://ec2-52-78-66-184.ap-northeast-2.compute.amazonaws.com/"
+private val BASE_URL = if (BuildConfig.DEBUG) {
+    "http://ec2-52-78-66-184.ap-northeast-2.compute.amazonaws.com/"
+} else {
+    ""
+}
+
 
 val networkModule = module {
     single { createOkHttp() }
     single { createRetrofit(get(), BASE_URL) }
-    single { createService(get()) }
+    single { createFeedService(get()) }
 }
 
-fun createService(retrofit: Retrofit): FeedService {
+fun createFeedService(retrofit: Retrofit): FeedService {
     return retrofit.create(FeedService::class.java)
 }
 

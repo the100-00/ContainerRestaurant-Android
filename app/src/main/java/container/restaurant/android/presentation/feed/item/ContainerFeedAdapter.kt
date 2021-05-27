@@ -2,15 +2,13 @@ package container.restaurant.android.presentation.feed.item
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.tak8997.github.domain.ContainerFeedHistory
+import container.restaurant.android.data.model.Feed
 import container.restaurant.android.databinding.ItemContainerFeedBinding
 
-internal class ContainerFeedAdapter : ListAdapter<ContainerFeedHistory , ContainerFeedViewHolder>(
-    ContainerFeedDiffUtilCallback()
-) {
+internal class ContainerFeedAdapter : RecyclerView.Adapter<ContainerFeedViewHolder>() {
+
+    private val items = mutableListOf<Feed>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContainerFeedViewHolder {
         val binding = ItemContainerFeedBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -18,7 +16,23 @@ internal class ContainerFeedAdapter : ListAdapter<ContainerFeedHistory , Contain
     }
 
     override fun onBindViewHolder(holder: ContainerFeedViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(items[position])
+    }
+
+    override fun getItemCount(): Int {
+        return items.size
+    }
+
+    fun setItems(items: List<Feed>) {
+        this.items.clear()
+        this.items.addAll(items)
+        notifyDataSetChanged()
+    }
+
+    fun addItems(items: List<Feed>) {
+        val pos = itemCount
+        this.items.addAll(items)
+        notifyItemRangeInserted(pos, itemCount)
     }
 }
 
@@ -26,20 +40,8 @@ class ContainerFeedViewHolder(
     private val binding: ItemContainerFeedBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(containerFeedHistory: ContainerFeedHistory) {
-        binding.item = containerFeedHistory
+    fun bind(feed: Feed) {
+        binding.item = feed
         binding.executePendingBindings()
     }
 }
-
-class ContainerFeedDiffUtilCallback : DiffUtil.ItemCallback<ContainerFeedHistory>() {
-
-    override fun areItemsTheSame(oldItem: ContainerFeedHistory, newItem: ContainerFeedHistory): Boolean {
-        return oldItem == newItem
-    }
-
-    override fun areContentsTheSame(oldItem: ContainerFeedHistory, newItem: ContainerFeedHistory): Boolean {
-        return oldItem == newItem
-    }
-}
-

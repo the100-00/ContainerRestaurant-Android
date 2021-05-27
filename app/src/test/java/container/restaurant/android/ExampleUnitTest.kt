@@ -1,16 +1,43 @@
 package container.restaurant.android
 
-import org.junit.Assert.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import org.junit.Test
+import java.io.IOException
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-class ExampleUnitTest {
+class Test {
+
+    val scope = CoroutineScope(Job())
+
     @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+    fun test() {
+        scope.launch {
+            suggestionSafeApiCall { test1() }
+        }
+    }
+
+    private suspend fun test1() {
+        println("invoke")
+        throw IllegalAccessError("error")
+    }
+}
+
+suspend fun <T> suggestionSafeApiCall(apiCall: suspend () -> T) {
+    coroutineScope {
+        try {
+            println("invoke")
+            apiCall.invoke()
+        } catch (throwable: Throwable) {
+            println(throwable.message)
+//            when (throwable) {
+//                is IOException -> {
+//                }
+//                else -> {
+//
+//                }
+//            }
+        }
     }
 }

@@ -5,7 +5,7 @@ import com.tak8997.github.domain.ResultState
 import retrofit2.HttpException
 import java.io.IOException
 
-suspend fun <T : Any> apiCall(call: suspend () -> T): ResultState<T> {
+suspend fun <T : Any> safeApiCall(call: suspend () -> T): ResultState<T> {
     return try {
         val response = call()
         ResultState.Success(response)
@@ -20,7 +20,7 @@ private fun handleError(throwable: Throwable): ErrorEntity.Error {
             ErrorEntity.Error(502, "no internet connection")
         }
         is HttpException -> {
-            ErrorEntity.Error(500, "server error")
+            ErrorEntity.Error(500, "server error: ${throwable.code()}")
         }
         else -> {
             ErrorEntity.Error(503, "unexpected error")

@@ -4,32 +4,40 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.tak8997.github.domain.ContainerFeedHistory
 import container.restaurant.android.databinding.FragmentFeedCategoryBinding
 import container.restaurant.android.presentation.feed.item.ContainerFeedAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 
 internal class FeedCategoryFragment : Fragment() {
 
     private lateinit var binding: FragmentFeedCategoryBinding
 
-    private val viewModel: FeedCategoryViewModel by viewModel()
-
     private val containerFeedAdapter = ContainerFeedAdapter()
 
     private var feedCategory: FeedCategory? = null
+
+    private val viewModel: FeedCategoryViewModel by viewModel {
+        parametersOf(feedCategory)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         feedCategory = arguments?.getSerializable(KEY_FEED_CATEGORY) as? FeedCategory
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = FragmentFeedCategoryBinding.inflate(layoutInflater, container, false)
             .apply {
                 viewModel = this@FeedCategoryFragment.viewModel
@@ -40,6 +48,19 @@ internal class FeedCategoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        with(viewModel) {
+            feeds.observe(viewLifecycleOwner, Observer {
+                if (page == 1) {
+                    containerFeedAdapter.setItems(it)
+                } else {
+                    containerFeedAdapter.addItems(it)
+                }
+            })
+            errorToast.observe(viewLifecycleOwner, Observer {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            })
+        }
+
         setupContainerFeedRecycler()
     }
 
@@ -57,47 +78,21 @@ internal class FeedCategoryFragment : Fragment() {
                         val totalItemCount = layoutManager.itemCount
 
                         if (visibleItemCount + firstVisibleItemPosition >= totalItemCount
-                            && firstVisibleItemPosition >= 0) {
-                                // TODO : check loading status for multiple fetch
-                            viewModel.fetchMore()
+                            && firstVisibleItemPosition >= 0
+                            && viewModel.loading.value == false
+                            && page < viewModel.lastPage.value ?: 0
+                        ) {
+                            viewModel.fetchMore(++page)
                         }
                     }
                 }
             })
         }
-        // test dummy
-        containerFeedAdapter.submitList(
-            listOf(
-                ContainerFeedHistory(1, "", "닉네임", "컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 ", "99", "99"),
-                ContainerFeedHistory(2, "", "닉네임", "컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 ", "99", "99"),
-                ContainerFeedHistory(3, "", "닉네임", "컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 ", "99", "99"),
-                ContainerFeedHistory(4, "", "닉네임", "컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 ", "99", "99"),
-                ContainerFeedHistory(5, "", "닉네임", "컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 ", "99", "99"),
-                ContainerFeedHistory(6, "", "닉네임", "컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 ", "99", "99"),
-                ContainerFeedHistory(7, "", "닉네임", "컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 ", "99", "99"),
-                ContainerFeedHistory(8, "", "닉네임", "컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 ", "99", "99"),
-                ContainerFeedHistory(9, "", "닉네임", "컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 ", "99", "99"),
-                ContainerFeedHistory(10, "", "닉네임", "컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 ", "99", "99"),
-                ContainerFeedHistory(11, "", "닉네임", "컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 ", "99", "99"),
-                ContainerFeedHistory(12, "", "닉네임", "컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 ", "99", "99"),
-                ContainerFeedHistory(1, "", "닉네임", "컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 ", "99", "99"),
-                ContainerFeedHistory(2, "", "닉네임", "컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 ", "99", "99"),
-                ContainerFeedHistory(3, "", "닉네임", "컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 ", "99", "99"),
-                ContainerFeedHistory(4, "", "닉네임", "컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 ", "99", "99"),
-                ContainerFeedHistory(5, "", "닉네임", "컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 ", "99", "99"),
-                ContainerFeedHistory(6, "", "닉네임", "컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 ", "99", "99"),
-                ContainerFeedHistory(7, "", "닉네임", "컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 ", "99", "99"),
-                ContainerFeedHistory(8, "", "닉네임", "컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 ", "99", "99"),
-                ContainerFeedHistory(9, "", "닉네임", "컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 ", "99", "99"),
-                ContainerFeedHistory(10, "", "닉네임", "컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 ", "99", "99"),
-                ContainerFeedHistory(11, "", "닉네임", "컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 ", "99", "99"),
-                ContainerFeedHistory(12, "", "닉네임", "컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 ", "99", "99")
-            )
-        )
     }
 
     companion object {
         private const val KEY_FEED_CATEGORY = "KEY_FEED_CATEGORY"
+        var page = 1
 
         fun newInstance(feedCategory: FeedCategory) = FeedCategoryFragment()
             .apply {

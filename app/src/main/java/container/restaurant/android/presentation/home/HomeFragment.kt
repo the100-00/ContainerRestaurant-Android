@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.tabs.TabLayoutMediator
 import com.tak8997.github.domain.BannerContent
-import com.tak8997.github.domain.ContainerFeedHistory
 import container.restaurant.android.databinding.FragmentHomeBinding
 import container.restaurant.android.presentation.auth.SignInActivity
 import container.restaurant.android.presentation.feed.all.FeedAllActivity
@@ -64,23 +63,6 @@ internal class HomeFragment : Fragment() {
             layoutManager = GridLayoutManager(context ?: return, 2)
             adapter = containerFeedAdapter
         }
-        // test dummy
-        containerFeedAdapter.submitList(
-            listOf(
-                ContainerFeedHistory(1, "", "닉네임", "컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 ", "99", "99"),
-                ContainerFeedHistory(2, "", "닉네임", "컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 ", "99", "99"),
-                ContainerFeedHistory(3, "", "닉네임", "컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 ", "99", "99"),
-                ContainerFeedHistory(4, "", "닉네임", "컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 ", "99", "99"),
-                ContainerFeedHistory(5, "", "닉네임", "컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 ", "99", "99"),
-                ContainerFeedHistory(6, "", "닉네임", "컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 ", "99", "99"),
-                ContainerFeedHistory(7, "", "닉네임", "컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 ", "99", "99"),
-                ContainerFeedHistory(8, "", "닉네임", "컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 ", "99", "99"),
-                ContainerFeedHistory(9, "", "닉네임", "컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 ", "99", "99"),
-                ContainerFeedHistory(10, "", "닉네임", "컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 ", "99", "99"),
-                ContainerFeedHistory(11, "", "닉네임", "컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 ", "99", "99"),
-                ContainerFeedHistory(12, "", "닉네임", "컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 컨텐츠 ", "99", "99")
-            )
-        )
     }
 
     private fun setupBannerPager() {
