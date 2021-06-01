@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="container.restaurant.android.data.model.Menu" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/TextAppearance.App.R.Gray07"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="@{@string/hypen(item.menuName)}"
+            tools:text="- 엽기떡볶이1인분로제맛+로제맛로제맛로제맛로..." />
+
+
+        <TextView
+            style="@style/TextAppearance.App.B.Green03"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:singleLine="true"
+            android:text="@{item.container}"
+            tools:text="조그만 플라스틱 반찬통 1개 " />
+    </LinearLayout>
+</layout>

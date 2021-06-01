@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="container.restaurant.android.presentation.feed.detail.FeedDetailViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/img_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:gravity="start"
+                        android:src="@drawable/ic_chevron_left_outline" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="24dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:padding="3dp"
+                        android:src="@drawable/ic_share_outline" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:padding="3dp"
+                        android:src="@drawable/ic_more_horiz_outline" />
+                </LinearLayout>
+            </androidx.appcompat.widget.Toolbar>
+
+            <ImageView
+                android:id="@+id/img_user"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                tools:src="@drawable/img_level_up" />
+
+            <TextView
+                android:id="@+id/tv_user_name"
+                style="@style/TextAppearance.App.B.Gray07"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textSize="12dp"
+                app:layout_constraintBottom_toTopOf="@+id/tv_user_lvl"
+                app:layout_constraintLeft_toRightOf="@+id/img_user"
+                app:layout_constraintTop_toTopOf="@+id/img_user"
+                app:layout_constraintVertical_chainStyle="spread"
+                tools:text="용기낸 식당" />
+
+            <TextView
+                android:id="@+id/tv_user_lvl"
+                style="@style/TextAppearance.App.B.Gray05"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10dp"
+                app:layout_constraintBottom_toBottomOf="@+id/img_user"
+                app:layout_constraintLeft_toLeftOf="@+id/tv_user_name"
+                app:layout_constraintTop_toBottomOf="@+id/tv_user_name"
+                tools:text="LV5. 다이아용기" />
+
+            <ImageView
+                android:id="@+id/img_feed"
+                android:layout_width="match_parent"
+                android:layout_height="256dp"
+                android:layout_marginTop="10dp"
+                android:imageUrl="@{viewModel.feedDetail.thumbnailUrl}"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/img_user"
+                tools:src="@drawable/img_level_up" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <ImageView
+                android:id="@+id/img_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
+                android:isSelected="@{viewModel.feedLike}"
+                android:onClick="@{() -> viewModel.onClickFeedLike()}"
+                android:padding="3dp"
+                android:src="@drawable/selector_like"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/tv_like"
+                app:layout_constraintTop_toBottomOf="@+id/img_feed" />
+
+            <TextView
+                android:id="@+id/tv_like"
+                style="@style/TextAppearance.App.R.Gray07"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="11dp"
+                android:text="@string/like"
+                app:layout_constraintBottom_toBottomOf="@+id/img_like"
+                app:layout_constraintLeft_toRightOf="@+id/img_like"
+                app:layout_constraintRight_toLeftOf="@+id/tv_like_count"
+                app:layout_constraintTop_toTopOf="@+id/img_like" />
+
+            <TextView
+                android:id="@+id/tv_like_count"
+                style="@style/TextAppearance.App.R.Gray07"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="@{String.valueOf(viewModel.feedDetail.likeCount)}"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_like"
+                app:layout_constraintLeft_toRightOf="@+id/tv_like"
+                app:layout_constraintRight_toLeftOf="@+id/guideline"
+                app:layout_constraintTop_toTopOf="@+id/tv_like"
+                tools:text="99" />
+
+            <ImageView
+                android:id="@+id/img_scrap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
+                android:padding="3dp"
+                android:isSelected="@{viewModel.feedScrap}"
+                android:src="@drawable/selector_bookmark"
+                android:onClick="@{() -> viewModel.onClickFeedScrap()}"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintLeft_toRightOf="@+id/guideline"
+                app:layout_constraintRight_toLeftOf="@+id/tv_scrap"
+                app:layout_constraintTop_toBottomOf="@+id/img_feed" />
+
+            <TextView
+                android:id="@+id/tv_scrap"
+                style="@style/TextAppearance.App.R.Gray07"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="11dp"
+                android:text="@string/scrap"
+                app:layout_constraintBottom_toBottomOf="@+id/img_scrap"
+                app:layout_constraintLeft_toRightOf="@+id/img_scrap"
+                app:layout_constraintRight_toLeftOf="@+id/tv_scrap_count"
+                app:layout_constraintTop_toTopOf="@+id/img_scrap" />
+
+            <TextView
+                android:id="@+id/tv_scrap_count"
+                style="@style/TextAppearance.App.R.Gray07"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="@{String.valueOf(viewModel.feedDetail.scrapCount)}"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_scrap"
+                app:layout_constraintLeft_toRightOf="@+id/tv_scrap"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_scrap"
+                tools:text="99" />
+
+            <View
+                android:id="@+id/separator1"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:layout_marginTop="13dp"
+                android:background="@color/gray_02"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/img_like" />
+
+            <TextView
+                android:id="@+id/tv_food_category"
+                style="@style/TextAppearance.App.B.Gray06"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="13dp"
+                android:layout_marginBottom="13dp"
+                android:background="@drawable/bg_stroke_gray04_r20"
+                android:paddingLeft="8dp"
+                android:paddingTop="6dp"
+                android:paddingRight="8dp"
+                android:paddingBottom="6dp"
+                android:text="@{viewModel.feedDetail.category.type}"
+                android:textSize="10dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/separator1"
+                tools:text="돈까스/회/일식" />
+
+            <TextView
+                android:id="@+id/tv_restaurant_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:singleLine="true"
+                android:text="@{viewModel.feedDetail.restaurantName}"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_food_category"
+                app:layout_constraintLeft_toRightOf="@+id/tv_food_category"
+                app:layout_constraintTop_toTopOf="@+id/tv_food_category"
+                tools:text="라공방강남일호점일호점일..." />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="24dp"
+                android:src="@drawable/ic_chevron_right_outline_bold"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_restaurant_title"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_restaurant_title" />
+
+            <View
+                android:id="@+id/separator2"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/gray_02"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_food_category" />
+
+            <TextView
+                android:id="@+id/tv_level_difficulty"
+                style="@style/TextAppearance.App.B.Gray07"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/difficulty_level"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/separator2" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="22dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_level_difficulty"
+                app:layout_constraintLeft_toRightOf="@+id/tv_level_difficulty"
+                app:layout_constraintTop_toTopOf="@+id/tv_level_difficulty"
+                tools:itemCount="1" />
+
+            <TextView
+                style="@style/TextAppearance.App.R.Gray07"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="11dp"
+                app:layout_constraintBottom_toBottomOf="@+id/rv_level"
+                app:layout_constraintLeft_toRightOf="@+id/rv_level"
+                app:layout_constraintTop_toTopOf="@+id/rv_level"
+                tools:text="많이 어려워요" />
+
+            <View
+                android:id="@+id/separator3"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="16dp"
+                android:background="@color/gray_04"
+                app:layout_constraintLeft_toLeftOf="@id/tv_level_difficulty"
+                app:layout_constraintRight_toRightOf="@id/tv_level_difficulty"
+                app:layout_constraintTop_toBottomOf="@+id/tv_level_difficulty" />
+
+            <ImageView
+                android:id="@+id/img_main_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="22dp"
+                android:src="@drawable/ic_main_menu_outline"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/separator3" />
+
+            <TextView
+                android:id="@+id/tv_main_food"
+                style="@style/TextAppearance.App.B.Gray07"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:text="@string/main_food"
+                app:layout_constraintBottom_toBottomOf="@+id/img_main_menu"
+                app:layout_constraintLeft_toRightOf="@+id/img_main_menu"
+                app:layout_constraintTop_toTopOf="@+id/img_main_menu" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_main_food"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="17dp"
+                app:layout_constraintLeft_toRightOf="@+id/img_main_menu"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_main_food" />
+
+            <ImageView
+                android:id="@+id/img_side_dish_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="22dp"
+                android:src="@drawable/ic_main_menu_outline"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rv_main_food" />
+
+            <TextView
+                android:id="@+id/tv_side_dish_food"
+                style="@style/TextAppearance.App.B.Gray07"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:text="@string/side_dish_menu"
+                app:layout_constraintBottom_toBottomOf="@+id/img_side_dish_menu"
+                app:layout_constraintLeft_toRightOf="@+id/img_side_dish_menu"
+                app:layout_constraintTop_toTopOf="@+id/img_side_dish_menu" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_side_dish_food"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="17dp"
+                app:layout_constraintLeft_toRightOf="@+id/img_side_dish_menu"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_side_dish_food" />
+
+            <View
+                android:id="@+id/separator6"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="16dp"
+                android:background="@color/gray_04"
+                app:layout_constraintTop_toBottomOf="@+id/rv_side_dish_food" />
+
+            <TextView
+                android:id="@+id/tv_review_title"
+                style="@style/TextAppearance.App.B.Gray07"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="21dp"
+                android:text="@string/review_title"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/separator6" />
+
+            <TextView
+                android:id="@+id/tv_review_desc"
+                style="@style/TextAppearance.App.R.Gray07"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:text="@{viewModel.feedDetail.content}"
+                app:layout_constraintTop_toBottomOf="@+id/tv_review_title"
+                tools:text="환경에 기여한다는 생각에 너무 좋았습니다. 음식도 너무 환경에 기여한다는 생각에 너무 좋았습니다. 음식도 너무 환경에 기여한다는 생각에 너무 좋았습니다. " />
+
+            <View
+                android:id="@+id/separator4"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:layout_marginTop="32dp"
+                android:background="@color/gray_02"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_review_desc" />
+
+            <LinearLayout
+                android:id="@+id/ll_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:elevation="5dp"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/separator4">
+
+                <TextView
+                    style="@style/TextAppearance.App.R.Gray07"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginBottom="13dp"
+                    android:text="@string/comment" />
+
+                <TextView
+                    style="@style/TextAppearance.App.R.Gray05"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginTop="13dp"
+                    android:text="@{viewModel.feedDetail.replyCount}"
+                    tools:text="0" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="21dp"
+                app:layout_constraintTop_toBottomOf="@+id/ll_comment" />
+
+            <View
+                android:id="@+id/separator5"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="64dp"
+                android:background="@color/gray_02"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rv_comment" />
+
+            <EditText
+                android:id="@+id/et_comment"
+                style="@style/TextAppearance.App.R.Gray07"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginBottom="14dp"
+                android:background="@android:color/transparent"
+                android:drawableStart="@drawable/ic_comment_outline"
+                android:drawablePadding="14dp"
+                android:hint="@string/please_comment"
+                android:text="@={viewModel.commentEditing}"
+                android:textColor="@color/gray_07"
+                android:textColorHint="@color/gray_05"
+                android:textCursorDrawable="@drawable/cursor_color"
+                android:textSize="12dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/tv_comment_post"
+                app:layout_constraintTop_toBottomOf="@+id/separator5" />
+
+            <TextView
+                android:id="@+id/tv_comment_post"
+                style="@style/TextAppearance.App.B.Green03"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="14dp"
+                android:onClick="@{() -> viewModel.onClickPostComment()}"
+                android:text="@string/publish"
+                android:textColor="@color/green_03"
+                android:textSize="12dp"
+                app:layout_constraintBottom_toBottomOf="@+id/et_comment"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/et_comment" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

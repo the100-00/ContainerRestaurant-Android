@@ -15,7 +15,7 @@ data class FeedModel(
 )
 
 data class Feed(
-    val id: Int = 0,
+    val id: Long = 0,
     val thumbnailUrl: String = "",
     val ownerNickname: String = "",
     val content: String = "",

@@ -70,5 +70,17 @@
 실시간으로 업데이트 됩니다.</string>
     <string name="user_profile">프로필 조회</string>
     <string name="nickname">닉네임</string>
+    <string name="like">좋아요</string>
+    <string name="scrap">스크랩</string>
+    <string name="difficulty_level">난이도</string>
+    <string name="main_food">메인 음식</string>
+    <string name="side_dish_menu">반찬</string>
+    <string name="comment">댓글</string>
+    <string name="please_comment">댓글을 남겨주세요</string>
+    <string name="publish">게시</string>
+    <string name="review_title">용기낸 소감</string>
+    <string name="hypen">- %s</string>
+    <string name="error_comment_post">댓글 등록에 문제가 생겼습니다</string>
+    <string name="error_feed_detail">피드를 찾을 수 없습니다</string>
 
 </resources>

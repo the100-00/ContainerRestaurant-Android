@@ -1,8 +1,8 @@
 package container.restaurant.android.presentation.feed.category
 
-internal enum class FeedCategory(val type: String) {
+enum class FeedCategory(val type: String) {
 
-    ALL("전체"),
+    DEFAULT("전체"),
     KOREAN("한식"),
     SCHOOL_FOOD("분식"),
     FAST_FOOD("패스트푸"),

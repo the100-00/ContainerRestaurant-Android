@@ -15,7 +15,7 @@ fun ImageView.setImage(url: String?, circleCrop: Boolean = false) {
         .load(url)
         .apply {
             if (circleCrop) {
-                centerCrop()
+                circleCrop()
             }
         }
         .into(this)

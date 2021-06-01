@@ -7,11 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import container.restaurant.android.R
 import container.restaurant.android.databinding.ActivityMainBinding
-import container.restaurant.android.presentation.feed.write.FeedWriteActivity
+import container.restaurant.android.presentation.feed.detail.FeedDetailActivity
 import container.restaurant.android.util.observe
 import org.koin.android.ext.android.inject
-import org.koin.core.parameter.parametersOf
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 internal class MainActivity : AppCompatActivity() {
 
@@ -31,7 +31,8 @@ internal class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         with(viewModel) {
             navToFeed.observe(this@MainActivity) {
-                startActivity(FeedWriteActivity.getIntent(this@MainActivity))
+//                startActivity(FeedWriteActivity.getIntent(this@MainActivity))
+                startActivity(FeedDetailActivity.getIntent(this@MainActivity, 10))
             }
         }
 

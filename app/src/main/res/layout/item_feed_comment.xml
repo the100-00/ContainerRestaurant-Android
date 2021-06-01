@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="item"
+            type="container.restaurant.android.data.model.FeedComment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/img_user"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="18dp"
+            android:circleCrop="@{true}"
+            android:imageUrl="@{item.ownerProfile}"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_like_filled_med" />
+
+        <TextView
+            android:id="@+id/tv_user_name"
+            style="@style/TextAppearance.App.B.Gray07"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@{item.ownerNickName}"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_user_lvl"
+            app:layout_constraintLeft_toRightOf="@+id/img_user"
+            app:layout_constraintTop_toTopOf="@id/img_user"
+            app:layout_constraintVertical_chainStyle="spread"
+            tools:text="용기낸 식당" />
+
+        <TextView
+            android:id="@+id/tv_user_lvl"
+            style="@style/TextAppearance.App.B.Green03"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{item.ownerLevel}"
+            android:textSize="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/img_user"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_user_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_user_name"
+            tools:text="LV5. 다이아 용기" />
+
+        <!--        <ImageView-->
+        <!--            android:id="@+id/img_more"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="17dp"-->
+        <!--            android:layout_marginEnd="17dp"-->
+        <!--            android:padding="3dp"-->
+        <!--            android:src="@drawable/ic_more_horiz_outline"-->
+        <!--            app:layout_constraintRight_toRightOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+        <TextView
+            android:id="@+id/tv_review_desc"
+            style="@style/TextAppearance.App.R.Gray07"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="14dp"
+            android:text="@{item.content}"
+            android:textSize="12dp"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_user_lvl"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_user_lvl"
+            tools:text="용기낸 식당 컨텐츠 보고 저도 용기를 내봤습니다! 너무 좋은 시도인 것 같아요! 용기낸 식당 컨텐츠 보고 저도 용기를 내봤습니다! 너무 좋은 시도인 것 같아요! " />
+
+        <TextView
+            android:id="@+id/tv_comment_date"
+            style="@style/TextAppearance.App.R.Gray07"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:layout_marginBottom="16dp"
+            android:text="@{item.createdDate}"
+            android:textSize="10dp"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_review_desc"
+            app:layout_constraintTop_toBottomOf="@+id/tv_review_desc"
+            tools:text="04.20" />
+
+        <ImageView
+            android:id="@+id/img_comment_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/selector_like_small"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_comment_date"
+            app:layout_constraintLeft_toRightOf="@+id/tv_comment_date"
+            app:layout_constraintTop_toTopOf="@+id/tv_comment_date" />
+
+        <TextView
+            android:id="@+id/tv_comment_like"
+            style="@style/TextAppearance.App.R.Gray07"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@{String.valueOf(item.likeCount)}"
+            android:textSize="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/img_comment_like"
+            app:layout_constraintLeft_toRightOf="@+id/img_comment_like"
+            app:layout_constraintTop_toTopOf="@+id/img_comment_like"
+            tools:text="99" />
+
+        <ImageView
+            android:id="@+id/img_cocoment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/ic_comment_outline"
+            android:visibility="@{item.commentReply.size() == 0 ? View.INVISIBLE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_comment_like"
+            app:layout_constraintLeft_toRightOf="@+id/tv_comment_like"
+            app:layout_constraintTop_toTopOf="@+id/tv_comment_like" />
+
+        <TextView
+            android:id="@+id/tv_cocomment"
+            style="@style/TextAppearance.App.R.Gray07"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@{String.valueOf(item.commentReply.size())}"
+            android:textSize="10dp"
+            android:visibility="@{item.commentReply.size() == 0 ? View.INVISIBLE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@+id/img_cocoment"
+            app:layout_constraintLeft_toRightOf="@+id/img_cocoment"
+            app:layout_constraintTop_toTopOf="@+id/img_cocoment"
+            tools:text="99" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_cocomment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:visibility="@{item.commentReply.size() == 0 ? View.INVISIBLE : View.VISIBLE}"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_comment_date"
+            app:layout_constraintRight_toRightOf="@+id/tv_review_desc"
+            app:layout_constraintTop_toBottomOf="@+id/tv_comment_date" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

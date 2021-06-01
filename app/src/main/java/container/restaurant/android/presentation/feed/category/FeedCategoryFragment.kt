@@ -37,7 +37,7 @@ internal class FeedCategoryFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentFeedCategoryBinding.inflate(layoutInflater, container, false)
             .apply {
                 viewModel = this@FeedCategoryFragment.viewModel
