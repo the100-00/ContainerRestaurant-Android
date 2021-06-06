@@ -42,6 +42,6 @@
 
     <!-- blue -->
     <color name="blue_00">#0064E5</color>
-    <color name="blue_01">#1877F2</color>
-    <color name="blue_02">#599CF1</color>
+    <color name="blue_01">#60a5ff</color>
+    <color name="blue_02">#1877f2</color>
 </resources>

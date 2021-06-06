@@ -70,5 +70,10 @@
 실시간으로 업데이트 됩니다.</string>
     <string name="user_profile">프로필 조회</string>
     <string name="nickname">닉네임</string>
+    <string name="my_page">마이 페이지</string>
+    <string name="brave_level">용기낸 레벨</string>
+    <string name="my_feed">내 피드</string>
+    <string name="scrap_feed">스크랩 피드</string>
+    <string name="favorite_restaurant">찜한 식당</string>
 
 </resources>
