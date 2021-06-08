@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.tak8997.github.domain.ResultState
 import container.restaurant.android.data.model.FeedResponse
 import container.restaurant.android.data.repository.FeedRepository
+import container.restaurant.android.presentation.feed.item.FeedSort
 import container.restaurant.android.util.SingleLiveEvent
 import kotlinx.coroutines.launch
 
@@ -16,6 +17,7 @@ internal class FeedCategoryViewModel(
 ) : ViewModel() {
 
     private val feedResponse = MutableLiveData<FeedResponse>()
+    private var feedSort: FeedSort = FeedSort.LATEST
 
     val feeds = feedResponse.map {
         it.feedModel?.feeds ?: emptyList()
@@ -28,7 +30,11 @@ internal class FeedCategoryViewModel(
     val loading = MutableLiveData<Boolean>()
 
     init {
-        fetchFeedCategory(FeedCategoryFragment.page)
+        fetchFeedsByCategory(FeedCategoryFragment.page)
+    }
+
+    fun onClickSort(sort: FeedSort) {
+        this.feedSort = sort
     }
 
     fun onRefresh() {
@@ -36,20 +42,16 @@ internal class FeedCategoryViewModel(
     }
 
     fun fetchMore(page: Int) {
-        fetchFeedCategory(page)
+        fetchFeedsByCategory(page)
     }
 
-    private fun fetchFeedCategory(page: Int) {
+    private fun fetchFeedsByCategory(page: Int) {
         viewModelScope.launch {
             loading.value = true
-            val feedResult = repository.fetchFeed(getFeedCategory(), page)
-            when (feedResult) {
-                is ResultState.Success -> {
-                    feedResponse.value = feedResult.data ?: return@launch
-                }
-                is ResultState.Error -> {
-                    errorToast.value = feedResult.error?.errorMessage ?: ""
-                }
+            val feedsResult = repository.fetchFeedsWithCategory(getFeedCategory(), feedSort, page)
+            when (feedsResult) {
+                is ResultState.Success -> feedResponse.value = feedsResult.data ?: return@launch
+                is ResultState.Error -> errorToast.value = feedsResult.error?.errorMessage ?: ""
             }
             loading.value = false
         }

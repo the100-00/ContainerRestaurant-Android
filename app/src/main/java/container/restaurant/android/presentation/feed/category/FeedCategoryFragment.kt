@@ -24,20 +24,23 @@ internal class FeedCategoryFragment : Fragment() {
 
     private var feedCategory: FeedCategory? = null
 
+    private var viewModelCreatedListener: OnViewModelCreatedListener? = null
+
     private val viewModel: FeedCategoryViewModel by viewModel {
         parametersOf(feedCategory)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        feedCategory = arguments?.getSerializable(KEY_FEED_CATEGORY) as? FeedCategory
+        feedCategory = arguments?.getSerializable(KEY_FEED_CATEGORY) as FeedCategory?
+        viewModelCreatedListener?.onViewModelCreated(viewModel)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentFeedCategoryBinding.inflate(layoutInflater, container, false)
             .apply {
                 viewModel = this@FeedCategoryFragment.viewModel
@@ -64,6 +67,10 @@ internal class FeedCategoryFragment : Fragment() {
         setupContainerFeedRecycler()
     }
 
+    fun setOnViewModelCreatedListener(listener: OnViewModelCreatedListener) {
+        viewModelCreatedListener = listener
+    }
+
     private fun setupContainerFeedRecycler() {
         with(binding.rvContainerFeed) {
             layoutManager = GridLayoutManager(context ?: return, 2)
@@ -88,6 +95,10 @@ internal class FeedCategoryFragment : Fragment() {
                 }
             })
         }
+    }
+
+    interface OnViewModelCreatedListener {
+        fun onViewModelCreated(feedCategoryViewModel: FeedCategoryViewModel)
     }
 
     companion object {

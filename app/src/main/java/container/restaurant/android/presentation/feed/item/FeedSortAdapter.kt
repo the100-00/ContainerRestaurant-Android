@@ -4,9 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import container.restaurant.android.databinding.ItemSortBinding
+import container.restaurant.android.presentation.feed.category.FeedCategoryViewModel
 
 internal class FeedSortAdapter(
-    private val onClickSort: (feedSort: FeedSort) -> Unit
+    private val viewModel: FeedCategoryViewModel?
 ) : RecyclerView.Adapter<FeedSortAdapter.ViewHolder>() {
 
     private val items = FeedSort.values()
@@ -27,7 +28,7 @@ internal class FeedSortAdapter(
                 it.selected = false
             }
             items[position].selected = true
-            onClickSort(items[position])
+            viewModel?.onClickSort(items[position])
             notifyDataSetChanged()
         }
     }
@@ -37,16 +38,16 @@ internal class FeedSortAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(sort: FeedSort) {
-            binding.item = sort.sort
+            binding.item = sort.title
             binding.lytSortBg.isSelected = sort.selected
             binding.executePendingBindings()
         }
     }
 }
 
-enum class FeedSort(val sort: String, var selected: Boolean) {
-    LATEST("최신순", true),
-    LIKE("좋아요 많은 ", false),
-    EASY("난이도 낮은 순", false)
+enum class FeedSort(val title: String, var selected: Boolean, val sort: String) {
+    LATEST("최신순", true, "createdDate"),
+    LIKE("좋아요 많은 ", false, "likeCount"),
+    EASY("난이도 낮은 순", false, "difficulty")
     ;
 }

@@ -16,12 +16,14 @@ import container.restaurant.android.databinding.FragmentFeedBinding
 import container.restaurant.android.databinding.TabFeedCategoryBinding
 import container.restaurant.android.presentation.feed.category.FeedCategory
 import container.restaurant.android.presentation.feed.category.FeedCategoryFragment
+import container.restaurant.android.presentation.feed.category.FeedCategoryViewModel
 import container.restaurant.android.presentation.feed.item.FeedSortAdapter
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 internal class FeedFragment : Fragment() {
 
-    private val viewModel: FeedViewModel by viewModel()
+    private val tabViewModelMap = HashMap<Int, FeedCategoryViewModel>()
+
+    private var currentTabPos = 0
 
     private lateinit var feedAdapter: FragmentStateAdapter
 
@@ -35,7 +37,14 @@ internal class FeedFragment : Fragment() {
             }
 
             override fun createFragment(position: Int): Fragment {
-                return FeedCategoryFragment.newInstance(FeedCategory.values()[position])
+                currentTabPos = position
+                return FeedCategoryFragment.newInstance(FeedCategory.values()[position]).apply {
+                    setOnViewModelCreatedListener(object : FeedCategoryFragment.OnViewModelCreatedListener {
+                        override fun onViewModelCreated(feedCategoryViewModel: FeedCategoryViewModel) {
+                            tabViewModelMap[position] = feedCategoryViewModel
+                        }
+                    })
+                }
             }
         }
         return binding.root
@@ -51,7 +60,7 @@ internal class FeedFragment : Fragment() {
     private fun setupSortRecycler() {
         with(binding.rvFeedSort) {
             layoutManager = LinearLayoutManager(context ?: return, LinearLayoutManager.HORIZONTAL, false)
-            adapter = FeedSortAdapter(viewModel::onClickSort)
+            adapter = FeedSortAdapter(tabViewModelMap[currentTabPos])
         }
     }
 
