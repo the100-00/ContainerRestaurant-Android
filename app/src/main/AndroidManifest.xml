@@ -4,6 +4,9 @@
     package="container.restaurant.android">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
 
     <application
         android:name=".ContainerRestaurantApp"
@@ -33,5 +36,9 @@
             android:theme="@style/AppThemeGreen" />
 
         <activity android:name=".presentation.user.UserProfileActivity" />
+
+        <meta-data
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="xogjh75o5l" />
     </application>
 </manifest>

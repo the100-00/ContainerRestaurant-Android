@@ -2,6 +2,7 @@ package container.restaurant.android.di
 
 import container.restaurant.android.BuildConfig
 import container.restaurant.android.data.remote.FeedService
+import container.restaurant.android.data.remote.RestaurantService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
@@ -15,11 +16,16 @@ private val BASE_URL = if (BuildConfig.DEBUG) {
     ""
 }
 
-
 val networkModule = module {
     single { createOkHttp() }
     single { createRetrofit(get(), BASE_URL) }
     single { createFeedService(get()) }
+    single { createResService(get()) }
+}
+
+
+fun createResService(retrofit: Retrofit): RestaurantService {
+    return retrofit.create(RestaurantService::class.java)
 }
 
 fun createFeedService(retrofit: Retrofit): FeedService {
