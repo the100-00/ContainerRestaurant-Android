@@ -117,7 +117,7 @@ internal class MapsFragment : Fragment(), OnMapReadyCallback {
             }
         }
 
-        locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
+      //  locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
 
     }
 
@@ -218,7 +218,8 @@ internal class MapsFragment : Fragment(), OnMapReadyCallback {
         this.naverMap = naverMap
         naverMap.uiSettings.isLocationButtonEnabled = true
         naverMap.uiSettings.isCompassEnabled = false
-        naverMap.locationSource = locationSource
+        if(::locationSource.isInitialized)
+            naverMap.locationSource = locationSource
         naverMap.locationTrackingMode = LocationTrackingMode.Follow
 
         //카메라 움직일때
@@ -231,14 +232,10 @@ internal class MapsFragment : Fragment(), OnMapReadyCallback {
     private fun checkPermissions() {
         if (ActivityCompat.checkSelfPermission(
                 requireContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
+                Manifest.permission.ACCESS_FINE_LOCATION
             ) != PermissionChecker.PERMISSION_GRANTED
         )
-            ActivityCompat.requestPermissions(
-                requireActivity(),
-                arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
-                LOCATION_PERMISSION_REQUEST_CODE
-            )
+            locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
         else
             locationUtils.initLocation(requireActivity())
     }
@@ -248,17 +245,10 @@ internal class MapsFragment : Fragment(), OnMapReadyCallback {
         permissions: Array<String>,
         grantResults: IntArray
     ) {
-        if (locationSource.onRequestPermissionsResult(
-                requestCode, permissions,
-                grantResults
-            )
-        ) {
+        if (locationSource.onRequestPermissionsResult(requestCode, permissions,
+                grantResults)) {
             if (!locationSource.isActivated) { // 권한 거부됨
                 naverMap.locationTrackingMode = LocationTrackingMode.None
-                /*val cameraPosition = CameraPosition(
-                     LatLng(37.5666102, 126.9783881), // 대상 지점
-                     17.0)
-                 naverMap.cameraPosition = cameraPosition*/
             } else {
                 locationUtils.initLocation(requireActivity())
                 naverMap.locationSource = locationSource
@@ -266,9 +256,9 @@ internal class MapsFragment : Fragment(), OnMapReadyCallback {
             }
             return
         }
+
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
-
 
     companion object {
         fun newInstance(): MapsFragment = MapsFragment()
