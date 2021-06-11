@@ -3,17 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-    </data>
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:paddingBottom="120dp">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -22,6 +20,19 @@
                 android:theme="@style/BaseTheme"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/iv_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_chevron_left_outline" />
+
+                <TextView
+                    style="@style/TextAppearance.App.B.Gray07"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="용기낸 피드쓰기"
+                    android:textSize="16sp" />
 
             </androidx.appcompat.widget.Toolbar>
 
@@ -38,31 +49,23 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
-            <com.google.android.material.textfield.TextInputLayout
+            <TextView
                 android:id="@+id/et_search_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="46dp"
-                android:hint="@string/search_restaurant_name_hint"
-                android:textColorHint="@color/gray_05"
-                app:boxBackgroundColor="@color/white"
-                app:boxStrokeColor="@android:color/transparent"
-                app:endIconDrawable="@drawable/ic_icon_close"
-                app:endIconMode="clear_text"
-                app:layout_constraintTop_toBottomOf="@id/tv_container_name">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    style="@style/TextAppearance.App.B.Gray07"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </com.google.android.material.textfield.TextInputLayout>
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="식당명 또는 지역 + 식당명 입력"
+                app:layout_constraintTop_toBottomOf="@id/tv_container_name" />
 
             <ImageView
+                android:id="@+id/iv_search_restaurant_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="20dp"
                 android:src="@drawable/ic_search_outline"
                 app:layout_constraintBottom_toBottomOf="@id/et_search_container"
                 app:layout_constraintStart_toEndOf="@id/et_search_container"
@@ -91,6 +94,7 @@
                 app:layout_constraintTop_toBottomOf="@id/et_search_container" />
 
             <worker8.com.github.radiogroupplus.RadioGroupPlus
+
                 android:id="@+id/radio_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -98,95 +102,125 @@
                 android:layout_marginTop="12dp"
                 android:layout_marginRight="16dp"
                 android:orientation="vertical"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_category">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <RadioButton
-                        android:layout_width="wrap_content"
+                        android:id="@+id/rb_korea_food"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="6dp"
+                        android:autoSizeMaxTextSize="15dp"
+                        android:autoSizeMinTextSize="10dp"
+                        android:autoSizeTextType="uniform"
                         android:background="@drawable/category_bg_selector"
                         android:button="@android:color/transparent"
                         android:gravity="center"
-                        android:paddingLeft="16dp"
-                        android:paddingTop="7dp"
-                        android:paddingRight="16dp"
-                        android:paddingBottom="7dp"
                         android:text="@string/korean_food"
                         android:textColor="@drawable/category_text_selector"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias=".0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias=".0"
+                        app:layout_constraintWidth_percent=".15" />
 
                     <RadioButton
-                        android:layout_width="wrap_content"
+                        android:id="@+id/rb_midnight_meal"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="6dp"
+                        android:autoSizeMaxTextSize="15dp"
+                        android:autoSizeMinTextSize="10dp"
+                        android:autoSizeTextType="uniform"
                         android:background="@drawable/category_bg_selector"
                         android:button="@android:color/transparent"
                         android:gravity="center"
-                        android:paddingLeft="16dp"
-                        android:paddingTop="7dp"
-                        android:paddingRight="16dp"
-                        android:paddingBottom="7dp"
                         android:text="@string/midnight_snack"
                         android:textColor="@drawable/category_text_selector"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/rb_china_food"
+                        app:layout_constraintStart_toEndOf="@id/rb_korea_food"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias=".0"
+                        app:layout_constraintWidth_percent=".15" />
 
                     <RadioButton
-                        android:layout_width="wrap_content"
+                        android:id="@+id/rb_china_food"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="6dp"
+                        android:autoSizeMaxTextSize="15dp"
+                        android:autoSizeMinTextSize="10dp"
+                        android:autoSizeTextType="uniform"
                         android:background="@drawable/category_bg_selector"
                         android:button="@android:color/transparent"
                         android:gravity="center"
-                        android:paddingLeft="16dp"
-                        android:paddingTop="7dp"
-                        android:paddingRight="16dp"
-                        android:paddingBottom="7dp"
                         android:text="@string/chinese_food"
                         android:textColor="@drawable/category_text_selector"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/rb_fast_food"
+                        app:layout_constraintStart_toEndOf="@id/rb_korea_food"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias=".0"
+                        app:layout_constraintWidth_percent=".15" />
 
                     <RadioButton
-                        android:layout_width="wrap_content"
+                        android:id="@+id/rb_school_food"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="6dp"
+                        android:autoSizeMaxTextSize="15dp"
+                        android:autoSizeMinTextSize="10dp"
+                        android:autoSizeTextType="uniform"
                         android:background="@drawable/category_bg_selector"
                         android:button="@android:color/transparent"
                         android:gravity="center"
-                        android:paddingLeft="16dp"
-                        android:paddingTop="7dp"
-                        android:paddingRight="16dp"
-                        android:paddingBottom="7dp"
                         android:text="@string/snack"
                         android:textColor="@drawable/category_text_selector"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/rb_fast_food"
+                        app:layout_constraintStart_toEndOf="@id/rb_china_food"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias=".0"
+                        app:layout_constraintWidth_percent=".15" />
 
                     <RadioButton
-                        android:layout_width="wrap_content"
+                        android:id="@+id/rb_fast_food"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:autoSizeMaxTextSize="15dp"
+                        android:autoSizeMinTextSize="10dp"
+                        android:autoSizeTextType="uniform"
                         android:background="@drawable/category_bg_selector"
                         android:button="@android:color/transparent"
                         android:gravity="center"
-                        android:paddingLeft="16dp"
-                        android:paddingTop="7dp"
-                        android:paddingRight="16dp"
-                        android:paddingBottom="7dp"
                         android:text="@string/fast_food"
                         android:textColor="@drawable/category_text_selector"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias=".0"
+                        app:layout_constraintWidth_percent=".3" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
 
                     <RadioButton
+                        android:id="@+id/rb_asian_food"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="6dp"
@@ -202,6 +236,7 @@
                         android:textStyle="bold" />
 
                     <RadioButton
+                        android:id="@+id/rb_desert"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="6dp"
@@ -217,6 +252,7 @@
                         android:textStyle="bold" />
 
                     <RadioButton
+                        android:id="@+id/rb_japan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/category_bg_selector"
@@ -232,6 +268,7 @@
                 </LinearLayout>
 
                 <RadioButton
+                    android:id="@+id/rb_chiken"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/category_bg_selector"
@@ -288,106 +325,49 @@
                 app:layout_constraintStart_toEndOf="@id/ic_main_menu"
                 app:layout_constraintTop_toTopOf="@id/ic_main_menu" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:id="@+id/cl_main_menu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginRight="16dp"
-                android:background="@drawable/shadow_box"
-                android:padding="15dp"
+                android:orientation="vertical"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_main_menu">
 
-                <TextView
-                    android:id="@+id/tv_main_food"
-                    style="@style/TextAppearance.App.B.Gray07"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="23.5dp"
-                    android:layout_marginTop="20dp"
-                    android:text="@string/food"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <EditText
-                    android:id="@+id/et_main_menu"
-                    android:layout_width="229dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="17dp"
-                    android:layout_marginRight="30.5dp"
-                    android:backgroundTint="@android:color/transparent"
-                    android:hint="@string/write_main_menu_hint"
-                    android:textCursorDrawable="@color/green_02"
-                    app:layout_constraintBottom_toBottomOf="@id/tv_main_food"
-                    app:layout_constraintStart_toEndOf="@id/tv_main_food"
-                    app:layout_constraintTop_toTopOf="@id/tv_main_food" />
-
-                <ImageView
-                    android:id="@+id/line_gray_main"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_main_food"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="19dp"
-                    android:layout_marginTop="9dp"
-                    android:layout_marginRight="15dp"
-                    android:src="@color/gray_03"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/et_main_menu" />
-
-                <TextView
-                    android:id="@+id/tv_main_container"
-                    style="@style/TextAppearance.App.B.Gray07"
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="23.5dp"
-                    android:layout_marginTop="15.5dp"
-                    android:text="@string/container"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/line_gray_main" />
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="3" />
 
-                <EditText
-                    android:layout_width="229dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="17dp"
-                    android:backgroundTint="@android:color/transparent"
-                    android:hint="@string/write_main_menu_container_hint"
-                    android:textCursorDrawable="@color/green_02"
-                    app:layout_constraintBottom_toBottomOf="@id/tv_main_container"
-                    app:layout_constraintStart_toEndOf="@id/tv_main_container"
-                    app:layout_constraintTop_toTopOf="@id/tv_main_container" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:layout_marginLeft="105dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="120dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_add_main_menu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cl_main_menu">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="8dp"
+                        android:src="@drawable/ic_add_outline" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="8dp"
-                    android:src="@drawable/ic_add_outline"
-                    app:layout_constraintBottom_toBottomOf="@id/tv_add_main_menu"
-                    app:layout_constraintEnd_toStartOf="@+id/tv_add_main_menu"
-                    app:layout_constraintTop_toTopOf="@id/tv_add_main_menu" />
+                    <TextView
+                        android:id="@+id/tv_add_main_menu"
+                        style="@style/TextAppearance.App.B.Gray07"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/add_menu"
+                        android:textSize="14sp" />
 
-                <TextView
-                    android:id="@+id/tv_add_main_menu"
-                    style="@style/TextAppearance.App.B.Gray07"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/add_menu"
-                    android:textSize="14sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+            </LinearLayout>
 
 
             <ImageView
@@ -398,7 +378,7 @@
                 android:layout_marginTop="32dp"
                 android:src="@drawable/ic_side_menu_outline"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cl_add_main_menu" />
+                app:layout_constraintTop_toBottomOf="@id/cl_main_menu" />
 
             <TextView
                 android:id="@+id/tv_side_menu"
@@ -423,105 +403,49 @@
                 app:layout_constraintStart_toEndOf="@id/tv_side_menu"
                 app:layout_constraintTop_toTopOf="@+id/tv_side_menu" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:id="@+id/cl_side_menu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginRight="16dp"
-                android:background="@drawable/shadow_box"
-                android:padding="15dp"
+                android:orientation="vertical"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_side_menu">
 
-                <TextView
-                    android:id="@+id/tv_side_count"
-                    style="@style/TextAppearance.App.B.Gray07"
-                    android:layout_width="wrap_content"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_side_dish"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="24.5dp"
-                    android:layout_marginTop="20dp"
-                    android:text="@string/count"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="3" />
 
-                <EditText
-                    android:id="@+id/et_side_menu"
-                    android:layout_width="229dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="17dp"
-                    android:backgroundTint="@android:color/transparent"
-                    android:hint="@string/write_side_menu_count_hint"
-                    android:textCursorDrawable="@color/green_02"
-                    app:layout_constraintBottom_toBottomOf="@id/tv_side_count"
-                    app:layout_constraintStart_toEndOf="@id/tv_side_count"
-                    app:layout_constraintTop_toTopOf="@id/tv_side_count" />
-
-                <ImageView
-                    android:id="@+id/line_gray_side"
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="19dp"
-                    android:layout_marginTop="9dp"
-                    android:layout_marginRight="15dp"
-                    android:src="@color/gray_03"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/et_side_menu" />
-
-                <TextView
-                    android:id="@+id/tv_side_container"
-                    style="@style/TextAppearance.App.B.Gray07"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="23.5dp"
-                    android:layout_marginTop="15.5dp"
-                    android:text="@string/container"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/line_gray_side" />
-
-                <EditText
-                    android:layout_width="229dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="17dp"
-                    android:backgroundTint="@android:color/transparent"
-                    android:hint="@string/write_side_menu_container_hint"
-                    android:textCursorDrawable="@color/green_02"
-                    app:layout_constraintBottom_toBottomOf="@id/tv_side_container"
-                    app:layout_constraintStart_toEndOf="@id/tv_side_container"
-                    app:layout_constraintTop_toTopOf="@id/tv_side_container" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_add_side_menu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cl_side_menu">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="8dp"
-                    android:src="@drawable/ic_add_outline"
-                    app:layout_constraintBottom_toBottomOf="@id/tv_add_side_menu"
-                    app:layout_constraintEnd_toStartOf="@+id/tv_add_side_menu"
-                    app:layout_constraintTop_toTopOf="@id/tv_add_side_menu" />
-
-                <TextView
-                    android:id="@+id/tv_add_side_menu"
-                    style="@style/TextAppearance.App.B.Gray07"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="105dp"
                     android:layout_marginTop="16dp"
-                    android:text="@string/add_menu"
-                    android:textSize="14sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:layout_marginRight="120dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="8dp"
+                        android:src="@drawable/ic_add_outline" />
+
+                    <TextView
+                        android:id="@+id/tv_add_side_menu"
+                        style="@style/TextAppearance.App.B.Gray07"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/add_menu"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+            </LinearLayout>
 
 
             <ImageView
@@ -531,7 +455,7 @@
                 android:layout_marginTop="37dp"
                 android:src="@drawable/line_gray03"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cl_add_side_menu" />
+                app:layout_constraintTop_toBottomOf="@id/cl_side_menu" />
 
             <TextView
                 android:id="@+id/tv_level"
@@ -545,16 +469,36 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/line_gray_2" />
 
+            <TextView
+                android:id="@+id/tv_difficulty_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:background="@drawable/bg_gray02_r12"
+                android:paddingLeft="8dp"
+                android:paddingTop="5dp"
+                android:paddingRight="8dp"
+                android:paddingBottom="5dp"
+                android:textColor="@color/gray_07"
+                android:textSize="10sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/tv_level"
+                app:layout_constraintStart_toEndOf="@id/tv_level"
+                app:layout_constraintTop_toTopOf="@id/tv_level" />
+
             <androidx.appcompat.widget.AppCompatSeekBar
-                android:id="@+id/slider_level"
+                android:id="@+id/sb_difficulty"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="27dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:backgroundTint="@color/gray_03"
                 android:max="5"
+                android:paddingStart="30dp"
+                android:paddingEnd="30dp"
                 android:progressTint="@color/green_04"
                 android:thumb="@drawable/ic_hard_handle"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_level" />
 
@@ -569,14 +513,15 @@
                 android:clickable="true"
                 android:focusable="true"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/slider_level">
+                app:layout_constraintTop_toBottomOf="@+id/sb_difficulty">
 
                 <ImageView
                     android:id="@+id/iv_badge_unfilled"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10.6dp"
-                    android:layout_marginRight="7dp"
+                    android:layout_marginTop="9dp"
+                    android:layout_marginBottom="11dp"
                     android:src="@drawable/like_badge_selector"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -587,6 +532,7 @@
                     style="@style/TextAppearance.App.R.Gray07"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
                     android:text="@string/owner_likes_multi_disposable"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="@id/iv_badge_unfilled"
@@ -620,7 +566,7 @@
                 style="@style/TextAppearance.App.B.Gray07"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="34dp"
                 android:text="@string/write_courageous_experience"
                 android:textSize="16sp"
@@ -631,7 +577,7 @@
                 style="@style/TextAppearance.App.R.Gray06"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
                 android:text="@string/optional_input"
                 android:textSize="10sp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_content"
@@ -649,6 +595,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_content">
 
                 <LinearLayout
+                    android:id="@+id/ll_get_picture"
                     android:layout_width="72dp"
                     android:layout_height="72dp"
                     android:background="@drawable/border_gray04"
@@ -661,6 +608,7 @@
                         android:src="@drawable/ic_photo_outline" />
 
                     <TextView
+                        android:id="@+id/tv_image_count"
                         style="@style/TextAppearance.App.R.Gray05"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -668,11 +616,25 @@
                         android:textSize="10sp" />
                 </LinearLayout>
 
-                <LinearLayout
+                <FrameLayout
                     android:layout_width="72dp"
                     android:layout_height="72dp">
 
-                </LinearLayout>
+                    <ImageView
+                        android:id="@+id/iv_upload_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <ImageView
+                        android:id="@+id/iv_delete_image"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="4.5dp"
+                        android:layout_marginEnd="4.5dp"
+                        android:src="@drawable/ic_close_filled_16_px"
+                        android:visibility="gone" />
+                </FrameLayout>
             </LinearLayout>
 
             <ImageView
@@ -690,9 +652,9 @@
                 android:id="@+id/et_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginRight="40dp"
+                android:layout_marginEnd="40dp"
                 android:background="@null"
                 android:hint="@string/write_content_hint"
                 android:textCursorDrawable="@color/green_02"
@@ -705,7 +667,7 @@
                 style="@style/TextAppearance.App.R.Gray05"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
                 android:text="@string/write_content_caption"
                 android:textSize="10sp"
@@ -713,13 +675,13 @@
                 app:layout_constraintTop_toBottomOf="@id/et_content" />
 
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_feed_update"
                 style="@style/TextAppearance.App.B.Gray01"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="84dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginBottom="120dp"
                 android:background="@drawable/btn_write_r10"
                 android:text="@string/upload"
                 android:textColor="@color/gray_01"

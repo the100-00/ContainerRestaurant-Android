@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav"
+    app:startDestination="@id/myHomeFragment">
+
+    <fragment
+        android:id="@+id/myHomeFragment"
+        android:name="container.restaurant.android.presentation.my.MyHomeFragment"
+        android:label="fragment_my_home"
+        tools:layout="@layout/fragment_my_home" >
+        <action
+            android:id="@+id/action_myHomeFragment_to_changeNameFragment"
+            app:destination="@id/changeNameFragment" />
+        <action
+            android:id="@+id/action_myHomeFragment_to_myFeedFragment"
+            app:destination="@id/myFeedFragment" />
+        <action
+            android:id="@+id/action_myHomeFragment_to_myScrapFragment"
+            app:destination="@id/myScrapFragment" />
+        <action
+            android:id="@+id/action_myHomeFragment_to_favoriteFragment"
+            app:destination="@id/favoriteFragment" />
+        <action
+            android:id="@+id/action_myHomeFragment_to_mySettingFragment"
+            app:destination="@id/mySettingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/changeNameFragment"
+        android:name="container.restaurant.android.presentation.my.ChangeNameFragment"
+        android:label="fragment_change_name"
+        tools:layout="@layout/fragment_change_name">
+        <argument
+            android:name="userId"
+            app:argType="integer" />
+        <argument
+            android:name="nickName"
+            app:argType="string" />
+        <argument
+            android:name="profile"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/myFeedFragment"
+        android:name="container.restaurant.android.presentation.my.MyFeedFragment"
+        android:label="my_feed_fragment"
+        tools:layout="@layout/fragment_my_feed" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/myScrapFragment"
+        android:name="container.restaurant.android.presentation.my.MyScrapFragment"
+        android:label="fragment_my_scrap"
+        tools:layout="@layout/fragment_my_scrap" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="container.restaurant.android.presentation.my.FavoriteFragment"
+        android:label="FavoriteFragment" />
+    <fragment
+        android:id="@+id/mySettingFragment"
+        android:name="container.restaurant.android.presentation.my.MySettingFragment"
+        android:label="fragment_my_setting"
+        tools:layout="@layout/fragment_my_setting" />
+</navigation>
