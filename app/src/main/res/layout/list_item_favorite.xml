@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="favorite"
+            type="container.restaurant.android.data.response.MyFavoriteResponse.Embedded.RestaurantFavoriteDto" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="5dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/h_guide_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.333" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/h_guide_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.666" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/v_guide_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.25" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/v_guide_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.28" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_gray02_r12"
+                app:layout_constraintEnd_toEndOf="@id/v_guide_1"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                app:image_from_url="@{favorite.restaurant.imagePath}"
+                app:layout_constraintEnd_toEndOf="@id/v_guide_1"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                style="@style/TextAppearance.App.B.Gray07"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:gravity="center|start"
+                android:includeFontPadding="false"
+                android:text="@{favorite.restaurant.name}"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/h_guide_1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/v_guide_2"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="올더플레이트" />
+
+            <ImageView
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/favorite_filled_20_px"/>
+
+            <TextView
+                android:id="@+id/btn_main_menu"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="4dp"
+                android:text="#후라이드 통닭"
+                app:layout_constraintBottom_toBottomOf="@id/h_guide_2"
+                app:layout_constraintEnd_toStartOf="@id/btn_sub_menu"
+                app:layout_constraintStart_toStartOf="@id/v_guide_2"
+                app:layout_constraintTop_toTopOf="@id/h_guide_1" />
+
+            <TextView
+                android:id="@+id/btn_sub_menu"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="4dp"
+                android:text="#양념통닭"
+                app:layout_constraintBottom_toBottomOf="@id/h_guide_2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btn_main_menu"
+                app:layout_constraintTop_toTopOf="@id/h_guide_1" />
+
+            <TextView
+                android:id="@+id/tv_difficulty_avg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:includeFontPadding="false"
+                android:text="@{String.valueOf(favorite.restaurant.difficultyAvg)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/v_guide_2"
+                app:layout_constraintTop_toTopOf="@id/h_guide_2"
+                tools:text="2.1" />
+
+            <TextView
+                android:id="@+id/tv_favorite_feed_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:drawableStart="@drawable/ic_icon_feed_filled_20_px"
+                android:drawableTint="@color/green_03"
+                android:includeFontPadding="false"
+                app:favorite_feed_count="@{favorite.restaurant.feedCount}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_difficulty_avg"
+                app:layout_constraintTop_toTopOf="@id/h_guide_2"
+                tools:text="+3회" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>
+
