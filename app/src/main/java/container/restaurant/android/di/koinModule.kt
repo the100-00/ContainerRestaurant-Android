@@ -9,8 +9,6 @@ import container.restaurant.android.presentation.feed.FeedViewModel
 import container.restaurant.android.presentation.feed.all.FeedAllViewModel
 import container.restaurant.android.presentation.feed.category.FeedCategoryViewModel
 import container.restaurant.android.presentation.home.HomeViewModel
-import container.restaurant.android.presentation.my.MyViewModel
-import container.restaurant.android.presentation.my.SettingsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -23,6 +21,4 @@ val presentationModule = module {
     viewModel { FeedViewModel() }
     viewModel { FeedCategoryViewModel(get(), it[0]) }
     viewModel { FeedAllViewModel() }
-    viewModel { MyViewModel() }
-    viewModel { SettingsViewModel() }
 }

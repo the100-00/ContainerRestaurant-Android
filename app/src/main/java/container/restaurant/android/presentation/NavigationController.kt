@@ -7,7 +7,6 @@ import container.restaurant.android.presentation.feed.FeedFragment
 import container.restaurant.android.presentation.home.HomeFragment
 import container.restaurant.android.presentation.map.MapFragment
 import container.restaurant.android.presentation.my.MyFragment
-import container.restaurant.android.presentation.my.SettingsFragment
 
 class NavigationController(private val activity: AppCompatActivity) {
 
@@ -30,17 +29,9 @@ class NavigationController(private val activity: AppCompatActivity) {
         replaceFragment(MyFragment.newInstance())
     }
 
-    fun navigateToSettings() {
-        replaceFragment(SettingsFragment.newInstance(), true)
-    }
-
-    private fun replaceFragment(fragment: Fragment, backStack: Boolean = false) {
+    private fun replaceFragment(fragment: Fragment) {
         val transaction = fragmentManager
-            .beginTransaction().apply {
-                if (backStack) {
-                    addToBackStack(null)
-                }
-            }
+            .beginTransaction()
             .replace(containerId, fragment, "")
 
         if (fragmentManager.isStateSaved) {
