@@ -3,6 +3,7 @@ package container.restaurant.android.di
 import com.skydoves.sandwich.coroutines.CoroutinesResponseCallAdapterFactory
 import container.restaurant.android.BuildConfig
 import container.restaurant.android.data.remote.FeedService
+import container.restaurant.android.data.remote.RestaurantService
 import container.restaurant.android.data.remote.NewApiService
 import container.restaurant.android.util.HeaderInterceptor
 import okhttp3.OkHttpClient
@@ -25,10 +26,15 @@ val networkModule = module {
     single { createRetrofit(get(), BASE_URL) }
     single { createFeedService(get()) }
     single { newApiCreate() }
+    single { createResService(get()) }
 }
 
 fun createFeedService(retrofit: Retrofit): FeedService {
     return retrofit.create(FeedService::class.java)
+}
+
+fun createResService(retrofit: Retrofit): RestaurantService {
+    return retrofit.create(RestaurantService::class.java)
 }
 
 fun createOkHttp(): OkHttpClient {

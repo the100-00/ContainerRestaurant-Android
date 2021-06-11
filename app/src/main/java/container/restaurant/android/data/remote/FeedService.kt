@@ -2,6 +2,7 @@ package container.restaurant.android.data.remote
 
 import container.restaurant.android.data.model.FeedResponse
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface FeedService {
@@ -12,5 +13,10 @@ interface FeedService {
         @Query("sort") sort: String? = null,
         @Query("page") page: Int,
         @Query("size") perPage: Int
+    ): FeedResponse
+
+    @GET("api/feed/restaurant/{restaurantId}")
+    suspend fun fetchResFeed(
+        @Path("restaurantId") resId : Long
     ): FeedResponse
 }

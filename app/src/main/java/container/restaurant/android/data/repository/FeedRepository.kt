@@ -9,6 +9,7 @@ import container.restaurant.android.presentation.feed.item.FeedSort
 
 interface FeedRepository {
     suspend fun fetchFeedsWithCategory(category: String, feedSort: FeedSort, page: Int): ResultState<FeedResponse>
+    suspend fun fetchResFeed(resId: Long): ResultState<FeedResponse>
 }
 
 private const val perPage = 20
@@ -26,5 +27,9 @@ internal class FeedDataRepository(
         }
 
         return safeApiCall { feedService.fetchFeeds(feedCategory, feedSort.sort, page, perPage) }
+    }
+
+    override suspend fun fetchResFeed(resId: Long): ResultState<FeedResponse> {
+        return safeApiCall { feedService.fetchResFeed(resId) }
     }
 }

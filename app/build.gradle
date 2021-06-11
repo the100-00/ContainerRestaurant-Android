@@ -69,6 +69,11 @@ dependencies {
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
     implementation "org.koin:koin-android-architecture:$koin_architecture_version"
 
+    //naver
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.naver.maps:map-sdk:3.11.0'
+
     // network
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
     implementation "com.squareup.okhttp3:okhttp:4.9.1"

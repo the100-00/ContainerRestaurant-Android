@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="3dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="3dp"
+        android:text="| "
+        android:textColor="#cecece"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/res_rank"
+        app:layout_constraintTop_toBottomOf="@+id/res_tag" />
+
+    <TextView
+        android:id="@+id/res_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="28dp"
+        android:text="@{item.name}"
+        android:textColor="#242424"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="용기낸 식당"/>
+
+        <TextView
+            android:id="@+id/res_tag"
+            android:layout_width="335dp"
+            android:layout_height="21dp"
+            android:text="@{item.address}"
+            android:textColor="#cecece"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.21"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/res_title"
+            tools:text="#용기낸 식당" />
+
+        <TextView
+        android:id="@+id/res_rank"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:text="@{String.valueOf(item.difficultyAvg)}"
+        android:textColor="#242424"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/imageView7"
+        app:layout_constraintTop_toBottomOf="@+id/res_tag"
+        tools:text="2.1"/>
+
+    <TextView
+        android:id="@+id/res_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:text="@{String.valueOf(item.feedCount)}"
+        android:textColor="#242424"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/imageView4"
+        app:layout_constraintTop_toBottomOf="@+id/res_tag"
+        tools:text="+3회"/>
+
+    <ImageButton
+        android:id="@+id/btn_star"
+        android:background="@drawable/selector_star"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="326dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.96"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+         />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="6dp"
+        app:layout_constraintStart_toEndOf="@+id/textView4"
+        app:layout_constraintTop_toBottomOf="@+id/res_tag"
+        app:srcCompat="@drawable/ic_feed_outline" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/res_tag"
+        app:srcCompat="@drawable/ic_hard_filled_black" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintStart_toEndOf="@+id/imageView5"
+        app:layout_constraintTop_toBottomOf="@+id/res_tag"
+        app:srcCompat="@drawable/ic_hard_filled_black" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/res_tag"
+        app:srcCompat="@drawable/ic_hard_filled_black" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/res_tag"
+        app:srcCompat="@drawable/ic_hard_filled_black" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintStart_toEndOf="@+id/imageView6"
+        app:layout_constraintTop_toBottomOf="@+id/res_tag"
+        app:srcCompat="@drawable/ic_hard_filled_black" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="380dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="16dp"
+            android:background="#ececec"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.397"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/res_count" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="18dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="16dp"
+            android:text="해당 식당의 다른 피드도 살펴봐요!"
+            android:textColor="#242424"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.01"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="18dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="1dp"
+            android:text="@{`총 ` + item.feedCount + `개의 용기낸 피드가 있어요.`}"
+            android:textColor="#aeaeae"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.013"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <data>
+        <variable
+            name="item"
+            type="container.restaurant.android.data.model.RestaurantNearInfoDto" />
+    </data>
+</layout>
