@@ -263,8 +263,8 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun gotoMain() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
+//        val intent = Intent(this, MainActivity::class.java)
+//        startActivity(intent)
         finish()
     }
 
