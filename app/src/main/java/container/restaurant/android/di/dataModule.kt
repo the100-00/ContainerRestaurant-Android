@@ -11,10 +11,9 @@ import container.restaurant.android.data.AuthRepository
 import container.restaurant.android.data.PrefStorage
 import container.restaurant.android.data.SharedPrefStorage
 import container.restaurant.android.data.db.AppDatabase
+import container.restaurant.android.data.repository.*
 import container.restaurant.android.data.repository.FeedDataRepository
-import container.restaurant.android.data.repository.FeedRepository
-import container.restaurant.android.data.repository.FeedWriteRepository
-import container.restaurant.android.data.repository.MyRepository
+import container.restaurant.android.data.repository.ResDataRepository
 import container.restaurant.android.worker.MainFoodDatabaseWorker
 import container.restaurant.android.worker.SideDishDatabaseWorker
 import org.koin.android.ext.koin.androidContext
@@ -27,6 +26,7 @@ val dataModule = module {
     single<FeedRepository> { FeedDataRepository(get()) }
     single<FeedWriteRepository> { FeedWriteRepository(get(), get()) }
     single<MyRepository> { MyRepository(get())  }
+    single<RestaurantRepository> { ResDataRepository(get()) }
 }
 
 val roomDBModule = module {
