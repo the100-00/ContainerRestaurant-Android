@@ -75,5 +75,12 @@
     <string name="my_feed">내 피드</string>
     <string name="scrap_feed">스크랩 피드</string>
     <string name="favorite_restaurant">찜한 식당</string>
+    <string name="settings">설정</string>
+    <string name="alarm_settings">알림 수신 설정</string>
+    <string name="personal_info_policy">개인정보 취급방침</string>
+    <string name="service_agreement">서비스 이용약관</string>
+    <string name="logout">로그아웃</string>
+    <string name="user_drop">계정 탈퇴</string>
+    <string name="app_version">앱 버전</string>
 
 </resources>
