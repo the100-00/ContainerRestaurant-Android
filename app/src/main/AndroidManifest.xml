@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="container.restaurant.android">
 
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -33,5 +34,8 @@
             android:theme="@style/AppThemeGreen" />
 
         <activity android:name=".presentation.user.UserProfileActivity" />
+        <meta-data
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="xogjh75o5l" />
     </application>
 </manifest>

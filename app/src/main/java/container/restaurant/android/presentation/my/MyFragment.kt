@@ -11,12 +11,15 @@ internal class MyFragment : Fragment() {
 
     private lateinit var binding: FragmentMyBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentMyBinding.inflate(layoutInflater, container, false)
+        context ?: return binding.root
+
         return binding.root
     }
 
     companion object {
         fun newInstance(): MyFragment = MyFragment()
     }
+
 }
