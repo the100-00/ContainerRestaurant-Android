@@ -15,24 +15,18 @@
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="50dp"
+                android:layout_marginEnd="16dp"
                 android:theme="@style/BaseTheme"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/iv_back"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_chevron_left_outline" />
-
-                <TextView
-                    style="@style/TextAppearance.App.B.Gray07"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="용기낸 피드쓰기"
-                    android:textSize="16sp" />
+                    android:src="@drawable/ic_close_outline_20_px" />
 
             </androidx.appcompat.widget.Toolbar>
 
@@ -224,6 +218,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="6dp"
+                        android:autoSizeMaxTextSize="15dp"
+                        android:autoSizeMinTextSize="10dp"
+                        android:autoSizeTextType="uniform"
                         android:background="@drawable/category_bg_selector"
                         android:button="@android:color/transparent"
                         android:gravity="center"
@@ -240,6 +237,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="6dp"
+                        android:autoSizeMaxTextSize="15dp"
+                        android:autoSizeMinTextSize="10dp"
+                        android:autoSizeTextType="uniform"
                         android:background="@drawable/category_bg_selector"
                         android:button="@android:color/transparent"
                         android:gravity="center"
@@ -255,6 +255,9 @@
                         android:id="@+id/rb_japan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:autoSizeMaxTextSize="15dp"
+                        android:autoSizeMinTextSize="10dp"
+                        android:autoSizeTextType="uniform"
                         android:background="@drawable/category_bg_selector"
                         android:button="@android:color/transparent"
                         android:gravity="center"
@@ -271,6 +274,9 @@
                     android:id="@+id/rb_chiken"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:autoSizeMaxTextSize="15dp"
+                    android:autoSizeMinTextSize="10dp"
+                    android:autoSizeTextType="uniform"
                     android:background="@drawable/category_bg_selector"
                     android:button="@android:color/transparent"
                     android:gravity="center"
@@ -486,28 +492,28 @@
                 app:layout_constraintStart_toEndOf="@id/tv_level"
                 app:layout_constraintTop_toTopOf="@id/tv_level" />
 
-            <androidx.appcompat.widget.AppCompatSeekBar
+            <com.hedgehog.ratingbar.RatingBar
                 android:id="@+id/sb_difficulty"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="7.5dp"
                 android:layout_marginEnd="20dp"
-                android:backgroundTint="@color/gray_03"
-                android:max="5"
-                android:paddingStart="30dp"
-                android:paddingEnd="30dp"
-                android:progressTint="@color/green_04"
-                android:thumb="@drawable/ic_hard_handle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_level" />
+                app:layout_constraintTop_toBottomOf="@id/tv_level"
+                app:starCount="5"
+                app:starEmpty="@drawable/ic_hard_disabled_32_px"
+                app:starFill="@drawable/ic_hard_filled_32px"
+                app:starImageHeight="32dp"
+                app:starImageWidth="32dp" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_is_like"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="23.5dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginRight="16dp"
                 android:background="@drawable/shadow_box"
                 android:clickable="true"
@@ -623,7 +629,8 @@
                     <ImageView
                         android:id="@+id/iv_upload_image"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop" />
 
                     <ImageView
                         android:id="@+id/iv_delete_image"
