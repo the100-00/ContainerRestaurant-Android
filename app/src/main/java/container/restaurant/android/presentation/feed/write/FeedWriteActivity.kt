@@ -1,12 +1,15 @@
 package container.restaurant.android.presentation.feed.write
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.widget.SeekBar
+import android.view.Window
+import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -23,7 +26,6 @@ import container.restaurant.android.data.request.FeedWriteRequest
 import container.restaurant.android.data.response.ImageUploadResponse
 import container.restaurant.android.databinding.ActivityFeedWriteBinding
 import container.restaurant.android.dialog.AlertDialog
-import container.restaurant.android.presentation.MainActivity
 import container.restaurant.android.presentation.feed.write.adapter.MainFoodAdapter
 import container.restaurant.android.presentation.feed.write.adapter.SideDishAdapter
 import container.restaurant.android.util.CommUtils
@@ -89,6 +91,17 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
         setCategory()
         subscribeUi()
         difficultyAction()
+    }
+
+    override fun onBackPressed() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_cancle_write)
+        dialog.show()
+        val btnOk = dialog.findViewById<Button>(R.id.btn_ok)
+        btnOk.setOnClickListener { gotoMain() }
+        val btnCancel = dialog.findViewById<Button>(R.id.btn_cancel)
+        btnCancel.setOnClickListener { dialog.dismiss() }
     }
 
     private fun setBindItem() {
@@ -257,7 +270,7 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
             binding.ivDeleteImage -> onDeleteImage()
             binding.clIsLike -> isLikeAction()
             binding.btnFeedUpdate -> observe(viewModel.tempLogin()) {}
-            binding.ivBack -> gotoMain()
+            binding.ivBack -> onBackPressed()
         }
     }
 
