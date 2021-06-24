@@ -623,7 +623,8 @@
                     <ImageView
                         android:id="@+id/iv_upload_image"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop" />
 
                     <ImageView
                         android:id="@+id/iv_delete_image"
