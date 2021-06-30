@@ -9,6 +9,7 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 import container.restaurant.android.R
 import container.restaurant.android.databinding.FragmentKakaoSigninBinding
+import timber.log.Timber
 
 
 internal class KakaoSignInDialogFragment : DialogFragment() {
@@ -19,11 +20,18 @@ internal class KakaoSignInDialogFragment : DialogFragment() {
         UserApiClient.instance
     }
 
-    private val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
-        if (error != null) {
-            // 실패
+    private val callback: (OAuthToken?, Throwable?) -> Unit = { token, err ->
+        if (err != null) {
+            Timber.e(err,"카카오 인증 실패")
         } else if (token != null) {
-            // TODO : navigate to SignInActivity
+            kakaoUserApi.me { userKakao, err2 ->
+                if(err2 != null) {
+                    Timber.e(err2, "카카오 사용자 정보 요청 실패")
+                } else if(userKakao != null){
+                    Timber.d("카카오 인증 성공")
+                    startActivity(SignInActivity.getIntent(requireContext()))
+                }
+            }
         }
     }
 
@@ -32,7 +40,7 @@ internal class KakaoSignInDialogFragment : DialogFragment() {
         setStyle(STYLE_NO_TITLE, R.style.DialogTheme)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentKakaoSigninBinding.inflate(inflater, container, false)
         return binding.root
     }

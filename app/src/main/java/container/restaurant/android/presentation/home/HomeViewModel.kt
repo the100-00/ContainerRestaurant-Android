@@ -1,5 +1,6 @@
 package container.restaurant.android.presentation.home
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import container.restaurant.android.presentation.auth.AuthViewModelDelegate
@@ -9,18 +10,19 @@ internal class HomeViewModel(
     private val authViewModelDelegate: AuthViewModelDelegate
 ) : ViewModel(), AuthViewModelDelegate by authViewModelDelegate {
 
-    val navToMyContainerFeed = MutableLiveData<Event<Unit>>()
     val navToAllContainerFeed = MutableLiveData<Event<Unit>>()
-    val kakaoLoginDialog = MutableLiveData<Event<Unit>>()
+
+    private val _isNavToAllContainerFeedClicked = MutableLiveData<Event<Boolean>>()
+    val isNavToAllContainerFeedClicked : LiveData<Event<Boolean>> = _isNavToAllContainerFeedClicked
+
+    private val _isNavToMyContainerFeedClicked = MutableLiveData<Event<Boolean>>()
+    val isNavToMyContainerFeedClicked : LiveData<Event<Boolean>> = _isNavToMyContainerFeedClicked
 
     fun onClickMyContainerFeed() {
-        if (!isUserSignIn()) {
-            kakaoLoginDialog.value = Event(Unit)
-            return
-        }
+        _isNavToMyContainerFeedClicked.value = Event(true)
     }
 
     fun onClickAllContainerFeed() {
-        navToAllContainerFeed.value = Event(Unit)
+        _isNavToAllContainerFeedClicked.value = Event(true)
     }
 }
