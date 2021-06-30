@@ -6,8 +6,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import container.restaurant.android.DATABASE_NAME
-import container.restaurant.android.data.AuthDataRepository
-import container.restaurant.android.data.AuthRepository
+import container.restaurant.android.data.repository.AuthDataRepository
+import container.restaurant.android.data.repository.AuthRepository
 import container.restaurant.android.data.PrefStorage
 import container.restaurant.android.data.SharedPrefStorage
 import container.restaurant.android.data.db.AppDatabase

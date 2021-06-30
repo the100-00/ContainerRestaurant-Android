@@ -1,7 +1,7 @@
 package container.restaurant.android.presentation.auth
 
 import androidx.lifecycle.ViewModel
-import container.restaurant.android.data.AuthRepository
+import container.restaurant.android.data.repository.AuthRepository
 
 interface AuthViewModelDelegate {
     fun isUserSignIn(): Boolean

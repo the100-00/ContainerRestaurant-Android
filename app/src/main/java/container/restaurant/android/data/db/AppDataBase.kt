@@ -1,6 +1,6 @@
-package container.restaurant.android.data.db;
+package container.restaurant.android.data.db
 
-import androidx.room.Database;
+import androidx.room.Database
 import androidx.room.RoomDatabase
 import container.restaurant.android.DATABASE_VERSION
 
