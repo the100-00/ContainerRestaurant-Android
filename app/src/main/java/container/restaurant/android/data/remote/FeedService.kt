@@ -1,6 +1,6 @@
 package container.restaurant.android.data.remote
 
-import container.restaurant.android.data.model.FeedResponse
+import container.restaurant.android.data.response.FeedResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

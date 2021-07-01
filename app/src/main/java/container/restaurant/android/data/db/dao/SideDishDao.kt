@@ -1,6 +1,7 @@
-package container.restaurant.android.data.db
+package container.restaurant.android.data.db.dao
 
 import androidx.room.*
+import container.restaurant.android.data.db.entity.SideDish
 import kotlinx.coroutines.flow.Flow
 
 @Dao

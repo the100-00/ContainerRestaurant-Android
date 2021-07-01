@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.tak8997.github.domain.ResultState
-import container.restaurant.android.data.model.FeedResponse
+import container.restaurant.android.data.response.FeedResponse
 import container.restaurant.android.data.repository.FeedRepository
 import container.restaurant.android.presentation.feed.item.FeedSort
 import container.restaurant.android.util.SingleLiveEvent

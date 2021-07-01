@@ -1,8 +1,8 @@
 package container.restaurant.android.presentation.feed.write
 
 import androidx.lifecycle.*
-import container.restaurant.android.data.db.MainFood
-import container.restaurant.android.data.db.SideDish
+import container.restaurant.android.data.db.entity.MainFood
+import container.restaurant.android.data.db.entity.SideDish
 import container.restaurant.android.data.repository.FeedWriteRepository
 import container.restaurant.android.data.request.FeedWriteRequest
 import kotlinx.coroutines.flow.MutableStateFlow

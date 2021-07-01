@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import container.restaurant.android.R
-import container.restaurant.android.data.model.RestaurantNearInfoDto
+import container.restaurant.android.data.response.RestaurantNearInfoDto
 import container.restaurant.android.databinding.ItemResListBinding
 
 internal class NearResAdapter : RecyclerView.Adapter<NearResAdapter.NearResViewHolder>() {

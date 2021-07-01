@@ -1,7 +1,7 @@
 package container.restaurant.android.data.remote
 
-import container.restaurant.android.data.model.RestaurantNearInfoDto
-import container.restaurant.android.data.model.RestaurantResponse
+import container.restaurant.android.data.response.RestaurantNearInfoDto
+import container.restaurant.android.data.response.RestaurantResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 

@@ -191,6 +191,6 @@
     <data>
         <variable
             name="item"
-            type="container.restaurant.android.data.model.RestaurantNearInfoDto" />
+            type="container.restaurant.android.data.response.RestaurantNearInfoDto" />
     </data>
 </layout>

@@ -1,7 +1,7 @@
 package container.restaurant.android.data.repository
 
 import com.tak8997.github.domain.ResultState
-import container.restaurant.android.data.model.FeedResponse
+import container.restaurant.android.data.response.FeedResponse
 import container.restaurant.android.data.remote.FeedService
 import container.restaurant.android.data.safeApiCall
 import container.restaurant.android.presentation.feed.category.FeedCategory

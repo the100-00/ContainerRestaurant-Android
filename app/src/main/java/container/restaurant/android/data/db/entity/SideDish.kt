@@ -1,12 +1,12 @@
-package container.restaurant.android.data.db
+package container.restaurant.android.data.db.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "MainFood")
-data class MainFood(
+@Entity(tableName = "SideDish")
+data class SideDish (
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    var foodName: String,
+    var quantity: String,
     var bottle: String
 )

@@ -1,8 +1,8 @@
 package container.restaurant.android.data.repository
 
 import com.tak8997.github.domain.ResultState
-import container.restaurant.android.data.model.RestaurantNearInfoDto
-import container.restaurant.android.data.model.RestaurantResponse
+import container.restaurant.android.data.response.RestaurantNearInfoDto
+import container.restaurant.android.data.response.RestaurantResponse
 import container.restaurant.android.data.remote.RestaurantService
 import container.restaurant.android.data.safeApiCall
 

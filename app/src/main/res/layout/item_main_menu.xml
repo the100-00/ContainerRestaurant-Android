@@ -6,7 +6,7 @@
 
         <variable
             name="food"
-            type="container.restaurant.android.data.db.MainFood" />
+            type="container.restaurant.android.data.db.entity.MainFood" />
     </data>
 
     <LinearLayout
