@@ -1,18 +1,22 @@
 package container.restaurant.android.presentation.feed.write
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.widget.SeekBar
+import android.view.Window
+import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.asLiveData
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.hedgehog.ratingbar.RatingBar
 import com.naver.maps.geometry.Tm128
 import container.restaurant.android.R
 import container.restaurant.android.presentation.base.BaseActivity
@@ -89,6 +93,17 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
         difficultyAction()
     }
 
+    override fun onBackPressed() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_cancle_write)
+        dialog.show()
+        val btnOk = dialog.findViewById<Button>(R.id.btn_ok)
+        btnOk.setOnClickListener { gotoMain() }
+        val btnCancel = dialog.findViewById<Button>(R.id.btn_cancel)
+        btnCancel.setOnClickListener { dialog.dismiss() }
+    }
+
     private fun setBindItem() {
         binding.apply {
             etSearchContainer.setOnClickListener(this@FeedWriteActivity)
@@ -120,7 +135,7 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
             if(feedNullCheck()) {
                 val restaurantCreateDto = restaurantCreateDto
                 val category = categoryStr
-                val difficulty = binding.sbDifficulty.progress
+                val difficulty = binding.sbDifficulty.childCount
                 val welcome = welcome
                 val thumbnailImageId = imageUploadId ?: 9
                 val content = binding.etContent.text.toString()
@@ -218,10 +233,10 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun difficultyAction() {
-        binding.sbDifficulty.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+        binding.sbDifficulty.setOnRatingChangeListener(object : RatingBar.OnRatingChangeListener {
+            override fun onRatingChange(RatingCount: Float) {
                 binding.tvDifficultyInfo.show()
-                when(progress) {
+                when(RatingCount.toInt()) {
                     0 -> binding.tvDifficultyInfo.hide()
                     1 -> binding.tvDifficultyInfo.text = "쉬워요"
                     2 -> binding.tvDifficultyInfo.text = "할 만 해요"
@@ -230,8 +245,6 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
                     5 -> binding.tvDifficultyInfo.text = "많이 어려워요"
                 }
             }
-            override fun onStartTrackingTouch(seekBar: SeekBar?) = Unit
-            override fun onStopTrackingTouch(seekBar: SeekBar?) = Unit
         })
     }
 
@@ -257,7 +270,7 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
             binding.ivDeleteImage -> onDeleteImage()
             binding.clIsLike -> isLikeAction()
             binding.btnFeedUpdate -> observe(viewModel.tempLogin()) {}
-            binding.ivBack -> gotoMain()
+            binding.ivBack -> onBackPressed()
         }
     }
 
