@@ -9,11 +9,21 @@ import container.restaurant.android.R
 import container.restaurant.android.databinding.ActivitySignInBinding
 import container.restaurant.android.presentation.MainViewModel
 import container.restaurant.android.presentation.base.BaseActivity
+import container.restaurant.android.util.DataTransfer
+import container.restaurant.android.util.observe
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 internal class SignInActivity : BaseActivity() {
 
     private val viewModel: AuthViewModel by viewModel()
+
+    private val provider: String? by lazy {
+        intent.getStringExtra(DataTransfer.PROVIDER)
+    }
+    private val accessToken: String? by lazy{
+        intent.getStringExtra(DataTransfer.ACCESS_TOKEN)
+    }
 
     companion object {
         fun getIntent(context: Context) = Intent(context, SignInActivity::class.java)
@@ -34,5 +44,14 @@ internal class SignInActivity : BaseActivity() {
                 .replace(R.id.container, SignInFragment.newInstance())
                 .commit()
         }
+
+        Timber.d("provider : $provider")
+        Timber.d("accessToken : $accessToken")
+        provider?.also{ provider ->
+            accessToken?.also{ accessToken ->
+                observe(viewModel.signInWithAccessToken(provider, accessToken)){}
+            }
+        }
+
     }
 }

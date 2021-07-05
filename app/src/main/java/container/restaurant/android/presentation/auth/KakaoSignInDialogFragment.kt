@@ -9,6 +9,7 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 import container.restaurant.android.R
 import container.restaurant.android.databinding.FragmentKakaoSigninBinding
+import container.restaurant.android.util.DataTransfer
 import timber.log.Timber
 
 
@@ -20,6 +21,10 @@ internal class KakaoSignInDialogFragment : DialogFragment() {
         UserApiClient.instance
     }
 
+    enum class Provider(val providerStr:String) {
+        KAKAO("KAKAO")
+    }
+
     private val callback: (OAuthToken?, Throwable?) -> Unit = { token, err ->
         if (err != null) {
             Timber.e(err,"카카오 인증 실패")
@@ -29,7 +34,11 @@ internal class KakaoSignInDialogFragment : DialogFragment() {
                     Timber.e(err2, "카카오 사용자 정보 요청 실패")
                 } else if(userKakao != null){
                     Timber.d("카카오 인증 성공")
-                    startActivity(SignInActivity.getIntent(requireContext()))
+                    val intent = SignInActivity.getIntent(requireContext())
+                    intent.putExtra(DataTransfer.ACCESS_TOKEN, token.accessToken)
+                    intent.putExtra(DataTransfer.PROVIDER, Provider.KAKAO.providerStr)
+                    startActivity(intent)
+                    this.dismiss()
                 }
             }
         }

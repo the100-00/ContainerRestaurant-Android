@@ -2,6 +2,7 @@ package container.restaurant.android.di
 
 import com.skydoves.sandwich.coroutines.CoroutinesResponseCallAdapterFactory
 import container.restaurant.android.BuildConfig
+import container.restaurant.android.data.remote.AuthService
 import container.restaurant.android.data.remote.FeedService
 import container.restaurant.android.data.remote.RestaurantService
 import container.restaurant.android.data.remote.NewApiService
@@ -20,21 +21,17 @@ private val BASE_URL = if (BuildConfig.DEBUG) {
     ""
 }
 
-
+//네트워크 관련 클래스 koin 명세서
 val networkModule = module {
+    //OkHttpClient 와 Retrofit 객체
     single { createOkHttp() }
     single { createRetrofit(get(), BASE_URL) }
+
+    //각 화면에 쓰이는 ApiService
     single { createFeedService(get()) }
-    single { newApiCreate() }
     single { createResService(get()) }
-}
-
-fun createFeedService(retrofit: Retrofit): FeedService {
-    return retrofit.create(FeedService::class.java)
-}
-
-fun createResService(retrofit: Retrofit): RestaurantService {
-    return retrofit.create(RestaurantService::class.java)
+    single { createAuthService(get()) }
+    single { newApiCreate() }
 }
 
 fun createOkHttp(): OkHttpClient {
@@ -54,6 +51,18 @@ fun createRetrofit(okHttpClient: OkHttpClient, url: String): Retrofit {
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
+}
+
+fun createFeedService(retrofit: Retrofit): FeedService {
+    return retrofit.create(FeedService::class.java)
+}
+
+fun createResService(retrofit: Retrofit): RestaurantService {
+    return retrofit.create(RestaurantService::class.java)
+}
+
+fun createAuthService(retrofit: Retrofit): AuthService {
+    return retrofit.create(AuthService::class.java)
 }
 
 fun newApiCreate(): NewApiService {
