@@ -75,5 +75,6 @@
     <string name="my_feed">내 피드</string>
     <string name="scrap_feed">스크랩 피드</string>
     <string name="favorite_restaurant">찜한 식당</string>
+    <string name="sign_in_hint">닉네임을 입력해주세요.</string>
 
 </resources>

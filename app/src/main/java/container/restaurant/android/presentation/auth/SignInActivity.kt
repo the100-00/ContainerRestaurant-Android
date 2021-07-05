@@ -49,7 +49,7 @@ internal class SignInActivity : BaseActivity() {
         Timber.d("accessToken : $accessToken")
         provider?.also{ provider ->
             accessToken?.also{ accessToken ->
-                observe(viewModel.signInWithAccessToken(provider, accessToken)){}
+//                observe(viewModel.signInWithAccessToken(provider, accessToken)){}
             }
         }
 

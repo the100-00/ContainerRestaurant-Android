@@ -25,7 +25,7 @@ internal class SignInFragment : Fragment() {
 
     private val nicknameEditing = MutableStateFlow("")
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentSignInBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -71,7 +71,7 @@ internal class SignInFragment : Fragment() {
 
     private fun setupBtnCompleteListener() {
         binding.btnComplete.setOnClickListener {
-
+            binding.btnComplete.isActivated = !binding.btnComplete.isActivated
         }
     }
 
