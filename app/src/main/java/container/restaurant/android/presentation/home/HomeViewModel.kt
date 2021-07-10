@@ -5,11 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.StatusCode
+import container.restaurant.android.R
 import container.restaurant.android.data.PrefStorage
 import container.restaurant.android.data.repository.HomeRepository
 import container.restaurant.android.data.response.SignInWithAccessTokenResponse
 import container.restaurant.android.util.Event
-import container.restaurant.android.util.SingleLiveEvent
 import kotlinx.coroutines.flow.collect
 import timber.log.Timber
 
@@ -28,6 +28,9 @@ internal class HomeViewModel(
 
     private val _notOurUser = MutableLiveData<Event<Boolean>>()
     val notOurUser: LiveData<Event<Boolean>> = _notOurUser
+
+    private val _errorMessageId = MutableLiveData<Event<Int>>()
+    val errorMessageId: LiveData<Event<Int>> = _errorMessageId
 
     private val _isNavToAllContainerFeedClicked = MutableLiveData<Event<Boolean>>()
     val isNavToAllContainerFeedClicked : LiveData<Event<Boolean>> = _isNavToAllContainerFeedClicked
@@ -81,6 +84,12 @@ internal class HomeViewModel(
                         when(response.statusCode) {
                             StatusCode.Unauthorized -> {
                                 _notOurUser.value = Event(true)
+                            }
+                            StatusCode.BadGateway -> {
+                                _errorMessageId.value = Event(R.string.error_message_bad_gateway)
+                            }
+                            else -> {
+                                _errorMessageId.value = Event(R.string.error_message_other)
                             }
                         }
                     }

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import com.kakao.sdk.auth.model.OAuthToken
@@ -90,6 +91,10 @@ internal class KakaoSignInDialogFragment : DialogFragment() {
                     startActivity(SignInActivity.getIntent(requireContext()))
                     this@KakaoSignInDialogFragment.dismiss()
                 }
+            })
+            errorMessageId.observe(this@KakaoSignInDialogFragment, EventObserver {
+                Toast.makeText(requireContext(), getString(it), Toast.LENGTH_LONG).show()
+                this@KakaoSignInDialogFragment.dismiss()
             })
         }
 
