@@ -1,29 +1,34 @@
 package container.restaurant.android.data.repository
 
 import androidx.annotation.WorkerThread
-import com.skydoves.sandwich.map
-import com.skydoves.sandwich.onError
-import com.skydoves.sandwich.onException
-import com.skydoves.sandwich.suspendOnSuccess
+import com.skydoves.sandwich.*
 import container.restaurant.android.data.PrefStorage
 import container.restaurant.android.data.remote.AuthService
 import container.restaurant.android.data.request.signInWithAccessTokenRequest
+import container.restaurant.android.data.response.NicknameDuplicationCheckResponse
+import container.restaurant.android.data.response.SignInWithAccessTokenResponse
 import container.restaurant.android.util.ErrorResponseMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
-import okhttp3.ResponseBody
 import timber.log.Timber
 
 
 interface AuthRepository {
     fun isUserSignIn(): Boolean
-    fun signInWithAccessToken(
+    suspend fun signInWithAccessToken(
         provider: String,
         accessToken: String,
         onStart: () -> Unit,
         onComplete: () -> Unit,
         onError: (String?) -> Unit
-    ): Flow<ResponseBody>
+    ): Flow<ApiResponse<SignInWithAccessTokenResponse>>
+
+    suspend fun nicknameDuplicationCheck(
+        nickname: String,
+        onStart: () -> Unit,
+        onComplete: () -> Unit,
+        onError: (String?) -> Unit
+    ): Flow<ApiResponse<NicknameDuplicationCheckResponse>>
 }
 
 internal class AuthDataRepository(
@@ -36,7 +41,7 @@ internal class AuthDataRepository(
     }
 
     @WorkerThread
-    override fun signInWithAccessToken(
+    override suspend fun signInWithAccessToken(
         provider: String,
         accessToken: String,
         onStart: () -> Unit,
@@ -46,12 +51,54 @@ internal class AuthDataRepository(
         Timber.d("AuthDataRepository signInWithAccessToken called")
         val response =
             authService.signInWithAccessToken(signInWithAccessTokenRequest(provider, accessToken))
-        response.suspendOnSuccess {
-            data?.let {
-                emit(it)
-                Timber.d("Response body : $it")
+        response
+            .suspendOnSuccess {
+                Timber.d("signInWithAccessToken onSuccess")
+                emit(this)
             }
-        }.onError { map(ErrorResponseMapper) { onError(message) } }
-            .onException { onError(message) }
+            .suspendOnError {
+                Timber.d("signInWithAccessToken onError")
+                emit(this)
+                map(ErrorResponseMapper) { onError(message) }
+            }
+            .suspendOnException {
+                Timber.d("signInWithAccessToken onException")
+                emit(this)
+                onError(message)
+            }
     }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(Dispatchers.IO)
+
+    // 입력한 onError 상관 없이 에러 로그 나옴, onStart랑 onCompletion은 나오는데 sandwich시리즈가 결과가 안나옴
+    // sandwich 시리즈는 response의 응답인데, onStart랑 onCompletion은 flow의 콜백임
+    // 이걸 활용하려는 이유는 생명주기에 따른 콜백 사용이 간편하기 때문. 근데 왜 안될까??
+    // 문제는 safeApiCall을 해도 suspend할 생각이 없음...
+    // 원인은 addCallAdapterFactory를 안해줘서 그랬음!! 이게 있어야 Exception을 잡을 수 있음
+    @WorkerThread
+    override suspend fun nicknameDuplicationCheck(
+        nickname: String,
+        onStart: () -> Unit,
+        onComplete: () -> Unit,
+        onError: (String?) -> Unit
+    ) = flow {
+        Timber.d("AuthDataRepository nicknameDuplicationCheck called")
+        val response = authService.nicknameDuplicationCheck(nickname)
+        response
+            .suspendOnSuccess {
+                emit(this)
+            }
+            .suspendOnError {
+                emit(this)
+                Timber.d("errorBody : ${this.errorBody}")
+                Timber.d("statusCode : ${this.statusCode}")
+                Timber.d("response : ${this.response}")
+                Timber.d("raw : ${this.raw}")
+                Timber.d("headers : ${this.headers}")
+                map(ErrorResponseMapper) { onError(message) }
+            }
+            .suspendOnException {
+                emit(this)
+                onError(message)
+            }
+    }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(Dispatchers.IO)
+
 }

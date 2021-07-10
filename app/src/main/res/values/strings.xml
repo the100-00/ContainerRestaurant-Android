@@ -54,9 +54,12 @@
     <string name="kakao_login">카카오 로그인</string>
     <string name="login_nickname">용기낸 식당에 어서오세요!\n닉네임만 정하면 가입이 끝나요 :)</string>
     <string name="complete">작성 완료</string>
-    <string name="nickname_too_long">16자를 넘을 수 없습니다</string>
+    <string name="nickname_too_long">더 짧은 닉네임을 사용해주세요</string>
+    <string name="nickname_too_short">더 긴 닉네임을 사용해주세요</string>
+    <string name="nickname_empty">닉네임을 입력해주세요</string>
     <string name="nickname_possible">사용 가능한 닉네임 입니다</string>
-    <string name="nickname_not_possiblew">한글/영문/숫자만 입력해 주세요</string>
+    <string name="nickname_letter_impossible">한글/영문/숫자만 입력해주세요</string>
+    <string name="nickname_duplication">닉네임이 이미 존재합니다.</string>
     <string name="all_feed_title">우주같이 웅장한\n용기를 가진 분</string>
     <string name="all_feed_sub_title">세상을 바꾸는\n특별한 용기를 가진 분들</string>
     <string name="confirm">확인</string>

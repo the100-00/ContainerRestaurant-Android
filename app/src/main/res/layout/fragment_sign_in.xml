@@ -2,6 +2,11 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="container.restaurant.android.presentation.auth.AuthViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -60,6 +65,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:textSize="12sp"
+            android:text="@{viewModel.infoMessage}"
             tools:text="한글/영문/숫자만 입력해 주세요"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/separator"/>
@@ -80,8 +86,4 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <data>
-
-    </data>
 </layout>

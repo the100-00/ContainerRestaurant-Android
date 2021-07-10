@@ -2,10 +2,7 @@ package container.restaurant.android.di
 
 import com.skydoves.sandwich.coroutines.CoroutinesResponseCallAdapterFactory
 import container.restaurant.android.BuildConfig
-import container.restaurant.android.data.remote.AuthService
-import container.restaurant.android.data.remote.FeedService
-import container.restaurant.android.data.remote.RestaurantService
-import container.restaurant.android.data.remote.NewApiService
+import container.restaurant.android.data.remote.*
 import container.restaurant.android.util.HeaderInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -31,6 +28,7 @@ val networkModule = module {
     single { createFeedService(get()) }
     single { createResService(get()) }
     single { createAuthService(get()) }
+    single { createHomeService(get())}
     single { newApiCreate() }
 }
 
@@ -50,6 +48,7 @@ fun createRetrofit(okHttpClient: OkHttpClient, url: String): Retrofit {
         .baseUrl(url)
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(CoroutinesResponseCallAdapterFactory())
         .build()
 }
 
@@ -64,6 +63,8 @@ fun createResService(retrofit: Retrofit): RestaurantService {
 fun createAuthService(retrofit: Retrofit): AuthService {
     return retrofit.create(AuthService::class.java)
 }
+
+fun createHomeService(retrofit: Retrofit): HomeService = retrofit.create(HomeService::class.java)
 
 fun newApiCreate(): NewApiService {
     val httpLoggingInterceptor = HttpLoggingInterceptor()

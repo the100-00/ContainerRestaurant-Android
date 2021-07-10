@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import container.restaurant.android.R
 import container.restaurant.android.databinding.ActivitySignInBinding
 import container.restaurant.android.presentation.MainViewModel
@@ -39,6 +40,9 @@ internal class SignInActivity : BaseActivity() {
                     lifecycleOwner = this@SignInActivity
                     viewModel = this@SignInActivity.viewModel
                 }
+        observe(viewModel.signInWithAccessTokenResult){
+
+        }
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.container, SignInFragment.newInstance())
@@ -47,11 +51,14 @@ internal class SignInActivity : BaseActivity() {
 
         Timber.d("provider : $provider")
         Timber.d("accessToken : $accessToken")
-        provider?.also{ provider ->
-            accessToken?.also{ accessToken ->
-//                observe(viewModel.signInWithAccessToken(provider, accessToken)){}
+        lifecycleScope.launchWhenCreated {
+            provider?.also{ provider ->
+                accessToken?.also{ accessToken ->
+                    viewModel.signInWithAccessToken(provider,accessToken)
+                }
             }
         }
+
 
     }
 }
