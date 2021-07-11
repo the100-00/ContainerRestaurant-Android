@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import container.restaurant.android.R
 import container.restaurant.android.databinding.FragmentSignInBinding
+import container.restaurant.android.util.EventObserver
 import container.restaurant.android.util.observe
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
@@ -52,6 +54,10 @@ internal class SignInFragment : Fragment() {
                 setBtnCompleteValidation(true)
             }
         }
+
+        viewModel.errorMessageId.observe(viewLifecycleOwner, EventObserver {
+            Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
+        })
     }
 
     private fun setBtnCompleteValidation(isValidate: Boolean) {

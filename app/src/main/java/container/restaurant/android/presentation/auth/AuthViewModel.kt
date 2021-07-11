@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.StatusCode
+import container.restaurant.android.R
 import container.restaurant.android.data.repository.AuthRepository
 import container.restaurant.android.data.response.NicknameDuplicationCheckResponse
 import container.restaurant.android.data.response.SignInWithAccessTokenResponse
@@ -37,6 +38,9 @@ internal class AuthViewModel(
 
     private val _notOurUser = MutableLiveData<Event<Boolean>>()
     val notOurUser: LiveData<Event<Boolean>> = _notOurUser
+
+    private val _errorMessageId = MutableLiveData<Event<Int>>()
+    val errorMessageId: LiveData<Event<Int>> = _errorMessageId
 
     private val _nicknameValidationCheck = MutableLiveData<Event<Boolean>>()
     val nicknameValidationCheck:LiveData<Event<Boolean>> = _nicknameValidationCheck
@@ -115,6 +119,9 @@ internal class AuthViewModel(
                             StatusCode.Unauthorized -> {
                                 _notOurUser.value = Event(true)
                             }
+                            else -> {
+                                _errorMessageId.value = Event(R.string.error_message_other)
+                            }
                         }
                     }
                     is ApiResponse.Failure.Exception -> {
@@ -152,7 +159,10 @@ internal class AuthViewModel(
                         Timber.d("response.errorBody : ${response.errorBody}")
                         when(response.statusCode) {
                             StatusCode.BadRequest -> {
-
+                                // 올바르지 않은 닉네임
+                            }
+                            else -> {
+                                _errorMessageId.value = Event(R.string.error_message_other)
                             }
                         }
                     }
