@@ -9,6 +9,7 @@ import kotlin.reflect.KProperty
 
 interface PrefStorage {
     var isUserSignIn: Boolean
+    var userId: Int
 }
 
 internal class SharedPrefStorage(
@@ -19,18 +20,20 @@ internal class SharedPrefStorage(
         context.applicationContext.getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
     }
 
-    override var isUserSignIn by BooleanPreference(prefs, IS_USER_LOGIN, false)
+    override var isUserSignIn by BooleanPreference(prefs, IS_USER_LOGIN)
+    override var userId by IntPreference(prefs, USER_ID)
 
     companion object {
         private const val PREFS_NAME = "container-android"
         private const val IS_USER_LOGIN = "IS_USER_LOGIN"
+        private const val USER_ID =  "USER_ID"
     }
 }
 
 internal class BooleanPreference(
     private val preferences: Lazy<SharedPreferences>,
     private val name: String,
-    private val defaultValue: Boolean
+    private val defaultValue: Boolean = false
 ) : ReadWriteProperty<Any, Boolean> {
 
     override fun getValue(thisRef: Any, property: KProperty<*>): Boolean {
@@ -41,4 +44,18 @@ internal class BooleanPreference(
         preferences.value.edit { putBoolean(name, value) }
     }
 
+}
+
+internal class IntPreference(
+    private val preferences: Lazy<SharedPreferences>,
+    private val name: String,
+    private val defaultValue: Int = 0
+) :ReadWriteProperty<Any, Int> {
+    override fun getValue(thisRef: Any, property: KProperty<*>): Int {
+        return preferences.value.getInt(name, defaultValue)
+    }
+
+    override fun setValue(thisRef: Any, property: KProperty<*>, value: Int) {
+        preferences.value.edit { putInt(name, value) }
+    }
 }
