@@ -65,6 +65,7 @@ internal class HomeViewModel(
             .collect { response ->
                 when (response) {
                     is ApiResponse.Success -> {
+                        Timber.d("response.headers[\" Date \"] : ${response.headers["Date"]}")
                         Timber.d("response.headers : ${response.headers}")
                         Timber.d("response.raw : ${response.raw}")
                         Timber.d("response.response : ${response.response}")
@@ -76,6 +77,7 @@ internal class HomeViewModel(
                         _signInWithAccessTokenSuccess.value = Event(true)
                     }
                     is ApiResponse.Failure.Error -> {
+                        Timber.d("response.headers[\"Date\"] : ${response.headers["Date"]}")
                         Timber.d("response.headers : ${response.headers}")
                         Timber.d("response.raw : ${response.raw}")
                         Timber.d("response.response : ${response.response}")

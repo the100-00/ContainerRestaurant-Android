@@ -10,6 +10,7 @@ import container.restaurant.android.data.repository.AuthRepository
 import container.restaurant.android.data.response.NicknameDuplicationCheckResponse
 import container.restaurant.android.data.response.SignInWithAccessTokenResponse
 import container.restaurant.android.util.Event
+import container.restaurant.android.util.SingleLiveEvent
 import kotlinx.coroutines.flow.collect
 import timber.log.Timber
 import java.util.regex.Pattern
@@ -33,6 +34,12 @@ internal class AuthViewModel(
     private val _signInWithAccessTokenResult = MutableLiveData<SignInWithAccessTokenResponse>()
     val signInWithAccessTokenResult:LiveData<SignInWithAccessTokenResponse> = _signInWithAccessTokenResult
 
+    private val _signedUpId = SingleLiveEvent<Int>()
+    val signedUpId: LiveData<Int> = _signedUpId
+
+    private val _isSignUpButtonClicked = MutableLiveData<Event<Boolean>>()
+    val isSignUpButtonClicked: LiveData<Event<Boolean>> = _isSignUpButtonClicked
+
     private val _signInWithAccessTokenSuccess = MutableLiveData<Event<Boolean>>()
     val signInWithAccessTokenSuccess : LiveData<Event<Boolean>> = _signInWithAccessTokenSuccess
 
@@ -49,6 +56,10 @@ internal class AuthViewModel(
     val nicknameDuplicationCheckResult : LiveData<NicknameDuplicationCheckResponse> = _nicknameDuplicationCheckResult
 
     fun isUserSignIn() = authRepository.isUserSignIn()
+
+    fun onSignUpButtonClick() {
+        _isSignUpButtonClicked.value = Event(true)
+    }
 
     fun letterValidationCheck(string: String):Boolean {
         val matcher = ValidationCheck.impossibleLetterPattern.matcher(string)
@@ -83,7 +94,7 @@ internal class AuthViewModel(
         val enNumSpaceMatcher= ValidationCheck.enNumSpacePattern.matcher(string)
         while(enNumSpaceMatcher.find()){
             length++
-            if(length>ValidationCheck.MAX_LENGTH) return true
+            if(length>=ValidationCheck.MIN_LENGTH) return true
         }
         return false
     }
@@ -125,6 +136,7 @@ internal class AuthViewModel(
                         }
                     }
                     is ApiResponse.Failure.Exception -> {
+                        _errorMessageId.value = Event(R.string.error_message_other)
                         Timber.d("response.message : ${response.message}")
                         Timber.d("response.exception : ${response.exception}")
                     }
@@ -167,10 +179,55 @@ internal class AuthViewModel(
                         }
                     }
                     is ApiResponse.Failure.Exception -> {
+                        _errorMessageId.value = Event(R.string.error_message_other)
                         Timber.d("response.message : ${response.message}")
                         Timber.d("response.exception : ${response.exception}")
                     }
                 }
             }
+    }
+
+    suspend fun signUpWithAccessToken(provider: String, accessToken: String) {
+        authRepository.signUpWithAccessToken(
+            provider = provider,
+            accessToken = accessToken
+        ).collect { response ->
+            when(response) {
+                is ApiResponse.Success -> {
+                    Timber.d("response.headers : ${response.headers}")
+                    Timber.d("response.raw : ${response.raw}")
+                    Timber.d("response.response : ${response.response}")
+                    Timber.d("response.statusCode : ${response.statusCode}")
+                    Timber.d("response.data : ${response.data}")
+                    response.data?.let{
+                        _signedUpId.value = response.headers["Container-Restaurant-User-Id"]?.toInt()
+                    }
+                }
+                is ApiResponse.Failure.Error -> {
+                    Timber.d("response.headers : ${response.headers}")
+                    Timber.d("response.raw : ${response.raw}")
+                    Timber.d("response.response : ${response.response}")
+                    Timber.d("response.statusCode : ${response.statusCode}")
+                    Timber.d("response.errorBody : ${response.errorBody}")
+                    when(response.statusCode) {
+                        StatusCode.BadRequest -> {
+                            // 올바르지 않은 닉네임
+                        }
+                        else -> {
+                            _errorMessageId.value = Event(R.string.error_message_other)
+                        }
+                    }
+                }
+                is ApiResponse.Failure.Exception -> {
+                    _errorMessageId.value = Event(R.string.error_message_other)
+                    Timber.d("response.message : ${response.message}")
+                    Timber.d("response.exception : ${response.exception}")
+                }
+            }
+        }
+    }
+
+    fun storeUserId(id: Int) {
+        authRepository.storeUserId(id)
     }
 }

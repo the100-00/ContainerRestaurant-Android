@@ -4,9 +4,11 @@ import androidx.annotation.WorkerThread
 import com.skydoves.sandwich.*
 import container.restaurant.android.data.PrefStorage
 import container.restaurant.android.data.remote.AuthService
-import container.restaurant.android.data.request.signInWithAccessTokenRequest
+import container.restaurant.android.data.request.SignInWithAccessTokenRequest
+import container.restaurant.android.data.request.SignUpWithAccessTokenRequest
 import container.restaurant.android.data.response.NicknameDuplicationCheckResponse
 import container.restaurant.android.data.response.SignInWithAccessTokenResponse
+import container.restaurant.android.data.response.SignUpWithAccessTokenResponse
 import container.restaurant.android.util.ErrorResponseMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -29,6 +31,13 @@ interface AuthRepository {
         onComplete: () -> Unit,
         onError: (String?) -> Unit
     ): Flow<ApiResponse<NicknameDuplicationCheckResponse>>
+
+    suspend fun signUpWithAccessToken(
+        provider: String,
+        accessToken: String
+    ): Flow<ApiResponse<SignUpWithAccessTokenResponse>>
+
+    fun storeUserId(id: Int)
 }
 
 internal class AuthDataRepository(
@@ -50,7 +59,7 @@ internal class AuthDataRepository(
     ) = flow {
         Timber.d("AuthDataRepository signInWithAccessToken called")
         val response =
-            authService.signInWithAccessToken(signInWithAccessTokenRequest(provider, accessToken))
+            authService.signInWithAccessToken(SignInWithAccessTokenRequest(provider, accessToken))
         response
             .suspendOnSuccess {
                 Timber.d("signInWithAccessToken onSuccess")
@@ -101,4 +110,24 @@ internal class AuthDataRepository(
             }
     }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(Dispatchers.IO)
 
+    override suspend fun signUpWithAccessToken(
+        provider: String,
+        accessToken: String
+    ): Flow<ApiResponse<SignUpWithAccessTokenResponse>> = flow {
+        authService.signUpWithAccessToken(SignUpWithAccessTokenRequest(provider,accessToken))
+            .suspendOnSuccess {
+                emit(this)
+            }
+            .suspendOnError{
+                emit(this)
+            }
+            .suspendOnException {
+                emit(this)
+            }
+    }.flowOn(Dispatchers.IO)
+
+    override fun storeUserId(id: Int){
+        prefStorage.isUserSignIn = true
+        prefStorage.userId = id
+    }
 }

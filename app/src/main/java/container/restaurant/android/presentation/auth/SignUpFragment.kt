@@ -10,7 +10,9 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import container.restaurant.android.R
-import container.restaurant.android.databinding.FragmentSignInBinding
+import container.restaurant.android.databinding.FragmentSignUpBinding
+import container.restaurant.android.presentation.user.UserProfileActivity
+import container.restaurant.android.util.DataTransfer
 import container.restaurant.android.util.EventObserver
 import container.restaurant.android.util.observe
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,17 +21,27 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.filter
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-internal class SignInFragment : Fragment() {
+internal class SignUpFragment : Fragment() {
 
-    private lateinit var binding: FragmentSignInBinding
+    private lateinit var binding: FragmentSignUpBinding
 
     private val viewModel: AuthViewModel by sharedViewModel()
 
     private val nicknameEditing = MutableStateFlow("")
+
     var nicknameFirstEdited = true
 
+    private val provider: String? by lazy {
+        arguments?.getString(DataTransfer.PROVIDER)
+    }
+
+    private val accessToken: String? by lazy {
+        arguments?.getString(DataTransfer.ACCESS_TOKEN)
+    }
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentSignInBinding.inflate(inflater, container, false)
+        binding = FragmentSignUpBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -55,11 +67,28 @@ internal class SignInFragment : Fragment() {
             }
         }
 
+        observe(viewModel.signedUpId) { id ->
+            viewModel.storeUserId(id)
+            startActivity(UserProfileActivity.getIntent(requireContext()))
+            activity?.finish()
+        }
+
         viewModel.errorMessageId.observe(viewLifecycleOwner, EventObserver {
             Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
+            startActivity(UserProfileActivity.getIntent(requireContext()))
+            activity?.finish()
+        })
+
+        viewModel.isSignUpButtonClicked.observe(viewLifecycleOwner, EventObserver {
+            lifecycleScope.launchWhenCreated {
+                if(provider!=null && accessToken!=null){
+                    viewModel.signUpWithAccessToken(provider!!, accessToken!!)
+                }
+            }
         })
     }
 
+    //버튼 활성화 설정
     private fun setBtnCompleteValidation(isValidate: Boolean) {
         if(isValidate) {
             binding.tvNicknameError.setTextColor(ContextCompat.getColor(requireContext(), R.color.green_03))
@@ -70,6 +99,7 @@ internal class SignInFragment : Fragment() {
         binding.btnComplete.isActivated = isValidate
     }
 
+    //nickname 입력 리스너 설정
     private fun setupNicknameEditing() {
         binding.editNickname.doOnTextChanged { text, _, _, _ ->
             nicknameEditing.value = text.toString()
@@ -117,6 +147,6 @@ internal class SignInFragment : Fragment() {
 
     companion object {
         private const val DEBOUNCE_TIME = 250L
-        fun newInstance() = SignInFragment()
+        fun newInstance() = SignUpFragment()
     }
 }

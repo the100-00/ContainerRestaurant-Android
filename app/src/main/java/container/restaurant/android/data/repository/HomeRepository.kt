@@ -6,7 +6,7 @@ import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
 import container.restaurant.android.data.remote.HomeService
-import container.restaurant.android.data.request.signInWithAccessTokenRequest
+import container.restaurant.android.data.request.SignInWithAccessTokenRequest
 import container.restaurant.android.util.ErrorResponseMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
@@ -26,7 +26,7 @@ class HomeRepository(private val homeService: HomeService) {
     ) = flow {
         Timber.d("AuthDataRepository signInWithAccessToken called")
         val response =
-            homeService.signInWithAccessToken(signInWithAccessTokenRequest(provider, accessToken))
+            homeService.signInWithAccessToken(SignInWithAccessTokenRequest(provider, accessToken))
         response
             .suspendOnSuccess {
                 emit(this)

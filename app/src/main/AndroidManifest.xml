@@ -28,7 +28,7 @@
         <activity android:name=".presentation.feed.write.FeedWriteActivity" />
         <activity android:name=".presentation.MainActivity"/>
         <activity
-            android:name=".presentation.auth.SignInActivity"
+            android:name=".presentation.auth.SignUpActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".presentation.feed.all.FeedAllActivity"
