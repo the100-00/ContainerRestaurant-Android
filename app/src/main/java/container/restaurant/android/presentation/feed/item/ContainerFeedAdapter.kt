@@ -3,7 +3,7 @@ package container.restaurant.android.presentation.feed.item
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import container.restaurant.android.data.model.Feed
+import container.restaurant.android.data.response.Feed
 import container.restaurant.android.databinding.ItemContainerFeedBinding
 
 internal class ContainerFeedAdapter : RecyclerView.Adapter<ContainerFeedViewHolder>() {

@@ -8,7 +8,7 @@ import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import container.restaurant.android.data.db.AppDatabase
-import container.restaurant.android.data.db.MainFood
+import container.restaurant.android.data.db.entity.MainFood
 import kotlinx.coroutines.coroutineScope
 import org.koin.core.component.KoinApiExtension
 import org.koin.core.component.KoinComponent

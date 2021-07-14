@@ -1,4 +1,6 @@
-package container.restaurant.android.data
+package container.restaurant.android.data.repository
+
+import container.restaurant.android.data.PrefStorage
 
 
 interface AuthRepository {

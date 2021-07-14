@@ -20,14 +20,14 @@ class AlertDialog(context: Context, private val titleStr: String?, private val m
 
     private var singleEventListener: SingleEventListener? = null
 
-    private var multiEventLister: MultiEventLister? = null
+    private var multiEventListener: MultiEventListener? = null
 
     fun setSingleEventListener(singleEventListener: SingleEventListener) {
         this::singleEventListener.set(singleEventListener)
     }
 
-    fun setMultiEventListener(multiEventLister: MultiEventLister) {
-        this::multiEventLister.set(multiEventLister)
+    fun setMultiEventListener(multiEventListener: MultiEventListener) {
+        this::multiEventListener.set(multiEventListener)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,11 +43,11 @@ class AlertDialog(context: Context, private val titleStr: String?, private val m
     private fun btnAction() {
         binding.confirm.setOnClickListener {
             singleEventListener?.confirmClick(this)
-            multiEventLister?.confirmClick(this)
+            multiEventListener?.confirmClick(this)
         }
 
         binding.cancel.setOnClickListener {
-            multiEventLister?.cancelClick(this)
+            multiEventListener?.cancelClick(this)
         }
     }
 
@@ -107,7 +107,7 @@ class AlertDialog(context: Context, private val titleStr: String?, private val m
         fun confirmClick(dialogSelf: container.restaurant.android.dialog.AlertDialog)
     }
 
-    interface MultiEventLister {
+    interface MultiEventListener {
         fun confirmClick(dialogSelf: container.restaurant.android.dialog.AlertDialog)
         fun cancelClick(dialogSelf: container.restaurant.android.dialog.AlertDialog)
     }

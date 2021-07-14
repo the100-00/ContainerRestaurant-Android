@@ -107,6 +107,6 @@
 
         <variable
             name="item"
-            type="container.restaurant.android.data.model.Feed" />
+            type="container.restaurant.android.data.response.Feed" />
     </data>
 </layout>

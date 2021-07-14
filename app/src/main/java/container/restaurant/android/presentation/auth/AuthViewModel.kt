@@ -1,6 +1,7 @@
 package container.restaurant.android.presentation.auth
 
-import container.restaurant.android.data.AuthRepository
+import androidx.lifecycle.ViewModel
+import container.restaurant.android.data.repository.AuthRepository
 
 interface AuthViewModelDelegate {
     fun isUserSignIn(): Boolean
@@ -8,7 +9,6 @@ interface AuthViewModelDelegate {
 
 internal class AuthViewModel(
     private val authRepository: AuthRepository
-) : AuthViewModelDelegate {
-
+) : ViewModel(), AuthViewModelDelegate {
     override fun isUserSignIn() = authRepository.isUserSignIn()
 }

@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tak8997.github.domain.ResultState
-import container.restaurant.android.data.model.FeedResponse
+import container.restaurant.android.data.response.FeedResponse
 import container.restaurant.android.data.repository.FeedRepository
 import container.restaurant.android.util.SingleLiveEvent
 import kotlinx.coroutines.launch

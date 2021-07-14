@@ -13,6 +13,8 @@
     </LinearLayout>
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="container.restaurant.android.presentation.auth.AuthViewModel" />
     </data>
 </layout>

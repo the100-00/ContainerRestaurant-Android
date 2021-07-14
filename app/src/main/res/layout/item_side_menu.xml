@@ -5,7 +5,7 @@
     <data>
         <variable
             name="side"
-            type="container.restaurant.android.data.db.SideDish" />
+            type="container.restaurant.android.data.db.entity.SideDish" />
     </data>
 
 

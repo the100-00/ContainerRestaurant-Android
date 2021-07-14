@@ -20,8 +20,8 @@ import com.hedgehog.ratingbar.RatingBar
 import com.naver.maps.geometry.Tm128
 import container.restaurant.android.R
 import container.restaurant.android.presentation.base.BaseActivity
-import container.restaurant.android.data.db.MainFood
-import container.restaurant.android.data.db.SideDish
+import container.restaurant.android.data.db.entity.MainFood
+import container.restaurant.android.data.db.entity.SideDish
 import container.restaurant.android.data.request.FeedWriteRequest
 import container.restaurant.android.data.response.ImageUploadResponse
 import container.restaurant.android.databinding.ActivityFeedWriteBinding

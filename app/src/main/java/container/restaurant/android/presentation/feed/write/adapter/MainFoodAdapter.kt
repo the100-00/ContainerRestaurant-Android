@@ -6,7 +6,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import container.restaurant.android.data.db.MainFood
+import container.restaurant.android.data.db.entity.MainFood
 import container.restaurant.android.databinding.ItemMainMenuBinding
 
 class MainFoodAdapter : ListAdapter<MainFood, RecyclerView.ViewHolder>(MainFoodItemDiffCallback()) {

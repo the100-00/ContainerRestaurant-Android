@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import container.restaurant.android.R
-import container.restaurant.android.data.model.Feed
+import container.restaurant.android.data.response.Feed
 import container.restaurant.android.databinding.ItemContainerFeedBinding
 
 internal class ConResAdapter : RecyclerView.Adapter<ConResAdapter.ConResViewHolder>() {

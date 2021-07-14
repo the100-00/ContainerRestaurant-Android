@@ -6,8 +6,8 @@ import com.skydoves.sandwich.onError
 import com.skydoves.sandwich.onException
 import com.skydoves.sandwich.suspendOnSuccess
 import container.restaurant.android.data.db.AppDatabase
-import container.restaurant.android.data.db.MainFood
-import container.restaurant.android.data.db.SideDish
+import container.restaurant.android.data.db.entity.MainFood
+import container.restaurant.android.data.db.entity.SideDish
 import container.restaurant.android.data.remote.NewApiService
 import container.restaurant.android.data.request.FeedWriteRequest
 import container.restaurant.android.presentation.feed.write.PlaceService

@@ -4,8 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tak8997.github.domain.ResultState
-import container.restaurant.android.data.model.RestaurantNearInfoDto
-import container.restaurant.android.data.model.RestaurantResponse
+import container.restaurant.android.data.response.RestaurantNearInfoDto
+import container.restaurant.android.data.response.RestaurantResponse
 import container.restaurant.android.data.repository.RestaurantRepository
 import container.restaurant.android.util.SingleLiveEvent
 import kotlinx.coroutines.launch

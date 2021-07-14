@@ -1,4 +1,4 @@
-package container.restaurant.android.data.model
+package container.restaurant.android.data.response
 
 import com.google.gson.annotations.SerializedName
 
