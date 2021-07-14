@@ -2,6 +2,7 @@ package container.restaurant.android.presentation.map
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +10,15 @@ import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.PermissionChecker
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.hedgehog.ratingbar.RatingBar
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
 import com.naver.maps.map.overlay.Marker
@@ -20,9 +26,15 @@ import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
 import container.restaurant.android.R
 import container.restaurant.android.databinding.FragmentMapBinding
-import container.restaurant.android.presentation.map.item.LocationUtils
+import container.restaurant.android.presentation.feed.write.FeedWriteActivity
+import container.restaurant.android.presentation.map.item.*
+import container.restaurant.android.presentation.map.item.ConResAdapter
+import container.restaurant.android.presentation.map.item.FeedRestaurantViewModel
+import container.restaurant.android.presentation.map.item.MapResAdapter
 import container.restaurant.android.presentation.map.item.MapsViewModel
 import container.restaurant.android.util.EventObserver
+import container.restaurant.android.util.hide
+import container.restaurant.android.util.show
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
@@ -38,10 +50,15 @@ internal class MapsFragment : Fragment(), OnMapReadyCallback {
     private var radius: Int = 2000
     private var index: Int = 0
     private val locationUtils = LocationUtils()
-    lateinit var firstDialogFragment: FirstDialogFragment
-    lateinit var secondDialogFragment : SecondDialogFragment
-    private val viewModel : MapsViewModel by viewModel()
+    private val viewModel: MapsViewModel by viewModel()
+    private val viewModel2: FeedRestaurantViewModel by viewModel()
     private val markers = mutableListOf<Marker>()
+    private lateinit var mapResAdapter: MapResAdapter
+    private lateinit var conResAdapter: ConResAdapter
+
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
+    private lateinit var bottomSheetBehavior1: BottomSheetBehavior<ConstraintLayout>
+    private lateinit var bottomSheetBehavior2: BottomSheetBehavior<ConstraintLayout>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,6 +68,7 @@ internal class MapsFragment : Fragment(), OnMapReadyCallback {
         binding = FragmentMapBinding.inflate(layoutInflater, container, false)
         binding.setLifecycleOwner(this)
         binding.viewModel = viewModel
+        binding.viewModel2 = viewModel2
 
 
         binding.btList.visibility = INVISIBLE
@@ -74,8 +92,8 @@ internal class MapsFragment : Fragment(), OnMapReadyCallback {
     }
 
     @SuppressLint("MissingPermission")
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         checkPermissions()
         subscribeMyLocation()
@@ -100,35 +118,60 @@ internal class MapsFragment : Fragment(), OnMapReadyCallback {
             searchAgain()
         }
 
-        firstDialogFragment = FirstDialogFragment.newInstance {
-            when (it) {
-                0 -> Toast.makeText(requireContext(), "시작", Toast.LENGTH_SHORT).show()
-                1 -> {
-                    radius = 20000;
-                    searchStart()
-                }
-            }
+        initBottomSheet()
+
+
+        binding.bottomfirst.btn0.setOnClickListener {
+            val intent = Intent(requireContext(), FeedWriteActivity::class.java)
+            startActivity(intent)
+            bottomSheetBehavior1.state = BottomSheetBehavior.STATE_COLLAPSED
         }
 
-        secondDialogFragment = SecondDialogFragment.newInstance {
-            when (it) {
-                1 -> {
-                }
-            }
+        binding.bottomfirst.btn1.setOnClickListener {
+            radius = 20000;
+            Toast.makeText(requireContext(), "반경 20KM에 있는 식당을 검색합니다.", Toast.LENGTH_SHORT).show()
+            searchStart()
         }
 
-      //  locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
+        binding.bottomsecond.btn0.setOnClickListener {
+            val intent = Intent(requireContext(), FeedWriteActivity::class.java)
+            startActivity(intent)
+            bottomSheetBehavior1.state = BottomSheetBehavior.STATE_COLLAPSED
+        }
+
+        binding.bottomsecond.btn1.setOnClickListener{
+            bottomSheetBehavior2.state = BottomSheetBehavior.STATE_COLLAPSED
+        }
+
+    }
+
+    private fun initBottomSheet() {
+
+        view?.findViewById<ConstraintLayout>(R.id.bottomfirst)?.let {
+            bottomSheetBehavior1 = BottomSheetBehavior.from(it)
+        }
+        bottomSheetBehavior1.state = BottomSheetBehavior.STATE_COLLAPSED
+
+        view?.findViewById<ConstraintLayout>(R.id.bottomsecond)?.let {
+            bottomSheetBehavior2 = BottomSheetBehavior.from(it)
+        }
+        bottomSheetBehavior2.state = BottomSheetBehavior.STATE_COLLAPSED
+
+         view?.findViewById<ConstraintLayout>(R.id.bottomres)?.let {
+            bottomSheetBehavior = BottomSheetBehavior.from(it)
+        }
+        bottomSheetBehavior.peekHeight = 0
 
     }
 
     private fun searchStart() {
-        //Toast.makeText(requireContext(), "이 위치에서 검색합니다.", Toast.LENGTH_SHORT).show()
         val latlng: CameraPosition = cp
         viewModel.fetchRes(latlng.target.latitude, latlng.target.longitude, radius)
         latitude = latlng.target.latitude
         longitude = latlng.target.longitude
 
         index = 1
+        bottomSheetBehavior1.state = BottomSheetBehavior.STATE_COLLAPSED
     }
 
     private fun searchAgain() {
@@ -147,13 +190,6 @@ internal class MapsFragment : Fragment(), OnMapReadyCallback {
             latitude = it.latitude
             longitude = it.longitude
         })
-/*
-        viewModel.fetchRes(37.48735456286126,126.91299694023027,1000)
-        latitude = 37.48735456286126
-        longitude = 126.91299694023027
-        radius = 1000
-*/
-        //subscribeResResponse()
     }
 
     private fun subscribeResResponse() {
@@ -169,21 +205,14 @@ internal class MapsFragment : Fragment(), OnMapReadyCallback {
                     }
                 } ?: NRes()
             })
-
-        val cameraUpdate = CameraPosition(
-            LatLng(latitude, longitude), 9.0)
-
-        naverMapOptions = NaverMapOptions()
-        naverMapOptions.camera(cameraUpdate)
     }
 
     private fun NRes() {
         if (index == 0) {
-            firstDialogFragment.show(childFragmentManager, "bottom_dialog")
-        } else if(index == 1){
-            secondDialogFragment.show(childFragmentManager, "bottom_dialog")
-        }
-        else if(index == 2){
+            bottomSheetBehavior1.state = BottomSheetBehavior.STATE_EXPANDED
+        } else if (index == 1) {
+            bottomSheetBehavior2.state = BottomSheetBehavior.STATE_EXPANDED
+        } else if (index == 2) {
             Toast.makeText(requireContext(), "이 위치에는 용기낸 식당이 아직 없어요", Toast.LENGTH_LONG).show()
         }
         binding.btList.visibility = INVISIBLE
@@ -202,23 +231,45 @@ internal class MapsFragment : Fragment(), OnMapReadyCallback {
             }
 
             marker.icon = OverlayImage.fromResource(R.drawable.ic_map_marker)
-            // marker.icon = OverlayImage.fromResource(R.drawable.ic_map_marker)
-            val resDialogFragment = ResDialogFragment.newInstance(id) {
-                when (it) {
 
-                }
-            }
-            resDialogFragment.show(childFragmentManager, "custom_dialog")
+            bottomSheetBehavior.peekHeight = 290
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            initRecyclerView(id)
+            setupContainerFeedRecycler(id)
             false
         }
+    }
 
+    private fun initRecyclerView(id : Long) {
+        mapResAdapter = MapResAdapter()
+        binding.bottomres.rvDetailRes.run{
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(context)
+            viewModel.fetchRestaurantInfo(id)
+            viewModel.resInfoResponse.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+                mapResAdapter.setItems(it)
+                adapter = mapResAdapter
+            })
+        }
+    }
+
+    private fun setupContainerFeedRecycler(id : Long) {
+        conResAdapter = ConResAdapter()
+        with(binding.bottomres.rvConRes) {
+            layoutManager = GridLayoutManager(context ?: return, 2)
+            viewModel2.fetchResFeed(id)
+            viewModel2.feedResponse.observe(viewLifecycleOwner,androidx.lifecycle.Observer {
+                it.feedModel?.let { it1 -> conResAdapter.setItems(it1.feeds) }
+                adapter = conResAdapter
+            })
+        }
     }
 
     override fun onMapReady(naverMap: NaverMap) {
         this.naverMap = naverMap
         naverMap.uiSettings.isLocationButtonEnabled = true
         naverMap.uiSettings.isCompassEnabled = false
-        if(::locationSource.isInitialized)
+        if (::locationSource.isInitialized)
             naverMap.locationSource = locationSource
         naverMap.locationTrackingMode = LocationTrackingMode.Follow
 
@@ -245,8 +296,11 @@ internal class MapsFragment : Fragment(), OnMapReadyCallback {
         permissions: Array<String>,
         grantResults: IntArray
     ) {
-        if (locationSource.onRequestPermissionsResult(requestCode, permissions,
-                grantResults)) {
+        if (locationSource.onRequestPermissionsResult(
+                requestCode, permissions,
+                grantResults
+            )
+        ) {
             if (!locationSource.isActivated) { // 권한 거부됨
                 naverMap.locationTrackingMode = LocationTrackingMode.None
             } else {
@@ -256,8 +310,7 @@ internal class MapsFragment : Fragment(), OnMapReadyCallback {
             }
             return
         }
-
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
     companion object {
