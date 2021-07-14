@@ -5,32 +5,32 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="3dp"
-        android:layout_height="21dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="3dp"
-        android:text="| "
-        android:textColor="#cecece"
-        android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@+id/res_rank"
-        app:layout_constraintTop_toBottomOf="@+id/res_tag" />
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="3dp"
+            android:layout_height="21dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="6dp"
+            android:text="| "
+            android:textColor="#cecece"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/imageView4"
+            app:layout_constraintTop_toBottomOf="@+id/res_tag" />
 
-    <TextView
-        android:id="@+id/res_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="28dp"
-        android:text="@{item.name}"
-        android:textColor="#242424"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="용기낸 식당"/>
+        <TextView
+            android:id="@+id/res_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@{item.name}"
+            android:textColor="#242424"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="용기낸 식당" />
 
         <TextView
             android:id="@+id/res_tag"
@@ -46,104 +46,71 @@
             tools:text="#용기낸 식당" />
 
         <TextView
-        android:id="@+id/res_rank"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
-        android:text="@{String.valueOf(item.difficultyAvg)}"
-        android:textColor="#242424"
-        android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@+id/imageView7"
-        app:layout_constraintTop_toBottomOf="@+id/res_tag"
-        tools:text="2.1"/>
+            android:id="@+id/res_rank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="6dp"
+            android:text="@{String.valueOf(item.difficultyAvg)}"
+            android:textColor="#242424"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/textView4"
+            app:layout_constraintTop_toBottomOf="@+id/res_tag"
+            tools:text="2.1" />
 
-    <TextView
-        android:id="@+id/res_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
-        android:text="@{String.valueOf(item.feedCount)}"
-        android:textColor="#242424"
-        android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@+id/imageView4"
-        app:layout_constraintTop_toBottomOf="@+id/res_tag"
-        tools:text="+3회"/>
+        <TextView
+            android:id="@+id/res_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="220dp"
+            android:text="@{`+`+ String.valueOf(item.feedCount)+`회`}"
+            android:textColor="#242424"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/view2"
+            app:layout_constraintTop_toBottomOf="@+id/res_tag"
+            tools:text="+3회" />
 
-    <ImageButton
-        android:id="@+id/btn_star"
-        android:background="@drawable/selector_star"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="326dp"
-        android:layout_marginTop="13dp"
-        android:layout_marginEnd="14dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.96"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-         />
+        <ImageButton
+            android:id="@+id/btn_star"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="326dp"
+            android:layout_marginEnd="14dp"
+            android:background="@drawable/selector_star"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.96"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="14dp"
-        android:layout_height="14dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="6dp"
-        app:layout_constraintStart_toEndOf="@+id/textView4"
-        app:layout_constraintTop_toBottomOf="@+id/res_tag"
-        app:srcCompat="@drawable/ic_feed_outline" />
 
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="5dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/res_tag"
-        app:srcCompat="@drawable/ic_hard_filled_black" />
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="5dp"
+            app:layout_constraintEnd_toStartOf="@+id/res_count"
+            app:layout_constraintTop_toBottomOf="@+id/res_tag"
+            app:srcCompat="@drawable/ic_feed_outline" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="5dp"
-        app:layout_constraintStart_toEndOf="@+id/imageView5"
-        app:layout_constraintTop_toBottomOf="@+id/res_tag"
-        app:srcCompat="@drawable/ic_hard_filled_black" />
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="5dp"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/res_tag"
-        app:srcCompat="@drawable/ic_hard_filled_black" />
-
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="5dp"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
-        app:layout_constraintTop_toBottomOf="@+id/res_tag"
-        app:srcCompat="@drawable/ic_hard_filled_black" />
-
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="5dp"
-        app:layout_constraintStart_toEndOf="@+id/imageView6"
-        app:layout_constraintTop_toBottomOf="@+id/res_tag"
-        app:srcCompat="@drawable/ic_hard_filled_black" />
+        <RatingBar
+            android:id="@+id/rb_difficulty"
+            style="@style/starRatingBar"
+            android:layout_width="120dp"
+            android:layout_height="23dp"
+            android:layout_marginEnd="5dp"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:stepSize="0.1"
+            android:rating="@{Float.parseFloat(String.valueOf(item.difficultyAvg))}"
+            android:scaleX="0.65"
+            android:scaleY="0.7"
+            android:transformPivotX="120dp"
+            app:layout_constraintBottom_toTopOf="@+id/view2"
+            app:layout_constraintEnd_toStartOf="@+id/res_rank"
+            app:layout_constraintTop_toBottomOf="@+id/res_tag"
+            app:layout_constraintVertical_bias="0.277" />
 
         <View
             android:id="@+id/view2"
@@ -188,7 +155,9 @@
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <data>
+
         <variable
             name="item"
             type="container.restaurant.android.data.model.RestaurantNearInfoDto" />

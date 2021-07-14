@@ -29,8 +29,14 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-    
+
     <style name="AppThemeGreen" parent="AppTheme.NoActionBar">
         <item name="colorPrimaryDark">@color/green_02</item>
     </style>
+
+
+    <style name="starRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/custom_rating</item>
+    </style>
+
 </resources>
