@@ -25,7 +25,7 @@ data class RestaurantNearInfoDto(
     val latitude : Double,
     val longitude : Double,
     val image_path : String,
-    val difficultyAvg : Double,
+    val difficultyAvg : Float,
     val feedCount : Int,
     val _links: JsonObject
 ){
