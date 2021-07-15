@@ -58,7 +58,7 @@
     <string name="nickname_too_short">더 긴 닉네임을 사용해주세요</string>
     <string name="nickname_empty">닉네임을 입력해주세요</string>
     <string name="nickname_possible">사용 가능한 닉네임 입니다</string>
-    <string name="nickname_letter_impossible">한글/영문/숫자만 입력해주세요</string>
+    <string name="nickname_letter_impossible">한글/영문/숫자 또는 공백만 입력해주세요</string>
     <string name="nickname_duplication">닉네임이 이미 존재합니다.</string>
     <string name="all_feed_title">우주같이 웅장한\n용기를 가진 분</string>
     <string name="all_feed_sub_title">세상을 바꾸는\n특별한 용기를 가진 분들</string>
@@ -81,5 +81,6 @@
     <string name="scrap_feed">스크랩 피드</string>
     <string name="favorite_restaurant">찜한 식당</string>
     <string name="sign_in_hint">닉네임을 입력해주세요.</string>
+    <string name="banner_image">배너 이미지</string>
 
 </resources>

@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.tabs.TabLayoutMediator
-import com.tak8997.github.domain.BannerContent
 import container.restaurant.android.databinding.FragmentHomeBinding
 import container.restaurant.android.dialog.SimpleConfirmDialog
 import container.restaurant.android.presentation.auth.KakaoSignInDialogFragment
@@ -15,6 +15,7 @@ import container.restaurant.android.presentation.feed.all.FeedAllActivity
 import container.restaurant.android.presentation.feed.item.ContainerFeedAdapter
 import container.restaurant.android.presentation.home.item.BannerAdapter
 import container.restaurant.android.presentation.user.UserProfileActivity
+import container.restaurant.android.util.observe
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 internal class HomeFragment : Fragment() {
@@ -46,6 +47,14 @@ internal class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        observeData()
+        setUpBannerView()
+        getBannersInfo()
+        setupContainerFeedRecycler()
+    }
+
+    private fun observeData() {
         with(viewModel) {
             isNavToAllContainerFeedClicked.observe(viewLifecycleOwner) {
                 startActivity(FeedAllActivity.getIntent(requireContext()))
@@ -55,12 +64,30 @@ internal class HomeFragment : Fragment() {
             }
         }
 
-        setupBannerPager()
-        setupContainerFeedRecycler()
+        observe(viewModel.bannerList) {
+            addBannerItems()
+        }
+    }
+
+    private fun addBannerItems() {
+        bannerAdapter.addItems(
+            viewModel.bannerList.value?.bannerInfoDtoList!!
+        )
+    }
+
+    private fun setUpBannerView(){
+        binding.pagerIntroBanner.adapter = bannerAdapter
+        TabLayoutMediator(binding.tablayoutIndicator, binding.pagerIntroBanner) { _, _ ->
+        }.attach()
+    }
+
+    private fun getBannersInfo() {
+        lifecycleScope.launchWhenCreated {
+            viewModel.getBannersInfo()
+        }
     }
 
     private fun showMyContainerConfirmDialog(){
-
         val dialog = SimpleConfirmDialog(
             titleStr = "용기낸 경험을 들려주시겠어요?",
             confirmStr = "네, 좋아요!",
@@ -88,20 +115,6 @@ internal class HomeFragment : Fragment() {
             layoutManager = GridLayoutManager(context ?: return, 2)
             adapter = containerFeedAdapter
         }
-    }
-
-    private fun setupBannerPager() {
-        binding.pagerIntroBanner.adapter = bannerAdapter
-        TabLayoutMediator(binding.tablayoutIndicator, binding.pagerIntroBanner) { _, _ ->
-        }.attach()
-        // test dummy
-        bannerAdapter.addItems(
-            listOf(
-                BannerContent("this is title", "this is content"),
-                BannerContent("this is title", "this is content"),
-                BannerContent("this is title", "this is content")
-            )
-        )
     }
 
     companion object {

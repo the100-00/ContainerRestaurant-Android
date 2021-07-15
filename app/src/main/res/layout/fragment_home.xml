@@ -24,7 +24,8 @@
                 app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/img_home_intro"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SpUsage" />
 
             <ImageView
                 android:id="@+id/img_home_intro"
@@ -36,7 +37,8 @@
                 android:src="@drawable/img_level_up"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintLeft_toRightOf="@+id/tv_home_intro_title"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 style="@style/TextAppearance.App.R.Gray00"
@@ -75,7 +77,8 @@
                 android:onClick="@{() -> viewModel.onClickMyContainerFeed()}"
                 android:background="?attr/selectableItemBackground"
                 app:layout_constraintTop_toBottomOf="@+id/tv_home_intro_title"
-                app:layout_constraintRight_toLeftOf="@+id/img_home_intro" />
+                app:layout_constraintRight_toLeftOf="@+id/img_home_intro"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 style="@style/TextAppearance.App.R.Gray00"
@@ -113,7 +116,8 @@
                 android:onClick="@{() -> viewModel.onClickAllContainerFeed()}"
                 android:background="?attr/selectableItemBackground"
                 app:layout_constraintTop_toBottomOf="@+id/img_my_container_arrow"
-                app:layout_constraintRight_toLeftOf="@+id/img_home_intro" />
+                app:layout_constraintRight_toLeftOf="@+id/img_home_intro"
+                tools:ignore="ContentDescription" />
 
             <Space
                 android:id="@+id/space"
@@ -127,7 +131,7 @@
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/pager_intro_banner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="88dp"
                 android:layout_marginTop="20dp"
                 app:layout_constraintTop_toBottomOf="@+id/space"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -162,7 +166,8 @@
                 android:textSize="16dp"
                 app:layout_constraintTop_toBottomOf="@+id/pager_intro_banner"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/rv_container_feed_history" />
+                app:layout_constraintBottom_toTopOf="@+id/rv_container_feed_history"
+                tools:ignore="SpUsage" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_container_feed_history"
@@ -196,13 +201,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/more_feed_history"
-                    android:textSize="14dp"/>
+                    android:textSize="14dp"
+                    tools:ignore="SpUsage" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_chevron_right_outline"
-                    android:layout_marginLeft="6dp"/>
+                    android:layout_marginStart="6dp"
+                    tools:ignore="ContentDescription" />
             </LinearLayout>
 
             <LinearLayout
@@ -223,7 +230,8 @@
                     android:layout_marginBottom="145dp"
                     android:text="@{@string/app_mail(`test@test.com`)}"
                     android:textSize="14dp"
-                    tools:text="용기낸 식당 con-restaurant@test.com"/>
+                    tools:text="용기낸 식당 con-restaurant@test.com"
+                    tools:ignore="SpUsage" />
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

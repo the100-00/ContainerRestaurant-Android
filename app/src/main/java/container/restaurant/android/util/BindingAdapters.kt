@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.button.MaterialButton
 import container.restaurant.android.R
+import container.restaurant.android.di.BASE_URL
 
 @BindingAdapter(value = ["android:imageUrl", "android:circleCrop"], requireAll = false)
 fun ImageView.setImage(url: String?, circleCrop: Boolean = false) {
@@ -69,4 +70,13 @@ fun bindFavoriteFeedCount(tv: TextView, count: Int?) {
     if(count != null) {
         tv.text = "피드 +$count"
     }
+}
+
+@BindingAdapter("bind:imageUrlWithOutBaseUrl")
+fun ImageView.setImageUrl(url: String){
+    val baseUrl = BASE_URL.substring(0, BASE_URL.lastIndex)
+    val fullUrl = "$baseUrl$url"
+    Glide.with(this)
+        .load(fullUrl)
+        .into(this)
 }

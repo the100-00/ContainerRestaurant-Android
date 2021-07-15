@@ -4,13 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.tak8997.github.domain.BannerContent
 import container.restaurant.android.R
+import container.restaurant.android.data.response.BannersInfoResponse
 import container.restaurant.android.databinding.ItemBannerBinding
 
 internal class BannerAdapter : RecyclerView.Adapter<BannerViewHolder>() {
 
-    private val items = mutableListOf<BannerContent>()
+    private val items = mutableListOf<BannersInfoResponse.BannerInfoDtoList.BannerInfoDto>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BannerViewHolder {
         val binding = DataBindingUtil.inflate<ItemBannerBinding>(LayoutInflater.from(parent.context), R.layout.item_banner, parent, false)
@@ -25,7 +25,7 @@ internal class BannerAdapter : RecyclerView.Adapter<BannerViewHolder>() {
         holder.bind(items[position])
     }
 
-    fun addItems(items: List<BannerContent>) {
+    fun addItems(items: List<BannersInfoResponse.BannerInfoDtoList.BannerInfoDto>) {
         this.items.clear()
         this.items.addAll(items)
         notifyDataSetChanged()
@@ -36,7 +36,7 @@ class BannerViewHolder(
     private val binding: ItemBannerBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(bannerContent: BannerContent) {
+    fun bind(bannerContent: BannersInfoResponse.BannerInfoDtoList.BannerInfoDto) {
         binding.item = bannerContent
     }
 }
