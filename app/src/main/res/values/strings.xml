@@ -54,12 +54,17 @@
     <string name="kakao_login">카카오 로그인</string>
     <string name="login_nickname">용기낸 식당에 어서오세요!\n닉네임만 정하면 가입이 끝나요 :)</string>
     <string name="complete">작성 완료</string>
-    <string name="nickname_too_long">16자를 넘을 수 없습니다</string>
+    <string name="nickname_too_long">더 짧은 닉네임을 사용해주세요</string>
+    <string name="nickname_too_short">더 긴 닉네임을 사용해주세요</string>
+    <string name="nickname_empty">닉네임을 입력해주세요</string>
     <string name="nickname_possible">사용 가능한 닉네임 입니다</string>
-    <string name="nickname_not_possiblew">한글/영문/숫자만 입력해 주세요</string>
+    <string name="nickname_letter_impossible">한글/영문/숫자만 입력해주세요</string>
+    <string name="nickname_duplication">닉네임이 이미 존재합니다.</string>
     <string name="all_feed_title">우주같이 웅장한\n용기를 가진 분</string>
     <string name="all_feed_sub_title">세상을 바꾸는\n특별한 용기를 가진 분들</string>
     <string name="confirm">확인</string>
+    <string name="error_message_bad_gateway">서버 오류입니다.</string>
+    <string name="error_message_other">알 수 없는 오류가 발생했습니다.</string>
 
     <string name="all_container_help">우주같이 웅장한 용기를 가진 분은\n
 <b>최근 30일간 피드를 가장 많이 작성한 순</b>\n
@@ -75,5 +80,6 @@
     <string name="my_feed">내 피드</string>
     <string name="scrap_feed">스크랩 피드</string>
     <string name="favorite_restaurant">찜한 식당</string>
+    <string name="sign_in_hint">닉네임을 입력해주세요.</string>
 
 </resources>

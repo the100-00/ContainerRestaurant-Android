@@ -22,11 +22,12 @@ import org.koin.dsl.module
 
 val dataModule = module {
     single<PrefStorage> { SharedPrefStorage(androidContext()) }
-    single<AuthRepository> { AuthDataRepository(get()) }
+    single<AuthRepository> { AuthDataRepository(get(), get()) }
     single<FeedRepository> { FeedDataRepository(get()) }
     single<FeedWriteRepository> { FeedWriteRepository(get(), get()) }
     single<MyRepository> { MyRepository(get())  }
     single<RestaurantRepository> { ResDataRepository(get()) }
+    single<HomeRepository> { HomeRepository(get())}
 }
 
 val roomDBModule = module {

@@ -2,9 +2,7 @@ package container.restaurant.android.di
 
 import com.skydoves.sandwich.coroutines.CoroutinesResponseCallAdapterFactory
 import container.restaurant.android.BuildConfig
-import container.restaurant.android.data.remote.FeedService
-import container.restaurant.android.data.remote.RestaurantService
-import container.restaurant.android.data.remote.NewApiService
+import container.restaurant.android.data.remote.*
 import container.restaurant.android.util.HeaderInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -20,21 +18,18 @@ private val BASE_URL = if (BuildConfig.DEBUG) {
     ""
 }
 
-
+//네트워크 관련 클래스 koin 명세서
 val networkModule = module {
+    //OkHttpClient 와 Retrofit 객체
     single { createOkHttp() }
     single { createRetrofit(get(), BASE_URL) }
+
+    //각 화면에 쓰이는 ApiService
     single { createFeedService(get()) }
-    single { newApiCreate() }
     single { createResService(get()) }
-}
-
-fun createFeedService(retrofit: Retrofit): FeedService {
-    return retrofit.create(FeedService::class.java)
-}
-
-fun createResService(retrofit: Retrofit): RestaurantService {
-    return retrofit.create(RestaurantService::class.java)
+    single { createAuthService(get()) }
+    single { createHomeService(get())}
+    single { newApiCreate() }
 }
 
 fun createOkHttp(): OkHttpClient {
@@ -53,8 +48,23 @@ fun createRetrofit(okHttpClient: OkHttpClient, url: String): Retrofit {
         .baseUrl(url)
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(CoroutinesResponseCallAdapterFactory())
         .build()
 }
+
+fun createFeedService(retrofit: Retrofit): FeedService {
+    return retrofit.create(FeedService::class.java)
+}
+
+fun createResService(retrofit: Retrofit): RestaurantService {
+    return retrofit.create(RestaurantService::class.java)
+}
+
+fun createAuthService(retrofit: Retrofit): AuthService {
+    return retrofit.create(AuthService::class.java)
+}
+
+fun createHomeService(retrofit: Retrofit): HomeService = retrofit.create(HomeService::class.java)
 
 fun newApiCreate(): NewApiService {
     val httpLoggingInterceptor = HttpLoggingInterceptor()
