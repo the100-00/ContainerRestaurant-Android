@@ -5,14 +5,14 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="115dp">
+        android:layout_height="100dp">
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="88dp"
-            android:layout_height="88dp"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="15dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
             android:imageUrl="@{item.image_path}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -22,12 +22,12 @@
             android:id="@+id/tv_res_hashtag"
             android:layout_width="239dp"
             android:layout_height="18dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:text="@{item.address}"
             android:textColor="#cecece"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.045"
             app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintTop_toBottomOf="@+id/tv_res_title"
             tools:text="#용기낸 식당" />
@@ -37,7 +37,7 @@
             android:layout_width="3dp"
             android:layout_height="22dp"
             android:layout_marginStart="4dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="2dp"
             android:text="| "
             android:textColor="#cecece"
             android:textSize="14sp"
@@ -48,72 +48,71 @@
             android:id="@+id/tv_res_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="118dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="20dp"
             android:text="@{item.name}"
             android:textColor="#242424"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="용기낸 식당"/>
+            tools:text="용기낸 식당" />
 
         <TextView
             android:id="@+id/tv_res_rank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:layout_marginTop="73dp"
+            android:layout_marginTop="4dp"
             android:text="@{String.valueOf(item.difficultyAvg)}"
             android:textColor="#242424"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/imageView5"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="2.1"/>
+            app:layout_constraintTop_toBottomOf="@+id/tv_res_hashtag"
+            tools:text="2.1" />
 
         <TextView
             android:id="@+id/tv_res_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:layout_marginTop="73dp"
-            android:text="@{String.valueOf(item.feedCount)}"
+            android:layout_marginTop="5dp"
+            android:text="@{`+`+ String.valueOf(item.feedCount)+`회`}"
             android:textColor="#242424"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/imageView4"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="+3회"/>
+            app:layout_constraintTop_toBottomOf="@+id/tv_res_hashtag"
+            tools:text="+3회" />
 
         <ImageButton
             android:id="@+id/btn_star"
-            android:background="@drawable/selector_star"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginStart="326dp"
-            android:layout_marginTop="13dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="14dp"
+            android:background="@drawable/selector_star"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.96"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-             />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/imageView4"
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:layout_marginStart="4dp"
-            android:layout_marginBottom="13dp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView"
+            android:layout_marginTop="4dp"
             app:layout_constraintStart_toEndOf="@+id/textView4"
+            app:layout_constraintTop_toBottomOf="@+id/tv_res_hashtag"
             app:srcCompat="@drawable/ic_feed_outline" />
 
         <ImageView
             android:id="@+id/imageView5"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="11dp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="3dp"
             app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toBottomOf="@+id/tv_res_hashtag"
             app:srcCompat="@drawable/ic_hard_filled_black" />
     </androidx.constraintlayout.widget.ConstraintLayout>
     <data>

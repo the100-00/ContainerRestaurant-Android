@@ -3,14 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-
     <data>
+        <variable
+            name="viewModel2"
+            type="container.restaurant.android.presentation.map.item.FeedRestaurantViewModel" />
         <variable
             name="viewModel"
             type="container.restaurant.android.presentation.map.item.MapsViewModel" />
-
     </data>
-
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -66,4 +69,9 @@
               app:layout_constraintStart_toStartOf="parent"
               app:layout_constraintTop_toTopOf="parent" /> -->
     </androidx.constraintlayout.widget.ConstraintLayout>
+        <include android:id="@+id/bottomfirst" layout="@layout/fragment_bottom_map"/>
+        <include android:id="@+id/bottomsecond" layout="@layout/fragment_bottom_map_2"/>
+        <include android:id="@+id/bottomres" layout="@layout/fragment_res"/>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 </layout>

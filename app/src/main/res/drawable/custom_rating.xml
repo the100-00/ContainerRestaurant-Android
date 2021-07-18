@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@android:id/background">
+        <bitmap
+            android:src="@drawable/hard_filled_16_px"
+            android:tint="@color/gray_03" />
+    </item>
+
+    <item android:id="@android:id/secondaryProgress">
+        <bitmap
+            android:src="@drawable/hard_filled_16_px"
+            android:tint="@color/gray_03" />
+    </item>
+
+    <item android:id="@android:id/progress">
+        <bitmap
+            android:src="@drawable/hard_filled_16_px"
+            android:tint="#18C08D" />
+    </item>
+</layer-list>
