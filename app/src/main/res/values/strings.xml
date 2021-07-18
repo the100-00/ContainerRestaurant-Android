@@ -82,5 +82,7 @@
     <string name="favorite_restaurant">찜한 식당</string>
     <string name="sign_in_hint">닉네임을 입력해주세요.</string>
     <string name="banner_image">배너 이미지</string>
+    <string name="home_empty_feed">아직 작성된 피드가 없어요!</string>
+    <string name="empty_data_info">피드 데이터가 없습니다</string>
 
 </resources>

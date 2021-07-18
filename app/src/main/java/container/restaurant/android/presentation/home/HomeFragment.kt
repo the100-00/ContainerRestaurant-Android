@@ -111,10 +111,10 @@ internal class HomeFragment : Fragment() {
     }
 
     private fun setupContainerFeedRecycler() {
-        with(binding.rvContainerFeedHistory) {
-            layoutManager = GridLayoutManager(context ?: return, 2)
-            adapter = containerFeedAdapter
-        }
+//        with(binding.rvContainerFeedHistory) {
+//            layoutManager = GridLayoutManager(context ?: return, 2)
+//            adapter = containerFeedAdapter
+//        }
     }
 
     companion object {
