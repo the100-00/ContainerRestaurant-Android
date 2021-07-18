@@ -8,6 +8,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.button.MaterialButton
 import container.restaurant.android.R
 import container.restaurant.android.di.BASE_URL
+import java.util.*
 
 @BindingAdapter(value = ["android:imageUrl", "android:circleCrop"], requireAll = false)
 fun ImageView.setImage(url: String?, circleCrop: Boolean = false) {
@@ -73,10 +74,38 @@ fun bindFavoriteFeedCount(tv: TextView, count: Int?) {
 }
 
 @BindingAdapter("bind:imageUrlWithOutBaseUrl")
-fun ImageView.setImageUrl(url: String){
-    val baseUrl = BASE_URL.substring(0, BASE_URL.lastIndex)
-    val fullUrl = "$baseUrl$url"
-    Glide.with(this)
-        .load(fullUrl)
-        .into(this)
+fun ImageView.setImageUrlWithoutBaseUrl(url: String?){
+    url?.let{
+        val baseUrl = BASE_URL.substring(0, BASE_URL.lastIndex)
+        val fullUrl = "$baseUrl$url"
+        Glide.with(this)
+            .load(fullUrl)
+            .into(this)
+    }
+}
+
+@BindingAdapter("bind:imageUrlWithBaseUrl")
+fun ImageView.setImageUrlWithBaseUrl(url: String?){
+    url?.let{
+        Glide.with(this)
+            .load(url)
+            .into(this)
+    }
+}
+
+@BindingAdapter("bind:emptyFeedBackgroundSetup")
+fun ImageView.setEmptyFeedBackgroundSetup(boolean: String) {
+    if(boolean.toBoolean()){
+        when(Random().nextInt(3)){
+            0 -> {
+                setBackgroundResource(R.color.green_02)
+            }
+            1 -> {
+                setBackgroundResource(R.color.blue_01)
+            }
+            2 -> {
+                setBackgroundResource(R.color.yellow_02)
+            }
+        }
+    }
 }

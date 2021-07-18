@@ -55,4 +55,19 @@ class HomeRepository(private val homeService: HomeService) {
                 emit(this)
             }
     }.flowOn(Dispatchers.IO)
+
+    @WorkerThread
+    suspend fun getRecommendedFeedList() = flow {
+        val response = homeService.recommendedFeedList()
+        response
+            .suspendOnSuccess {
+                emit(this)
+            }
+            .suspendOnError {
+                emit(this)
+            }
+            .suspendOnException {
+                emit(this)
+            }
+    }.flowOn(Dispatchers.IO)
 }

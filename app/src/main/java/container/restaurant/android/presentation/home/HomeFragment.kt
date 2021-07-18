@@ -24,10 +24,6 @@ internal class HomeFragment : Fragment() {
         BannerAdapter()
     }
 
-    private val containerFeedAdapter by lazy {
-        ContainerFeedAdapter()
-    }
-
     private val viewModel: HomeViewModel by viewModel()
 
     private lateinit var binding: FragmentHomeBinding
@@ -51,7 +47,7 @@ internal class HomeFragment : Fragment() {
         observeData()
         setUpBannerView()
         getBannersInfo()
-        setupContainerFeedRecycler()
+        getRecommendedFeedList()
     }
 
     private fun observeData() {
@@ -67,12 +63,17 @@ internal class HomeFragment : Fragment() {
         observe(viewModel.bannerList) {
             addBannerItems()
         }
+
+        observe(viewModel.recommendedFeedList){
+
+        }
     }
 
     private fun addBannerItems() {
-        bannerAdapter.addItems(
-            viewModel.bannerList.value?.bannerInfoDtoList!!
-        )
+        viewModel.bannerList.value?.bannerInfoDtoList?.let{
+            bannerAdapter.addItems(it)
+        }
+
     }
 
     private fun setUpBannerView(){
@@ -84,6 +85,12 @@ internal class HomeFragment : Fragment() {
     private fun getBannersInfo() {
         lifecycleScope.launchWhenCreated {
             viewModel.getBannersInfo()
+        }
+    }
+
+    private fun getRecommendedFeedList() {
+        lifecycleScope.launchWhenCreated {
+            viewModel.getRecommendedFeedList()
         }
     }
 
@@ -108,13 +115,6 @@ internal class HomeFragment : Fragment() {
             }
         })
         dialog.show(childFragmentManager,"SimpleConfirmDialog")
-    }
-
-    private fun setupContainerFeedRecycler() {
-//        with(binding.rvContainerFeedHistory) {
-//            layoutManager = GridLayoutManager(context ?: return, 2)
-//            adapter = containerFeedAdapter
-//        }
     }
 
     companion object {

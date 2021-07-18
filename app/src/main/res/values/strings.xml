@@ -84,5 +84,7 @@
     <string name="banner_image">배너 이미지</string>
     <string name="home_empty_feed">아직 작성된 피드가 없어요!</string>
     <string name="empty_data_info">피드 데이터가 없습니다</string>
+    <string name="recommended_feed_thumbnail_image">추천 피드 썸네일 이미지</string>
+    <string name="like_button">좋아요 버튼</string>
 
 </resources>

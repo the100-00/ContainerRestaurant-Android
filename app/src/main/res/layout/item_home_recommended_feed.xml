@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="container.restaurant.android.data.response.FeedListResponse.FeedPreviewDtoList.FeedPreviewDto" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginBottom="10dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view_img_feed"
+            android:layout_width="match_parent"
+            android:layout_height="192dp"
+            app:cardCornerRadius="10dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            >
+            <ImageView
+                android:id="@+id/img_feed"
+                android:layout_width="match_parent"
+                android:layout_height="192dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_empty_feed_img"
+                bind:imageUrlWithOutBaseUrl="@{item.thumbnailUrl}"
+                bind:emptyFeedBackgroundSetup='@{"true"}'
+                android:contentDescription="@string/recommended_feed_thumbnail_image" />
+        </androidx.cardview.widget.CardView>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:src="@drawable/ic_like_outline_white_20_px"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:contentDescription="@string/like_button"
+            android:elevation="10dp"
+            app:layout_constraintBottom_toBottomOf="@id/card_view_img_feed"
+            app:layout_constraintRight_toRightOf="@id/card_view_img_feed" />
+
+
+
+        <TextView
+            android:id="@+id/tv_nickname"
+            style="@style/TextAppearance.App.B.Gray07"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="start"
+            android:singleLine="true"
+            android:text="@{item.ownerNickname}"
+            android:textSize="12dp"
+            tools:ignore="SpUsage"
+            app:layout_constraintTop_toBottomOf="@id/card_view_img_feed"
+            tools:text="닉네임"
+            />
+
+        <TextView
+            android:id="@+id/tv_contents"
+            style="@style/TextAppearance.App.R.Gray06"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="@{item.content}"
+            android:textSize="12dp"
+            tools:ignore="SpUsage"
+            android:maxLines="2"
+            app:layout_constraintTop_toBottomOf="@+id/tv_nickname"
+            tools:text="컨텐츠 컨텐츠 텐츠 텐츠 텐츠 텐츠 텐츠 텐츠 텐츠 텐츠 텐츠 텐츠 텐츠 텐츠 텐츠 텐츠 텐츠 텐츠 텐츠 텐츠 " />
+
+
+        <TextView
+            style="@style/TextAppearance.App.B.Gray05"
+            android:id="@+id/tv_like_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{String.valueOf(item.likeCount)}"
+            android:textSize="12dp"
+            tools:ignore="SpUsage"
+            android:layout_marginStart="4dp"
+            tools:text="99"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_contents"
+            app:drawableStartCompat="@drawable/ic_like_outline_12_px"
+            android:drawablePadding="4dp"
+            android:layout_marginTop="5dp"
+            />
+
+
+        <TextView
+            style="@style/TextAppearance.App.B.Gray05"
+            android:id="@+id/tv_comment_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{String.valueOf(item.replyCount)}"
+            android:textSize="12dp"
+            tools:ignore="SpUsage"
+            tools:text="99"
+            app:layout_constraintTop_toBottomOf="@id/tv_contents"
+            app:layout_constraintStart_toEndOf="@id/tv_like_count"
+            app:drawableStartCompat="@drawable/ic_comment_outline_12_px"
+            android:drawablePadding="4dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="6dp"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>
