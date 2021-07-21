@@ -3,6 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="container.restaurant.android.presentation.home.HomeViewModel" />
+    </data>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -23,7 +28,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="3dp"
-                android:src="@drawable/ic_chevron_left_outline" />
+                android:src="@drawable/ic_chevron_left_outline"
+                android:contentDescription="@string/back" />
 
             <TextView
                 style="@style/TextAppearance.App.B.Gray07"
@@ -31,6 +37,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/user_profile"
                 android:textSize="16dp"
+                tools:ignore="SpUsage"
                 android:layout_gravity="center" />
         </androidx.appcompat.widget.Toolbar>
 
@@ -63,17 +70,20 @@
                         android:layout_height="42dp"
                         android:layout_marginTop="19dp"
                         android:layout_marginStart="16dp"
+                        android:contentDescription="@string/user_profile_image"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        style="@style/TextAppearance.App.B.Gray07"
                         android:id="@+id/tv_nickname"
+                        style="@style/TextAppearance.App.B.Gray07"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/nickname"
-                        android:textSize="18dp"
                         android:layout_marginStart="8dp"
+                        android:text="@{viewModel.userInfo.nickname}"
+                        tools:text="@string/nickname"
+                        android:textSize="18dp"
+                        tools:ignore="SpUsage"
                         app:layout_constraintLeft_toRightOf="@+id/img_user"
                         app:layout_constraintTop_toTopOf="@+id/img_user" />
 
@@ -81,6 +91,7 @@
                         style="@style/TextAppearance.App.B.Green03"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@{viewModel.userInfo.levelTitle}"
                         tools:text="LV4. 금 용기"
                         app:layout_constraintTop_toBottomOf="@+id/tv_nickname"
                         app:layout_constraintLeft_toLeftOf="@+id/tv_nickname"
@@ -106,13 +117,14 @@
                         android:layout_marginTop="12dp"
                         android:layout_marginStart="17dp"
                         android:layout_marginBottom="16dp"
-                        android:drawableLeft="@drawable/profile_view_count_filled_24_px"
                         android:drawablePadding="6dp"
                         android:gravity="center"
+                        android:text='@{viewModel.userInfo.feedCount+"회 용기 냈어요"}'
                         tools:text="0회 용기 냈어요"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/separator"
-                        app:layout_constraintLeft_toLeftOf="parent" />
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:drawableStartCompat="@drawable/profile_view_count_filled_24_px" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -127,7 +139,4 @@
 
     </LinearLayout>
 
-    <data>
-
-    </data>
 </layout>

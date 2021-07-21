@@ -83,7 +83,7 @@ internal class KakaoSignInDialogFragment : DialogFragment() {
     private fun observeData() {
         with(viewModel) {
             observe(signInWithAccessTokenResult) { response ->
-                response.id
+                storeUserId(response.id)
             }
             signInWithAccessTokenSuccess.observe(this@KakaoSignInDialogFragment, EventObserver {
                 startActivity(UserProfileActivity.getIntent(requireContext()))

@@ -86,5 +86,7 @@
     <string name="empty_data_info">피드 데이터가 없습니다</string>
     <string name="recommended_feed_thumbnail_image">추천 피드 썸네일 이미지</string>
     <string name="like_button">좋아요 버튼</string>
+    <string name="back">뒤로 가기</string>
+    <string name="user_profile_image">프로필 이미지</string>
 
 </resources>

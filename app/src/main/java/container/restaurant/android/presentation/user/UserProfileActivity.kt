@@ -5,14 +5,19 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import container.restaurant.android.R
 import container.restaurant.android.databinding.ActivityUserProfileBinding
 import container.restaurant.android.presentation.feed.item.ContainerFeedAdapter
+import container.restaurant.android.presentation.home.HomeViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 internal class UserProfileActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityUserProfileBinding
+
+    private val viewModel: HomeViewModel by viewModel()
 
     private val containerFeedAdapter by lazy {
         ContainerFeedAdapter()
@@ -23,12 +28,22 @@ internal class UserProfileActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_user_profile)
 
         setupFeedRecycler()
+        getUserData()
     }
 
     private fun setupFeedRecycler() {
         with(binding.rvContainerFeed) {
             layoutManager = GridLayoutManager(this@UserProfileActivity, 2)
             adapter = containerFeedAdapter
+        }
+    }
+
+    private fun getUserData() {
+        if(viewModel.isUserSignIn()){
+            lifecycleScope.launchWhenCreated {
+                viewModel.getUserFeedList()
+                viewModel.getUserInfo()
+            }
         }
     }
 
