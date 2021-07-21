@@ -6,6 +6,7 @@
 
     <data>
 
+        <import type="android.view.View"/>
         <variable
             name="item"
             type="container.restaurant.android.data.response.FeedListResponse.FeedPreviewDtoList.FeedPreviewDto" />
@@ -75,6 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:text="@{item.content}"
+            android:visibility="@{item.content.empty? View.GONE : View.VISIBLE}"
             android:textSize="12dp"
             tools:ignore="SpUsage"
             android:maxLines="2"
