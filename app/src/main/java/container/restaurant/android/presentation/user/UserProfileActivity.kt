@@ -6,11 +6,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.GridLayoutManager
 import container.restaurant.android.R
 import container.restaurant.android.databinding.ActivityUserProfileBinding
-import container.restaurant.android.presentation.feed.item.ContainerFeedAdapter
 import container.restaurant.android.presentation.home.HomeViewModel
+import container.restaurant.android.util.observe
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 internal class UserProfileActivity : AppCompatActivity() {
@@ -22,8 +21,18 @@ internal class UserProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_user_profile)
+        binding.viewModel = viewModel
 
+        observeData()
         getUserData()
+    }
+
+    private fun observeData() {
+        with(viewModel){
+            observe(isBackButtonClicked){
+                finish()
+            }
+        }
     }
 
     private fun getUserData() {

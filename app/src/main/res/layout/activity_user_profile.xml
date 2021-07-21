@@ -30,6 +30,7 @@
                 android:layout_height="wrap_content"
                 android:padding="3dp"
                 android:src="@drawable/ic_chevron_left_outline"
+                android:onClick="@{()->viewModel.onClickBackButton()}"
                 android:contentDescription="@string/back" />
 
             <TextView

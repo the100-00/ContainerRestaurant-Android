@@ -44,12 +44,19 @@ internal class HomeViewModel(
     private val _isNavToMyContainerFeedClicked = MutableLiveData<Event<Boolean>>()
     val isNavToMyContainerFeedClicked: LiveData<Event<Boolean>> = _isNavToMyContainerFeedClicked
 
+    private val _isBackButtonClicked = MutableLiveData<Event<Boolean>>()
+    val isBackButtonClicked: LiveData<Event<Boolean>> = _isBackButtonClicked
+
     fun onClickMyContainerFeed() {
         _isNavToMyContainerFeedClicked.value = Event(true)
     }
 
     fun onClickAllContainerFeed() {
         _isNavToAllContainerFeedClicked.value = Event(true)
+    }
+
+    fun onClickBackButton() {
+        _isBackButtonClicked.value = Event(true)
     }
 
     fun isUserSignIn(): Boolean {
