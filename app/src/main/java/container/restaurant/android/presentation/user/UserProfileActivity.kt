@@ -19,23 +19,11 @@ internal class UserProfileActivity : AppCompatActivity() {
 
     private val viewModel: HomeViewModel by viewModel()
 
-    private val containerFeedAdapter by lazy {
-        ContainerFeedAdapter()
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_user_profile)
 
-        setupFeedRecycler()
         getUserData()
-    }
-
-    private fun setupFeedRecycler() {
-        with(binding.rvContainerFeed) {
-            layoutManager = GridLayoutManager(this@UserProfileActivity, 2)
-            adapter = containerFeedAdapter
-        }
     }
 
     private fun getUserData() {

@@ -23,21 +23,17 @@ internal class HomeViewModel(
     val navToAllContainerFeed = MutableLiveData<Event<Unit>>()
 
     private val _signInWithAccessTokenResult = MutableLiveData<SignInWithAccessTokenResponse>()
-    val signInWithAccessTokenResult: LiveData<SignInWithAccessTokenResponse> =
-        _signInWithAccessTokenResult
+    val signInWithAccessTokenResult: LiveData<SignInWithAccessTokenResponse> = _signInWithAccessTokenResult
 
     private val _bannerList = MutableLiveData<BannersInfoResponse.BannerInfoDtoList>()
     val bannerList: LiveData<BannersInfoResponse.BannerInfoDtoList> = _bannerList
 
     private val _recommendedFeedList =
         MutableLiveData<List<FeedListResponse.FeedPreviewDtoList.FeedPreviewDto>>()
-    val recommendedFeedList: LiveData<List<FeedListResponse.FeedPreviewDtoList.FeedPreviewDto>> =
-        _recommendedFeedList
+    val recommendedFeedList: LiveData<List<FeedListResponse.FeedPreviewDtoList.FeedPreviewDto>> = _recommendedFeedList
 
-    private val _userFeedList =
-        MutableLiveData<List<FeedListResponse.FeedPreviewDtoList.FeedPreviewDto>>()
-    val userFeedList: LiveData<List<FeedListResponse.FeedPreviewDtoList.FeedPreviewDto>> =
-        _userFeedList
+    private val _userFeedList = MutableLiveData<List<FeedListResponse.FeedPreviewDtoList.FeedPreviewDto>>()
+    val userFeedList: LiveData<List<FeedListResponse.FeedPreviewDtoList.FeedPreviewDto>> = _userFeedList
 
     private val _userInfo = MutableLiveData<UserInfoResponse>()
     val userInfo: LiveData<UserInfoResponse> = _userInfo
