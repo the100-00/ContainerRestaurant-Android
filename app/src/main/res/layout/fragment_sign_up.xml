@@ -81,6 +81,7 @@
             android:fontFamily="@font/spoqa_hans_sans_bold"
             android:insetTop="0dp"
             android:insetBottom="0dp"
+            android:textAppearance="@style/TextAppearance.App.B.Gray01"
             android:foreground="?attr/selectableItemBackground"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
