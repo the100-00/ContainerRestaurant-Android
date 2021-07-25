@@ -38,6 +38,10 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
+ext {
+    srvVersion = "0.7.2"
+}
+
 def teamConfig(configFile) {
     def teamConfigDir = file('teamConfig')
     return new File(teamConfigDir, configFile)

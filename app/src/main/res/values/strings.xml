@@ -58,7 +58,7 @@
     <string name="nickname_too_short">더 긴 닉네임을 사용해주세요</string>
     <string name="nickname_empty">닉네임을 입력해주세요</string>
     <string name="nickname_possible">사용 가능한 닉네임 입니다</string>
-    <string name="nickname_letter_impossible">한글/영문/숫자만 입력해주세요</string>
+    <string name="nickname_letter_impossible">한글/영문/숫자 또는 공백만 입력해주세요</string>
     <string name="nickname_duplication">닉네임이 이미 존재합니다.</string>
     <string name="all_feed_title">우주같이 웅장한\n용기를 가진 분</string>
     <string name="all_feed_sub_title">세상을 바꾸는\n특별한 용기를 가진 분들</string>
@@ -81,5 +81,19 @@
     <string name="scrap_feed">스크랩 피드</string>
     <string name="favorite_restaurant">찜한 식당</string>
     <string name="sign_in_hint">닉네임을 입력해주세요.</string>
+    <string name="banner_image">배너 이미지</string>
+    <string name="home_empty_feed">아직 작성된 피드가 없어요!</string>
+    <string name="empty_data_info">피드 데이터가 없습니다</string>
+    <string name="recommended_feed_thumbnail_image">추천 피드 썸네일 이미지</string>
+    <string name="like_button">좋아요 버튼</string>
+    <string name="back">뒤로 가기</string>
+    <string name="user_profile_image">프로필 이미지</string>
+    <string name="profile_empty_data">아직 용기낸 횟수가 없어요!</string>
+    <string name="empty_profile_lv1">LV1. 텀블러</string>
+    <string name="empty_profile_lv2">LV2. 밥그릇</string>
+    <string name="empty_profile_lv3">LV3. 금 용기</string>
+    <string name="empty_profile_lv4">LV4. 후라이팬</string>
+    <string name="empty_profile_lv5">LV5. 냄비</string>
+    <string name="brave_count">%d회 용기냈어요</string>
 
 </resources>

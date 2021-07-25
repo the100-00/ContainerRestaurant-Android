@@ -41,4 +41,63 @@ class HomeRepository(private val homeService: HomeService) {
             }
     }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(Dispatchers.IO)
 
+    @WorkerThread
+    suspend fun getBannersInfo() = flow {
+        val response = homeService.bannersInfo()
+        response
+            .suspendOnSuccess {
+                emit(this)
+            }
+            .suspendOnError {
+                emit(this)
+            }
+            .suspendOnException {
+                emit(this)
+            }
+    }.flowOn(Dispatchers.IO)
+
+    @WorkerThread
+    suspend fun getRecommendedFeedList() = flow {
+        val response = homeService.recommendedFeedList()
+        response
+            .suspendOnSuccess {
+                emit(this)
+            }
+            .suspendOnError {
+                emit(this)
+            }
+            .suspendOnException {
+                emit(this)
+            }
+    }.flowOn(Dispatchers.IO)
+
+    @WorkerThread
+    suspend fun getUserFeedList(userId: Int) = flow {
+        val response = homeService.userFeedList(userId)
+        response
+            .suspendOnSuccess {
+                emit(this)
+            }
+            .suspendOnError {
+                emit(this)
+            }
+            .suspendOnException {
+                emit(this)
+            }
+    }.flowOn(Dispatchers.IO)
+
+    @WorkerThread
+    suspend fun getUserInfo(userId: Int) = flow {
+        val response = homeService.userInfo(userId)
+        response
+            .suspendOnSuccess {
+                emit(this)
+            }
+            .suspendOnError {
+                emit(this)
+            }
+            .suspendOnException {
+                emit(this)
+            }
+    }.flowOn(Dispatchers.IO)
 }
