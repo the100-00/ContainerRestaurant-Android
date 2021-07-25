@@ -3,13 +3,11 @@ package container.restaurant.android.presentation.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.skydoves.sandwich.ApiResponse
 import container.restaurant.android.data.PrefStorage
 import container.restaurant.android.data.repository.HomeRepository
 import container.restaurant.android.data.response.BannersInfoResponse
 import container.restaurant.android.data.response.FeedListResponse
 import container.restaurant.android.data.response.SignInWithAccessTokenResponse
-import container.restaurant.android.data.response.UserInfoResponse
 import container.restaurant.android.util.Event
 import container.restaurant.android.util.handleApiResponse
 import kotlinx.coroutines.flow.collect
@@ -28,15 +26,25 @@ internal class HomeViewModel(
     private val _bannerList = MutableLiveData<BannersInfoResponse.BannerInfoDtoList>()
     val bannerList: LiveData<BannersInfoResponse.BannerInfoDtoList> = _bannerList
 
-    private val _recommendedFeedList =
-        MutableLiveData<List<FeedListResponse.FeedPreviewDtoList.FeedPreviewDto>>()
+    private val _recommendedFeedList = MutableLiveData<List<FeedListResponse.FeedPreviewDtoList.FeedPreviewDto>>()
     val recommendedFeedList: LiveData<List<FeedListResponse.FeedPreviewDtoList.FeedPreviewDto>> = _recommendedFeedList
 
     private val _userFeedList = MutableLiveData<List<FeedListResponse.FeedPreviewDtoList.FeedPreviewDto>>()
     val userFeedList: LiveData<List<FeedListResponse.FeedPreviewDtoList.FeedPreviewDto>> = _userFeedList
 
-    private val _userInfo = MutableLiveData<UserInfoResponse>()
-    val userInfo: LiveData<UserInfoResponse> = _userInfo
+    private val _userNickName = MutableLiveData<String>()
+    val userNickName: LiveData<String> = _userNickName
+
+    private val _userProfileUrl = MutableLiveData<String>()
+    val userProfileUrl: LiveData<String> = _userProfileUrl
+
+    val userProfileRes = MutableLiveData<Int>()
+
+    private val _userLevelTitle = MutableLiveData<String>()
+    val userLevelTitle: LiveData<String> = _userLevelTitle
+
+    private val _userFeedCount = MutableLiveData<Int>()
+    val userFeedCount: LiveData<Int> = _userFeedCount
 
     private val _isNavToAllContainerFeedClicked = MutableLiveData<Event<Boolean>>()
     val isNavToAllContainerFeedClicked: LiveData<Event<Boolean>> = _isNavToAllContainerFeedClicked
@@ -148,9 +156,15 @@ internal class HomeViewModel(
                 handleApiResponse(
                     response = response,
                     onSuccess = {
-                        it.data?.let{ userInfoResponse ->
-                            _userInfo.value = userInfoResponse
-                        }
+                        _userNickName.value = it.data?.nickname
+                        _userFeedCount.value = it.data?.feedCount
+                        _userProfileUrl.value = it.data?.profile
+                        _userLevelTitle.value = it.data?.levelTitle
+                        Timber.d("userInfo value ${it.data}")
+                        Timber.d("_userNickName value ${_userNickName.value}")
+                        Timber.d("_userLevelTitle value ${_userLevelTitle.value}")
+                        Timber.d("_userFeedCount value ${_userFeedCount.value}")
+                        Timber.d("_userProfileUrl value ${_userProfileUrl.value}")
                     },
                     onError = {
                         Timber.d("it.errorBody : ${it.errorBody}")

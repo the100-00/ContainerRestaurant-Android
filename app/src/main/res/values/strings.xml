@@ -88,5 +88,12 @@
     <string name="like_button">좋아요 버튼</string>
     <string name="back">뒤로 가기</string>
     <string name="user_profile_image">프로필 이미지</string>
+    <string name="profile_empty_data">아직 용기낸 횟수가 없어요!</string>
+    <string name="empty_profile_lv1">LV1. 텀블러</string>
+    <string name="empty_profile_lv2">LV2. 밥그릇</string>
+    <string name="empty_profile_lv3">LV3. 금 용기</string>
+    <string name="empty_profile_lv4">LV4. 후라이팬</string>
+    <string name="empty_profile_lv5">LV5. 냄비</string>
+    <string name="brave_count">%d회 용기냈어요</string>
 
 </resources>
