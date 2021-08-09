@@ -31,6 +31,17 @@ class PrivacyPolicyFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getPrivacyPolicy()
+        observeData()
+    }
+
+    private fun observeData() {
+        with(viewModel) {
+            onPrivacyPolicyLoad.observe(viewLifecycleOwner) {
+                if(it){
+                    binding.layoutLoading.visibility = View.GONE
+                }
+            }
+        }
     }
 
     private fun getPrivacyPolicy() {

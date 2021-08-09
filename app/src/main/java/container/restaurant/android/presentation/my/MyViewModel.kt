@@ -1,6 +1,7 @@
 package container.restaurant.android.presentation.my
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import container.restaurant.android.data.PrefStorage
@@ -56,17 +57,24 @@ class MyViewModel(private val prefStorage: PrefStorage, private val myRepository
     private val _termsOfServiceArticle = MutableLiveData<String>()
     val termsOfServiceArticle: LiveData<String> = _termsOfServiceArticle
 
+    val onTermsOfServiceLoad: MediatorLiveData<Boolean> = MediatorLiveData()
+
     private val _privacyPolicyTitle = MutableLiveData<String>()
     val privacyPolicyTitle: LiveData<String> = _privacyPolicyTitle
 
     private val _privacyPolicyArticle = MutableLiveData<String>()
     val privacyPolicyArticle: LiveData<String> = _privacyPolicyArticle
 
-    private val _myFeedList = MutableLiveData<List<FeedListResponse.FeedPreviewDtoList.FeedPreviewDto>>()
+    val onPrivacyPolicyLoad: MediatorLiveData<Boolean> = MediatorLiveData()
+
+    private val _myFeedList =
+        MutableLiveData<List<FeedListResponse.FeedPreviewDtoList.FeedPreviewDto>>()
     val myFeedList: LiveData<List<FeedListResponse.FeedPreviewDtoList.FeedPreviewDto>> = _myFeedList
 
-    private val _myScrapFeedList = MutableLiveData<List<FeedListResponse.FeedPreviewDtoList.FeedPreviewDto>>()
-    val myScrapFeedList: LiveData<List<FeedListResponse.FeedPreviewDtoList.FeedPreviewDto>> = _myFeedList
+    private val _myScrapFeedList =
+        MutableLiveData<List<FeedListResponse.FeedPreviewDtoList.FeedPreviewDto>>()
+    val myScrapFeedList: LiveData<List<FeedListResponse.FeedPreviewDtoList.FeedPreviewDto>> =
+        _myFeedList
 
     private val _isSettingButtonClicked = MutableLiveData<Event<Boolean>>()
     val isSettingButtonClicked: LiveData<Event<Boolean>> = _isSettingButtonClicked
@@ -78,7 +86,8 @@ class MyViewModel(private val prefStorage: PrefStorage, private val myRepository
     val isScrapFeedButtonClicked: LiveData<Event<Boolean>> = _isScrapFeedButtonClicked
 
     private val _isBookmarkedRestaurantButtonClicked = MutableLiveData<Event<Boolean>>()
-    val isBookmarkedRestaurantButtonClicked: LiveData<Event<Boolean>> = _isBookmarkedRestaurantButtonClicked
+    val isBookmarkedRestaurantButtonClicked: LiveData<Event<Boolean>> =
+        _isBookmarkedRestaurantButtonClicked
 
     private val _isNicknameChangeButtonClicked = MutableLiveData<Event<Boolean>>()
     val isNicknameChangeButtonClicked: LiveData<Event<Boolean>> = _isNicknameChangeButtonClicked
@@ -97,6 +106,27 @@ class MyViewModel(private val prefStorage: PrefStorage, private val myRepository
 
     private val _isWithdrawalButtonClicked = MutableLiveData<Event<Boolean>>()
     val isWithdrawalButtonClicked: LiveData<Event<Boolean>> = _isWithdrawalButtonClicked
+
+    init {
+        onTermsOfServiceLoad.addSource(termsOfServiceTitle) {
+            onTermsOfServiceLoad.value = isTermsOfServiceLoadDone()
+        }
+        onTermsOfServiceLoad.addSource(termsOfServiceArticle) {
+            onTermsOfServiceLoad.value = isTermsOfServiceLoadDone()
+        }
+        onPrivacyPolicyLoad.addSource(privacyPolicyTitle) {
+            onPrivacyPolicyLoad.value = isPrivacyPolicyLoadDone()
+        }
+        onPrivacyPolicyLoad.addSource(privacyPolicyArticle) {
+            onPrivacyPolicyLoad.value = isPrivacyPolicyLoadDone()
+        }
+    }
+
+    private fun isTermsOfServiceLoadDone(): Boolean =
+        (termsOfServiceTitle.value != null && termsOfServiceArticle.value != null)
+
+    private fun isPrivacyPolicyLoadDone(): Boolean =
+        (privacyPolicyTitle.value != null && privacyPolicyArticle.value != null)
 
     fun onSettingButtonClick() {
         _isSettingButtonClicked.value = Event(true)
@@ -192,9 +222,10 @@ class MyViewModel(private val prefStorage: PrefStorage, private val myRepository
                 handleApiResponse(
                     response = response,
                     onSuccess = {
-                        val termsOfService =it.data?.embedded?.contractInfoDTOList?.find { contract ->
-                            contract.title == "용기낸식당 이용약관"
-                        }
+                        val termsOfService =
+                            it.data?.embedded?.contractInfoDTOList?.find { contract ->
+                                contract.title == "용기낸식당 이용약관"
+                            }
                         _termsOfServiceTitle.value = termsOfService?.title
                         _termsOfServiceArticle.value = termsOfService?.article
                     },
@@ -219,9 +250,10 @@ class MyViewModel(private val prefStorage: PrefStorage, private val myRepository
                 handleApiResponse(
                     response = response,
                     onSuccess = {
-                        val privacyPolicy = it.data?.embedded?.contractInfoDTOList?.find { contract ->
-                            contract.title == "용기낸식당 개인정보 취급방침"
-                        }
+                        val privacyPolicy =
+                            it.data?.embedded?.contractInfoDTOList?.find { contract ->
+                                contract.title == "용기낸식당 개인정보 취급방침"
+                            }
                         _privacyPolicyTitle.value = privacyPolicy?.title
                         _privacyPolicyArticle.value = privacyPolicy?.article
                     },

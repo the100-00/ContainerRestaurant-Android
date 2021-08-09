@@ -30,6 +30,17 @@ class TermsOfServiceFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getTermsOfService()
+        observeData()
+    }
+
+    private fun observeData() {
+        with(viewModel) {
+            onTermsOfServiceLoad.observe(viewLifecycleOwner) {
+                if(it) {
+                    binding.layoutLoading.visibility = View.GONE
+                }
+            }
+        }
     }
 
     private fun getTermsOfService() {

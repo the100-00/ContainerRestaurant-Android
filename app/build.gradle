@@ -134,6 +134,9 @@ dependencies {
     // rating bar
     implementation 'com.hedgehog.ratingbar:app:1.1.2'
 
+    // lottie
+    implementation 'com.airbnb.android:lottie:3.0.7'
+
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
