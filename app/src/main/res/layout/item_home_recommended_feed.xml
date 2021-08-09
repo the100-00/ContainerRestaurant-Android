@@ -35,7 +35,7 @@
                 android:layout_height="192dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_empty_feed_img"
-                bind:imageUrlWithOutBaseUrl="@{item.thumbnailUrl}"
+                bind:imageUrlWithBaseUrl="@{item.thumbnailUrl}"
                 bind:emptyFeedBackgroundSetup='@{"true"}'
                 android:contentDescription="@string/recommended_feed_thumbnail_image" />
         </androidx.cardview.widget.CardView>
