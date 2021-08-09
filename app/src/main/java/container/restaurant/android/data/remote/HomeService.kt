@@ -4,7 +4,7 @@ import com.skydoves.sandwich.ApiResponse
 import container.restaurant.android.data.request.SignInWithAccessTokenRequest
 import container.restaurant.android.data.response.BannersInfoResponse
 import container.restaurant.android.data.response.FeedListResponse
-import container.restaurant.android.data.response.SignInWithAccessTokenResponse
+import container.restaurant.android.data.response.ProfileResponse
 import container.restaurant.android.data.response.UserInfoResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -15,7 +15,7 @@ interface HomeService {
     @POST("/api/user/login")
     suspend fun signInWithAccessToken(
         @Body signInWithAccessTokenRequest: SignInWithAccessTokenRequest
-    ): ApiResponse<SignInWithAccessTokenResponse>
+    ): ApiResponse<ProfileResponse>
 
     @GET("/banners")
     suspend fun bannersInfo() : ApiResponse<BannersInfoResponse>

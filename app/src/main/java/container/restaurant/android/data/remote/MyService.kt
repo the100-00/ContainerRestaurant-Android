@@ -8,7 +8,7 @@ import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import retrofit2.http.*
 
-interface NewApiService {
+interface MyService {
     @GET("/api/user/temp-login")
     suspend fun getTempLogin(): ApiResponse<ResponseBody>
 
@@ -35,4 +35,21 @@ interface NewApiService {
 
     @GET("/api/favorite/restaurant")
     suspend fun getFavoriteRestaurant(@Header("Cookie") cookie: String) : ApiResponse<MyFavoriteResponse>
+
+    @GET("/api/user/{userId}")
+    suspend fun userInfo(
+        @Path("userId") userId: Int
+    ) : ApiResponse<UserInfoResponse>
+
+    @GET("/api/contract")
+    suspend fun contract() : ApiResponse<ContractResponse>
+
+    @GET("/api/feed/user/{userId}")
+    suspend fun myFeed(@Path("userId")userId: Int) :ApiResponse<FeedListResponse>
+
+    @GET("/api/feed/user/{userId}/scrap")
+    suspend fun myScrapFeed(@Path("userId")userId:Int): ApiResponse<FeedListResponse>
+
+    @GET("/api/favorite/restaurant")
+    suspend fun favoriteRestaurant()
 }

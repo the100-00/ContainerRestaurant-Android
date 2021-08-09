@@ -6,8 +6,9 @@ import container.restaurant.android.data.PrefStorage
 import container.restaurant.android.data.remote.AuthService
 import container.restaurant.android.data.request.SignInWithAccessTokenRequest
 import container.restaurant.android.data.request.SignUpWithAccessTokenRequest
+import container.restaurant.android.data.request.UpdateProfileRequest
 import container.restaurant.android.data.response.NicknameDuplicationCheckResponse
-import container.restaurant.android.data.response.SignInWithAccessTokenResponse
+import container.restaurant.android.data.response.ProfileResponse
 import container.restaurant.android.data.response.SignUpWithAccessTokenResponse
 import container.restaurant.android.util.ErrorResponseMapper
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +24,7 @@ interface AuthRepository {
         onStart: () -> Unit,
         onComplete: () -> Unit,
         onError: (String?) -> Unit
-    ): Flow<ApiResponse<SignInWithAccessTokenResponse>>
+    ): Flow<ApiResponse<ProfileResponse>>
 
     suspend fun nicknameDuplicationCheck(
         nickname: String,
@@ -36,6 +37,11 @@ interface AuthRepository {
         provider: String,
         accessToken: String
     ): Flow<ApiResponse<SignUpWithAccessTokenResponse>>
+
+    suspend fun updateProfile(
+        userId: Int
+        , updateProfileRequest: UpdateProfileRequest? = null
+    ): Flow<ApiResponse<ProfileResponse>>
 
     fun storeUserId(id: Int)
 }
@@ -114,11 +120,11 @@ internal class AuthDataRepository(
         provider: String,
         accessToken: String
     ): Flow<ApiResponse<SignUpWithAccessTokenResponse>> = flow {
-        authService.signUpWithAccessToken(SignUpWithAccessTokenRequest(provider,accessToken))
+        authService.signUpWithAccessToken(SignUpWithAccessTokenRequest(provider, accessToken))
             .suspendOnSuccess {
                 emit(this)
             }
-            .suspendOnError{
+            .suspendOnError {
                 emit(this)
             }
             .suspendOnException {
@@ -126,7 +132,20 @@ internal class AuthDataRepository(
             }
     }.flowOn(Dispatchers.IO)
 
-    override fun storeUserId(id: Int){
+    override suspend fun updateProfile(userId: Int, updateProfileRequest: UpdateProfileRequest?): Flow<ApiResponse<ProfileResponse>> = flow {
+        authService.updateProfile(userId, updateProfileRequest)
+            .suspendOnSuccess {
+                emit(this)
+            }
+            .suspendOnError {
+                emit(this)
+            }
+            .suspendOnException {
+                emit(this)
+            }
+    }.flowOn(Dispatchers.IO)
+
+    override fun storeUserId(id: Int) {
         prefStorage.isUserSignIn = true
         prefStorage.userId = id
     }

@@ -6,31 +6,28 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.Window
 import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.asLiveData
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.hedgehog.ratingbar.RatingBar
 import com.naver.maps.geometry.Tm128
 import container.restaurant.android.R
-import container.restaurant.android.presentation.base.BaseActivity
 import container.restaurant.android.data.db.entity.MainFood
 import container.restaurant.android.data.db.entity.SideDish
 import container.restaurant.android.data.request.FeedWriteRequest
 import container.restaurant.android.data.response.ImageUploadResponse
 import container.restaurant.android.databinding.ActivityFeedWriteBinding
 import container.restaurant.android.dialog.AlertDialog
+import container.restaurant.android.presentation.base.BaseActivity
 import container.restaurant.android.presentation.feed.write.adapter.MainFoodAdapter
 import container.restaurant.android.presentation.feed.write.adapter.SideDishAdapter
 import container.restaurant.android.util.CommUtils
 import container.restaurant.android.util.hide
-import container.restaurant.android.util.observe
 import container.restaurant.android.util.show
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.InputStream
@@ -67,7 +64,7 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
                         inputStream.close()
                         val bmpFile = CommUtils.convertBitmapToFile(this, "userImg.jpeg", bmp)
 
-                        observe(viewModel.uploadImg(bmpFile), ::imgUploadComplete)
+//                        observe(viewModel.uploadImg(bmpFile), ::imgUploadComplete)
 
                         Glide.with(this).load(bmp).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(binding.ivUploadImage)
                         binding.ivUploadImage.show()
@@ -119,18 +116,18 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
 
     private fun subscribeUi() {
         with(viewModel) {
-            observe(viewLoading, ::loadingCheck)
-            observe(getErrorMsg, ::errorDialog)
-
-            observe(mainFoodList, ::getMainFoodList)
-            observe(sideDishList, ::getSideDishList)
-            observe(loginChk.asLiveData()) { updateFeed(it) }
+//            observe(viewLoading, ::loadingCheck)
+//            observe(getErrorMsg, ::errorDialog)
+//
+//            observe(mainFoodList, ::getMainFoodList)
+//            observe(sideDishList, ::getSideDishList)
+//            observe(loginChk.asLiveData()) { updateFeed(it) }
         }
     }
 
     private fun updateFeed(chk: Boolean) {
         if(chk) {
-            viewModel.loginChk.value = false
+//            viewModel.loginChk.value = false
 
             if(feedNullCheck()) {
                 val restaurantCreateDto = restaurantCreateDto
@@ -159,7 +156,7 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
                     subMenu= subMenuList
                 )
 
-                observe(viewModel.updateFeed(feedWriteRequest), ::feedWriteComplete)
+//                observe(viewModel.updateFeed(feedWriteRequest), ::feedWriteComplete)
             }
         }
     }
@@ -264,12 +261,12 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when(v) {
             binding.etSearchContainer -> onClickNameSearch()
-            binding.tvAddMainMenu -> observe(viewModel.addMainFood(mainFoodAdapter.currentList)) {}
-            binding.tvAddSideMenu -> observe(viewModel.addSideDish(sideDishAdapter.currentList)) {}
+//            binding.tvAddMainMenu -> observe(viewModel.addMainFood(mainFoodAdapter.currentList)) {}
+//            binding.tvAddSideMenu -> observe(viewModel.addSideDish(sideDishAdapter.currentList)) {}
             binding.llGetPicture -> dispatchAlbumIntent()
             binding.ivDeleteImage -> onDeleteImage()
             binding.clIsLike -> isLikeAction()
-            binding.btnFeedUpdate -> observe(viewModel.tempLogin()) {}
+//            binding.btnFeedUpdate -> observe(viewModel.tempLogin()) {}
             binding.ivBack -> onBackPressed()
         }
     }

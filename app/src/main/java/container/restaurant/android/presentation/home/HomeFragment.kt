@@ -97,11 +97,11 @@ internal class HomeFragment : Fragment() {
     private fun showMyContainerConfirmDialog(){
         val dialog = SimpleConfirmDialog(
             titleStr = "용기낸 경험을 들려주시겠어요?",
-            confirmStr = "네, 좋아요!",
-            cancelStr = "나중에요"
+            rightBtnStr = "네, 좋아요!",
+            leftBtnStr = "나중에요"
         )
         dialog.setMultiEventListener(object : SimpleConfirmDialog.MultiEventListener {
-            override fun confirmClick(dialogSelf: SimpleConfirmDialog) {
+            override fun onRightBtnClick(dialogSelf: SimpleConfirmDialog) {
                 dialogSelf.dismiss()
                 if(!viewModel.isUserSignIn()){
                     KakaoSignInDialogFragment().show(childFragmentManager, "KakaoSignInDialogFragment")
@@ -110,7 +110,7 @@ internal class HomeFragment : Fragment() {
                 }
             }
 
-            override fun cancelClick(dialogSelf: SimpleConfirmDialog) {
+            override fun onLeftBtnClick(dialogSelf: SimpleConfirmDialog) {
                 dialogSelf.dismiss()
             }
         })

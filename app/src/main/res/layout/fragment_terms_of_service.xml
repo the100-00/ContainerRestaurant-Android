@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:bind="http://schemas.android.com/apk/res-auto"
-    tools:context=".presentation.my.MyScrapFragment">
+    tools:context=".presentation.my.TermsOfServiceFragment">
+
     <data>
-        <import type="android.view.View"/>
+
         <variable
             name="viewModel"
             type="container.restaurant.android.presentation.my.MyViewModel" />
@@ -14,16 +14,15 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white">
-
+        android:layout_height="match_parent">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_top_navigation"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            >
             <TextView
                 android:id="@+id/tv_scrap_feed"
                 android:textAppearance="@style/TextAppearance.App.B.Gray07"
@@ -31,20 +30,11 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:includeFontPadding="false"
-                android:text="@string/scrap_feed"
+                android:text="@string/terms_of_service"
                 android:textSize="16dp"
                 tools:ignore="SpUsage"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.App.B.Green03"
-                android:text='@{viewModel.myScrapFeedList.size() + ""}'
-                android:layout_marginStart="4dp"
-                app:layout_constraintStart_toEndOf="@id/tv_scrap_feed"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
@@ -62,51 +52,57 @@
                 android:contentDescription="@string/back" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_my_feed"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_top_navigation"
-            app:spanCount="2"
-            bind:dino_itemLayout="@{@layout/item_my_scrap_feed}"
-            bind:dino_items="@{viewModel.myScrapFeedList}"
-            bind:dino_vm="@{viewModel}"
-            tools:listitem="@layout/item_my_scrap_feed"
-            />
+            app:layout_constraintBottom_toBottomOf="parent">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:background="@color/gray_02"
+                    android:gravity="center_vertical"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:text="@{viewModel.termsOfServiceTitle}"
+                    android:textAppearance="@style/TextAppearance.App.B.Gray07"
+                    android:textSize="18dp"
+                    tools:ignore="SpUsage"
+                    tools:text="용기낸식당 서비스 이용약관"
+                    android:paddingHorizontal="16dp"/>
+                <TextView
+                    android:id="@+id/tv_article"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingHorizontal="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_title"
+                    bind:htmlText="@{viewModel.termsOfServiceArticle}"
+                    android:layout_marginTop="20dp"
+                    />
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/ll_empty_info"
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_loading"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:gravity="center"
-            android:orientation="vertical"
             android:background="@android:color/white"
-            android:visibility="@{viewModel.myScrapFeedList==null||viewModel.myScrapFeedList.empty? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_top_navigation">
-
-            <ImageView
+            <com.airbnb.lottie.LottieAnimationView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/empty_data_info"
-                android:src="@drawable/empty_data_img" />
-
-            <TextView
-                android:id="@+id/tv_info"
-                android:textAppearance="@style/TextAppearance.App.R.Gray06"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:gravity="center"
-                android:text="@string/empty_scrap_feed"
-                android:textSize="14sp" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:lottie_fileName="loading.json"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>

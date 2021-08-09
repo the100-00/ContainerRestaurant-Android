@@ -36,6 +36,7 @@
                     android:layout_marginTop="32dp"
                     android:textSize="16dp"
                     android:textAppearance="@style/TextAppearance.App.B.Gray07"
+                    android:gravity="center"
                     tools:text="제목"
                     tools:ignore="SpUsage" />
 
@@ -63,7 +64,7 @@
 
                     <!--취소 버튼-->
                     <TextView
-                        android:id="@+id/cancel"
+                        android:id="@+id/btn_left"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -81,7 +82,7 @@
 
                     <!--확인 버튼-->
                     <TextView
-                        android:id="@+id/confirm"
+                        android:id="@+id/btn_right"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

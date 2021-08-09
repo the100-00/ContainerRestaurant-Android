@@ -37,9 +37,11 @@
         <argument
             android:name="nickName"
             app:argType="string" />
-        <argument
-            android:name="profile"
-            app:argType="string" />
+        <action
+            android:id="@+id/action_changeNameFragment_to_myHomeFragment"
+            app:destination="@id/myHomeFragment"
+            app:popUpTo="@id/myHomeFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/myFeedFragment"
@@ -49,6 +51,11 @@
         <argument
             android:name="id"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_myFeedFragment_to_myHomeFragment"
+            app:destination="@id/myHomeFragment"
+            app:popUpTo="@id/myHomeFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/myScrapFragment"
@@ -58,14 +65,64 @@
         <argument
             android:name="id"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_myScrapFragment_to_myHomeFragment"
+            app:destination="@id/myHomeFragment"
+            app:popUpTo="@id/myHomeFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/favoriteFragment"
         android:name="container.restaurant.android.presentation.my.FavoriteFragment"
-        android:label="FavoriteFragment" />
+        android:label="FavoriteFragment"
+        tools:layout="@layout/fragment_favorite">
+        <action
+            android:id="@+id/action_favoriteFragment_to_myHomeFragment"
+            app:destination="@id/myHomeFragment"
+            app:popUpTo="@id/myHomeFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
     <fragment
         android:id="@+id/mySettingFragment"
         android:name="container.restaurant.android.presentation.my.MySettingFragment"
         android:label="fragment_my_setting"
-        tools:layout="@layout/fragment_my_setting" />
+        tools:layout="@layout/fragment_my_setting"
+        >
+        <action
+            android:id="@+id/action_mySettingFragment_to_myHomeFragment"
+            app:destination="@id/myHomeFragment"
+            app:popUpTo="@id/myHomeFragment"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_mySettingFragment_to_privacyPolicyFragment"
+            app:destination="@id/privacyPolicyFragment"/>
+        <action
+            android:id="@+id/action_mySettingFragment_to_termsOfServiceFragment"
+            app:destination="@id/termsOfServiceFragment"
+            />
+
+    </fragment>
+    <fragment
+        android:id="@+id/privacyPolicyFragment"
+        android:name="container.restaurant.android.presentation.my.PrivacyPolicyFragment"
+        android:label="PrivacyPolicyFragment"
+        tools:layout="@layout/fragment_privacy_policy">
+        <action
+            android:id="@+id/action_privacyPolicyFragment_to_mySettingFragment"
+            app:destination="@id/mySettingFragment"
+            app:popUpTo="@id/mySettingFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/termsOfServiceFragment"
+        android:name="container.restaurant.android.presentation.my.TermsOfServiceFragment"
+        android:label="TermsOfServiceFragment"
+        tools:layout="@layout/fragment_terms_of_service">
+        <action
+            android:id="@+id/action_termsOfPolicyFragment_to_mySettingFragment"
+            app:destination="@id/mySettingFragment"
+            app:popUpTo="@id/mySettingFragment"
+            app:popUpToInclusive="true"
+            />
+    </fragment>
 </navigation>

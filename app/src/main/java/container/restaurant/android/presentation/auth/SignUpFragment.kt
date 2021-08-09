@@ -79,7 +79,7 @@ internal class SignUpFragment : Fragment() {
             activity?.finish()
         })
 
-        viewModel.isSignUpButtonClicked.observe(viewLifecycleOwner, EventObserver {
+        viewModel.isCompleteButtonClicked.observe(viewLifecycleOwner, EventObserver {
             lifecycleScope.launchWhenCreated {
                 if(provider!=null && accessToken!=null){
                     viewModel.signUpWithAccessToken(provider!!, accessToken!!)
