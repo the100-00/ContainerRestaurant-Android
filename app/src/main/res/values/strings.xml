@@ -95,5 +95,23 @@
     <string name="empty_profile_lv4">LV4. 후라이팬</string>
     <string name="empty_profile_lv5">LV5. 냄비</string>
     <string name="brave_count">%d회 용기냈어요</string>
+    <string name="settings">설정</string>
+    <string name="user_profile_edit">프로필 이미지 수정</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="privacy_policy">개인정보 취급방침</string>
+    <string name="empty_scrap_feed">스크랩한 피드가 아직 없어요!</string>
+    <string name="empty_my_feed">아직 용기낸 횟수가 없어요!</string>
+    <string name="empty_favorite_restaurant">찜한 식당이 아직 없어요!</string>
+    <string name="terms_of_service">서비스 이용약관</string>
+    <string name="change_name">닉네임 수정</string>
+    <string name="nickname_not_changed">기존의 닉네임과 다른 닉네임을 입력해주세요.</string>
+    <string name="alarm_receiving_setting">알림 수신 설정</string>
+    <string name="sign_out">로그아웃</string>
+    <string name="withdrawal">계정 탈퇴</string>
+    <string name="app_version">앱 버전</string>
+    <string name="feed_image">피드 이미지</string>
+    <string name="heart">좋아요</string>
+
 
 </resources>

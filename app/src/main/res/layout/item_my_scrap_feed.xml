@@ -36,7 +36,8 @@
             android:layout_height="0dp"
             android:background="@drawable/bg_gray02_r12"
             app:layout_constraintBottom_toBottomOf="@id/h_guide_1"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/iv_feed_img"
@@ -45,7 +46,8 @@
             android:layout_margin="10dp"
             app:image_from_url="@{feedData.thumbnailUrl}"
             app:layout_constraintBottom_toBottomOf="@id/h_guide_1"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/feed_image" />
 
         <ImageView
             android:id="@+id/iv_feed_heart"
@@ -53,7 +55,8 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_like_outline"
             app:layout_constraintEnd_toEndOf="@id/iv_feed_img"
-            app:layout_constraintBottom_toBottomOf="@id/iv_feed_img"/>
+            app:layout_constraintBottom_toBottomOf="@id/iv_feed_img"
+            android:contentDescription="@string/heart"/>
 
         <TextView
             style="@style/TextAppearance.App.B.Gray07"
@@ -115,6 +118,7 @@
             android:gravity="center"
             android:includeFontPadding="false"
             android:paddingStart="20dp"
+            android:paddingEnd="0dp"
             android:text="@{String.valueOf(feedData.replyCount)}"
             app:drawableStartCompat="@drawable/ic_comment_outline"
             app:drawableTint="@android:color/darker_gray"

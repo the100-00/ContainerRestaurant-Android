@@ -31,7 +31,7 @@ internal class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         with(viewModel) {
-            navToFeed.observe(this@MainActivity) {
+            observe(navToFeed) {
                 startActivity(FeedWriteActivity.getIntent(this@MainActivity))
             }
         }
@@ -41,10 +41,10 @@ internal class MainActivity : BaseActivity() {
 
     private fun setupBottomNav(savedInstanceState: Bundle?) {
         binding.bottomNav.itemIconTintList = null
-        binding.bottomNav.setOnNavigationItemSelectedListener {
-            val navItem = BottomNavItem.forId(it.itemId)
-            navItem.navigate(navigationController)
-
+        binding.bottomNav.setOnNavigationItemSelectedListener { menuItem ->
+            val navItem = BottomNavItem.values().find { bottomNavItem ->
+                menuItem.itemId == bottomNavItem.menuId }
+            navItem?.navigate?.invoke(navigationController)
             true
         }
         if (savedInstanceState == null) {
@@ -63,6 +63,7 @@ internal class MainActivity : BaseActivity() {
             navigateToFeed()
         }),
         HIDDEN(R.id.hidden, {
+
         }),
         MAP(R.id.map, {
             navigateToMap()
@@ -70,12 +71,5 @@ internal class MainActivity : BaseActivity() {
         MY(R.id.my, {
             navigateToMy()
         })
-        ;
-
-        companion object {
-            fun forId(@IdRes id: Int): BottomNavItem {
-                return values().first { it.menuId == id }
-            }
-        }
     }
 }

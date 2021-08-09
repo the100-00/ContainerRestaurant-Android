@@ -4,6 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".presentation.my.MySettingFragment">
+    <data>
+        <variable
+            name="viewModel"
+            type="container.restaurant.android.presentation.my.MyViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -23,7 +28,7 @@
             android:layout_height="0dp"
             android:gravity="center"
             android:includeFontPadding="false"
-            android:text="설정"
+            android:text="@string/settings"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@id/h_guide_1"
             app:layout_constraintTop_toTopOf="parent" />
@@ -35,9 +40,11 @@
             android:layout_marginStart="10dp"
             android:background="@drawable/ic_chevron_left_outline"
             android:backgroundTint="@color/black"
+            android:onClick="@{()->viewModel.onBackButtonClick()}"
             app:layout_constraintBottom_toBottomOf="@id/h_guide_1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/back" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -59,7 +66,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp"
-                    android:text="알림 수신 설정"
+                    android:text="@string/alarm_receiving_setting"
                     android:textSize="18sp" />
 
                 <TextView
@@ -78,7 +85,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:onClick="@{()->viewModel.onPrivacyPolicyButtonClick()}"
+                >
 
                 <TextView
                     android:id="@+id/tv_privacy_statement"
@@ -87,7 +96,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp"
-                    android:text="개인정보 취급방침"
+                    android:text="@string/privacy_policy"
                     android:textSize="18sp" />
 
                 <TextView
@@ -99,13 +108,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_chevron_right_outline" />
+                    android:src="@drawable/ic_chevron_right_outline"
+                    android:contentDescription="@string/privacy_policy" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:onClick="@{()->viewModel.onTermsOfServiceButtonClick()}">
 
                 <TextView
                     android:id="@+id/tv_service_info"
@@ -114,7 +125,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp"
-                    android:text="서비스 이용약관"
+                    android:text="@string/terms_of_service"
                     android:textSize="18sp" />
 
                 <TextView
@@ -126,7 +137,67 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_chevron_right_outline" />
+                    android:src="@drawable/ic_chevron_right_outline"
+                    android:contentDescription="@string/terms_of_service"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:onClick="@{()->viewModel.onSignOutButtonClick()}"
+                >
+
+                <TextView
+                    style="@style/TextAppearance.App.R.Gray07"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="@string/sign_out"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_chevron_right_outline"
+                    android:contentDescription="@string/sign_out"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:onClick="@{()->viewModel.onWithdrawalButtonClick()}"
+                >
+
+                <TextView
+                    style="@style/TextAppearance.App.R.Gray07"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="@string/withdrawal"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_chevron_right_outline"
+                    android:contentDescription="@string/withdrawal"/>
+
             </LinearLayout>
 
             <LinearLayout
@@ -140,60 +211,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp"
-                    android:text="로그아웃"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_chevron_right_outline" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/TextAppearance.App.R.Gray07"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:text="계정 탈퇴"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_chevron_right_outline" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/TextAppearance.App.R.Gray07"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:text="앱 버전"
+                    android:text="@string/app_version"
                     android:textSize="18sp" />
 
                 <TextView

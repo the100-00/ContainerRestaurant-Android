@@ -5,7 +5,9 @@ import com.google.gson.annotations.SerializedName
 data class BannersInfoResponse(
     @SerializedName("_embedded") val embedded : BannerInfoDtoList
 ) {
-    data class BannerInfoDtoList(val bannerInfoDtoList: List<BannerInfoDto>){
+    data class BannerInfoDtoList(
+        @SerializedName("bannerInfoDtoList") val bannerInfoDtoList: List<BannerInfoDto>
+        ){
         data class BannerInfoDto(
             @SerializedName("title") val title: String,
             @SerializedName("bannerURL") val bannerUrl: String,

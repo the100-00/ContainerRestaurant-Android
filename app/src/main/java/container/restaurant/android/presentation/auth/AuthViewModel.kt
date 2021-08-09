@@ -7,10 +7,12 @@ import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.StatusCode
 import container.restaurant.android.R
 import container.restaurant.android.data.repository.AuthRepository
+import container.restaurant.android.data.request.UpdateProfileRequest
 import container.restaurant.android.data.response.NicknameDuplicationCheckResponse
-import container.restaurant.android.data.response.SignInWithAccessTokenResponse
+import container.restaurant.android.data.response.ProfileResponse
 import container.restaurant.android.util.Event
 import container.restaurant.android.util.SingleLiveEvent
+import container.restaurant.android.util.handleApiResponse
 import kotlinx.coroutines.flow.collect
 import timber.log.Timber
 import java.util.regex.Pattern
@@ -31,14 +33,14 @@ internal class AuthViewModel(
 
     val infoMessage = MutableLiveData<String>()
 
-    private val _signInWithAccessTokenResult = MutableLiveData<SignInWithAccessTokenResponse>()
-    val signInWithAccessTokenResult:LiveData<SignInWithAccessTokenResponse> = _signInWithAccessTokenResult
+    private val _signInWithAccessTokenResult = MutableLiveData<ProfileResponse>()
+    val signInWithAccessTokenResult:LiveData<ProfileResponse> = _signInWithAccessTokenResult
 
     private val _signedUpId = SingleLiveEvent<Int>()
     val signedUpId: LiveData<Int> = _signedUpId
 
-    private val _isSignUpButtonClicked = MutableLiveData<Event<Boolean>>()
-    val isSignUpButtonClicked: LiveData<Event<Boolean>> = _isSignUpButtonClicked
+    private val _isCompleteButtonClicked = MutableLiveData<Event<Boolean>>()
+    val isCompleteButtonClicked: LiveData<Event<Boolean>> = _isCompleteButtonClicked
 
     private val _signInWithAccessTokenSuccess = MutableLiveData<Event<Boolean>>()
     val signInWithAccessTokenSuccess : LiveData<Event<Boolean>> = _signInWithAccessTokenSuccess
@@ -57,8 +59,8 @@ internal class AuthViewModel(
 
     fun isUserSignIn() = authRepository.isUserSignIn()
 
-    fun onSignUpButtonClick() {
-        _isSignUpButtonClicked.value = Event(true)
+    fun onCompleteButtonClick() {
+        _isCompleteButtonClicked.value = Event(true)
     }
 
     fun letterValidationCheck(string: String):Boolean {
@@ -225,6 +227,18 @@ internal class AuthViewModel(
                 }
             }
         }
+    }
+
+    suspend fun updateProfile(userId: Int, updateProfileRequest: UpdateProfileRequest? = null){
+        authRepository.updateProfile(userId, updateProfileRequest)
+            .collect { response ->
+               handleApiResponse(
+                   response = response,
+                   onSuccess = {
+                       Timber.d("updateProfile complete")
+                   }
+               )
+            }
     }
 
     fun storeUserId(id: Int) {
