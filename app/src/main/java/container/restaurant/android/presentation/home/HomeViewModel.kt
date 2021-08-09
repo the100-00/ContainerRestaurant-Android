@@ -7,7 +7,7 @@ import container.restaurant.android.data.PrefStorage
 import container.restaurant.android.data.repository.HomeRepository
 import container.restaurant.android.data.response.BannersInfoResponse
 import container.restaurant.android.data.response.FeedListResponse
-import container.restaurant.android.data.response.SignInWithAccessTokenResponse
+import container.restaurant.android.data.response.ProfileResponse
 import container.restaurant.android.util.Event
 import container.restaurant.android.util.handleApiResponse
 import kotlinx.coroutines.flow.collect
@@ -20,8 +20,8 @@ internal class HomeViewModel(
 
     val navToAllContainerFeed = MutableLiveData<Event<Unit>>()
 
-    private val _signInWithAccessTokenResult = MutableLiveData<SignInWithAccessTokenResponse>()
-    val signInWithAccessTokenResult: LiveData<SignInWithAccessTokenResponse> = _signInWithAccessTokenResult
+    private val _signInWithAccessTokenResult = MutableLiveData<ProfileResponse>()
+    val signInWithAccessTokenResult: LiveData<ProfileResponse> = _signInWithAccessTokenResult
 
     private val _bannerList = MutableLiveData<BannersInfoResponse.BannerInfoDtoList>()
     val bannerList: LiveData<BannersInfoResponse.BannerInfoDtoList> = _bannerList
@@ -106,10 +106,6 @@ internal class HomeViewModel(
                     response = response,
                     onSuccess = {
                         _recommendedFeedList.value = it.data?.embedded?.feedPreviewDtoList
-                        Timber.d("list value :")
-                        for ((index, feed) in recommendedFeedList.value!!.withIndex()) {
-                            Timber.d("$index 번째 피드 : $feed")
-                        }
                     },
                     onError = {
                         Timber.d("it.errorBody : ${it.errorBody}")

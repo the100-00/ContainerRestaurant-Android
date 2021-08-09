@@ -29,7 +29,7 @@ val networkModule = module {
     single { createResService(get()) }
     single { createAuthService(get()) }
     single { createHomeService(get())}
-    single { newApiCreate() }
+    single { createMyService(get()) }
 }
 
 fun createOkHttp(): OkHttpClient {
@@ -64,9 +64,13 @@ fun createAuthService(retrofit: Retrofit): AuthService {
     return retrofit.create(AuthService::class.java)
 }
 
+fun createMyService(retrofit: Retrofit): MyService {
+    return retrofit.create(MyService::class.java)
+}
+
 fun createHomeService(retrofit: Retrofit): HomeService = retrofit.create(HomeService::class.java)
 
-fun newApiCreate(): NewApiService {
+fun newApiCreate(): MyService {
     val httpLoggingInterceptor = HttpLoggingInterceptor()
     httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BASIC
 
@@ -83,7 +87,8 @@ fun newApiCreate(): NewApiService {
         .baseUrl(BASE_URL)
         .client(client)
         .addConverterFactory(MoshiConverterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(CoroutinesResponseCallAdapterFactory())
         .build()
-        .create(NewApiService::class.java)
+        .create(MyService::class.java)
 }

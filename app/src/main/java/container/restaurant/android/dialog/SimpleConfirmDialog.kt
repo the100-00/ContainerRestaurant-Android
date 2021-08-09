@@ -14,8 +14,8 @@ import container.restaurant.android.databinding.DialogSimpleConfirmBinding
 class SimpleConfirmDialog(
     private val titleStr: String? = null,
     private val msgStr: String? = null,
-    private val confirmStr: String? = null,
-    private val cancelStr: String? = null
+    private val leftBtnStr: String? = null,
+    private val rightBtnStr: String? = null
 ) : DialogFragment() {
     private lateinit var binding: DialogSimpleConfirmBinding
 
@@ -53,13 +53,13 @@ class SimpleConfirmDialog(
 
     //버튼 클릭 이벤트 설정
     private fun setBtnAction() {
-        binding.confirm.setOnClickListener {
+        binding.btnRight.setOnClickListener {
             singleEventListener?.confirmClick(this)
-            multiEventListener?.confirmClick(this)
+            multiEventListener?.onRightBtnClick(this)
         }
 
-        binding.cancel.setOnClickListener {
-            multiEventListener?.cancelClick(this)
+        binding.btnLeft.setOnClickListener {
+            multiEventListener?.onLeftBtnClick(this)
         }
     }
 
@@ -67,15 +67,15 @@ class SimpleConfirmDialog(
     private fun uiSetting() {
         binding.title.visibility = View.GONE
         binding.message.visibility = View.GONE
-        binding.confirm.visibility = View.GONE
-        binding.confirm.visibility = View.GONE
+        binding.btnLeft.visibility = View.GONE
+        binding.btnRight.visibility = View.GONE
         binding.horizontalDevider.visibility = View.GONE
         binding.verticalDevider.visibility = View.GONE
 
         // 디바이더로 사용된 뷰의 Visibility 설정 로직
-        if (confirmStr != null || cancelStr != null) {
+        if (leftBtnStr != null || rightBtnStr != null) {
             binding.horizontalDevider.visibility = View.VISIBLE
-            if (confirmStr != null && cancelStr != null) {
+            if (leftBtnStr != null && rightBtnStr != null) {
                 binding.verticalDevider.visibility = View.VISIBLE
             }
         }
@@ -89,13 +89,13 @@ class SimpleConfirmDialog(
             binding.message.text = it
             binding.message.visibility = View.VISIBLE
         }
-        confirmStr?.let {
-            binding.confirm.text = it
-            binding.confirm.visibility = View.VISIBLE
+        leftBtnStr?.let {
+            binding.btnLeft.text = it
+            binding.btnLeft.visibility = View.VISIBLE
         }
-        cancelStr?.let {
-            binding.cancel.text = it
-            binding.cancel.visibility = View.VISIBLE
+        rightBtnStr?.let {
+            binding.btnRight.text = it
+            binding.btnRight.visibility = View.VISIBLE
         }
     }
 
@@ -112,8 +112,8 @@ class SimpleConfirmDialog(
 
     //확인, 취소 버튼이 있을 때 사용되는 리스너 인터페이스
     interface MultiEventListener {
-        fun confirmClick(dialogSelf: SimpleConfirmDialog)
-        fun cancelClick(dialogSelf: SimpleConfirmDialog)
+        fun onRightBtnClick(dialogSelf: SimpleConfirmDialog)
+        fun onLeftBtnClick(dialogSelf: SimpleConfirmDialog)
     }
 
     //확인 버튼만 있을 때 사용되는 리스너

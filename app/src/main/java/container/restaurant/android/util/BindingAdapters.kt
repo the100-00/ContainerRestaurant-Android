@@ -3,15 +3,18 @@ package container.restaurant.android.util
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.StyleSpan
+import android.view.Gravity
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.DrawableRes
+import androidx.core.text.HtmlCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.button.MaterialButton
 import container.restaurant.android.R
 import container.restaurant.android.di.BASE_URL
+import timber.log.Timber
 import java.util.*
 
 @BindingAdapter(value = ["android:imageUrl", "android:circleCrop"], requireAll = false)
@@ -79,6 +82,7 @@ fun bindFavoriteFeedCount(tv: TextView, count: Int?) {
 
 @BindingAdapter("bind:imageUrlWithOutBaseUrl")
 fun ImageView.setImageUrlWithoutBaseUrl(url: String?) {
+    Timber.d("image Test : $url")
     url?.let {
         val baseUrl = BASE_URL.substring(0, BASE_URL.lastIndex)
         val fullUrl = "$baseUrl$url"
@@ -143,5 +147,12 @@ fun ImageView.setEmptyFeedBackgroundSetup(boolean: String) {
                 setBackgroundResource(R.color.yellow_02)
             }
         }
+    }
+}
+
+@BindingAdapter("bind:htmlText")
+fun TextView.setHtmlText(htmlText: String?) {
+    htmlText?.let{
+        text = HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_LEGACY)
     }
 }

@@ -1,7 +1,9 @@
 package container.restaurant.android.presentation
 
+import androidx.annotation.NavigationRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
 import container.restaurant.android.R
 import container.restaurant.android.presentation.feed.FeedFragment
 import container.restaurant.android.presentation.home.HomeFragment
@@ -26,7 +28,7 @@ class NavigationController(private val activity: AppCompatActivity) {
     }
 
     fun navigateToMy() {
-        replaceFragment(MyFragment.newInstance())
+        replaceFragmentNavGraph(R.navigation.my_nav)
     }
 
     private fun replaceFragment(fragment: Fragment) {
@@ -39,5 +41,13 @@ class NavigationController(private val activity: AppCompatActivity) {
         } else {
             transaction.commit()
         }
+    }
+
+    private fun replaceFragmentNavGraph(@NavigationRes navGraph: Int){
+        val host = NavHostFragment.create(navGraph)
+        fragmentManager.beginTransaction()
+            .replace(containerId, host)
+            .setPrimaryNavigationFragment(host)
+            .commit()
     }
 }

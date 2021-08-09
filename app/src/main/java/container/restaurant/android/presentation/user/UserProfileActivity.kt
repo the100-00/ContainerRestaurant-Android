@@ -52,7 +52,6 @@ internal class UserProfileActivity : AppCompatActivity() {
                             R.drawable.empty_profile_lv5
                     }
                 }
-
             }
         }
     }

@@ -40,9 +40,9 @@ class FeedWriteBottomSheetFragment(private val clickItem:(SearchLocalResponse.It
             }
 
             etNameSearch.addTextChangedListener {
-                if(!viewModel.searchProgressChk.value && etNameSearch.text.length >= 2) {
-                    observe(viewModel.getSearchPlace(it.toString()), ::searchPlaceComplete)
-                }
+//                if(!viewModel.searchProgressChk.value && etNameSearch.text.length >= 2) {
+//                    observe(viewModel.getSearchPlace(it.toString()), ::searchPlaceComplete)
+//                }
             }
         }
     }
