@@ -27,7 +27,7 @@
     <string name="main_menu">메인 음식</string>
     <string name="food">음식</string>
     <string name="container">용기</string>
-    <string name="side_menu">반찬</string>
+    <string name="side_menu">사이드 음식</string>
     <string name="count">수량</string>
     <string name="optional_input">(선택입력)</string>
     <string name="optional_details">(선택사항)</string>
@@ -118,5 +118,9 @@
     <string name="search">검색하기</string>
     <string name="welcome_mark">다회용기 환영 마크</string>
     <string name="add_photo">사진 추가</string>
+    <string name="main_food_example_hint">ex. 제육볶음</string>
+    <string name="main_container_example_hint">ex. 1L 스테인리스 용기</string>
+    <string name="side_count_example_hint">ex. 단무지, 멸치 볶음</string>
+    <string name="side_container_example_hint">ex. 3칸 칸막이 1개</string>
 
 </resources>

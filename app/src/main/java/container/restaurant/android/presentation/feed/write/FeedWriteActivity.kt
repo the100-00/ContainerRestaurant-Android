@@ -1,14 +1,11 @@
 package container.restaurant.android.presentation.feed.write
 
 import android.app.Activity
-import android.app.Dialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.View
-import android.view.Window
-import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -25,8 +22,6 @@ import container.restaurant.android.databinding.ActivityFeedWriteBinding
 import container.restaurant.android.dialog.AlertDialog
 import container.restaurant.android.dialog.SimpleConfirmDialog
 import container.restaurant.android.presentation.base.BaseActivity
-import container.restaurant.android.presentation.feed.write.adapter.MainFoodAdapter
-import container.restaurant.android.presentation.feed.write.adapter.SideDishAdapter
 import container.restaurant.android.util.CommUtils
 import container.restaurant.android.util.hide
 import container.restaurant.android.util.show
@@ -45,8 +40,6 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
         restaurantCreateDto = FeedWriteRequest.RestaurantCreateDto(name = it.title, address = it.address, latitude = latLng.latitude, longitude = latLng.longitude)
         binding.etSearchContainer.text = CommUtils.fromHtml(it.title)
     }
-    private val mainFoodAdapter = MainFoodAdapter()
-    private val sideDishAdapter = SideDishAdapter()
 
     private var restaurantCreateDto: FeedWriteRequest.RestaurantCreateDto? = null
     private var categoryStr = "CHINESE"
@@ -83,6 +76,8 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_feed_write)
+        binding.viewModel = this.viewModel
+        binding.lifecycleOwner = this
 
         setBindItem()
         setCategory()
@@ -107,14 +102,6 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
             }
         })
         dialog.show(supportFragmentManager,"SimpleConfirmDialog")
-//        val dialog = Dialog(this)
-//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-//        dialog.setContentView(R.layout.dialog_cancle_write)
-//        dialog.show()
-//        val btnOk = dialog.findViewById<Button>(R.id.btn_ok)
-//        btnOk.setOnClickListener { gotoMain() }
-//        val btnCancel = dialog.findViewById<Button>(R.id.btn_cancel)
-//        btnCancel.setOnClickListener { dialog.dismiss() }
     }
 
     private fun setBindItem() {
@@ -153,13 +140,13 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
                 val thumbnailImageId = imageUploadId ?: 9
                 val content = binding.etContent.text.toString()
                 val mainMenuList: MutableList<FeedWriteRequest.MainMenu> = mutableListOf()
-                mainFoodAdapter.currentList.forEach {
-                    mainMenuList.add(FeedWriteRequest.MainMenu(it.foodName, it.bottle))
-                }
+//                mainFoodAdapter.currentList.forEach {
+//                    mainMenuList.add(FeedWriteRequest.MainMenu(it.foodName, it.bottle))
+//                }
                 val subMenuList: MutableList<FeedWriteRequest.SubMenu> = mutableListOf()
-                sideDishAdapter.currentList.forEach {
-                    subMenuList.add(FeedWriteRequest.SubMenu(it.quantity, it.bottle))
-                }
+//                sideDishAdapter.currentList.forEach {
+//                    subMenuList.add(FeedWriteRequest.SubMenu(it.quantity, it.bottle))
+//                }
 
                 val feedWriteRequest = FeedWriteRequest(
                     restaurantCreateDto= restaurantCreateDto!!,
@@ -215,13 +202,13 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun getMainFoodList(list: List<MainFood>) {
-        binding.rvMainFood.adapter = mainFoodAdapter
-        mainFoodAdapter.submitList(list)
+//        binding.rvMainFood.adapter = mainFoodAdapter
+//        mainFoodAdapter.submitList(list)
     }
 
     private fun getSideDishList(list: List<SideDish>) {
-        binding.rvSideDish.adapter = sideDishAdapter
-        sideDishAdapter.submitList(list)
+//        binding.rvSideDish.adapter = sideDishAdapter
+//        sideDishAdapter.submitList(list)
     }
 
     private fun onDeleteImage(){
