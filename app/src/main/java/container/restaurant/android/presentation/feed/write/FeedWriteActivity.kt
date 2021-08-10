@@ -23,6 +23,7 @@ import container.restaurant.android.data.request.FeedWriteRequest
 import container.restaurant.android.data.response.ImageUploadResponse
 import container.restaurant.android.databinding.ActivityFeedWriteBinding
 import container.restaurant.android.dialog.AlertDialog
+import container.restaurant.android.dialog.SimpleConfirmDialog
 import container.restaurant.android.presentation.base.BaseActivity
 import container.restaurant.android.presentation.feed.write.adapter.MainFoodAdapter
 import container.restaurant.android.presentation.feed.write.adapter.SideDishAdapter
@@ -83,7 +84,6 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_feed_write)
 
-        setupToolbar()
         setBindItem()
         setCategory()
         subscribeUi()
@@ -91,14 +91,30 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
     }
 
     override fun onBackPressed() {
-        val dialog = Dialog(this)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.dialog_cancle_write)
-        dialog.show()
-        val btnOk = dialog.findViewById<Button>(R.id.btn_ok)
-        btnOk.setOnClickListener { gotoMain() }
-        val btnCancel = dialog.findViewById<Button>(R.id.btn_cancel)
-        btnCancel.setOnClickListener { dialog.dismiss() }
+        val dialog = SimpleConfirmDialog(
+            "작성을 종료할까요?",
+            "지금까지 작성한 내용은 저장되지 않아요",
+            "취소",
+            "확인"
+        )
+        dialog.setMultiEventListener(object: SimpleConfirmDialog.MultiEventListener {
+            override fun onLeftBtnClick(dialogSelf: SimpleConfirmDialog) {
+                dialog.dismiss()
+            }
+
+            override fun onRightBtnClick(dialogSelf: SimpleConfirmDialog) {
+                finish()
+            }
+        })
+        dialog.show(supportFragmentManager,"SimpleConfirmDialog")
+//        val dialog = Dialog(this)
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+//        dialog.setContentView(R.layout.dialog_cancle_write)
+//        dialog.show()
+//        val btnOk = dialog.findViewById<Button>(R.id.btn_ok)
+//        btnOk.setOnClickListener { gotoMain() }
+//        val btnCancel = dialog.findViewById<Button>(R.id.btn_cancel)
+//        btnCancel.setOnClickListener { dialog.dismiss() }
     }
 
     private fun setBindItem() {
@@ -174,7 +190,7 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
         dialog.setSingleEventListener(object : AlertDialog.SingleEventListener {
             override fun confirmClick(dialogSelf: AlertDialog) {
                 dialogSelf.dismiss()
-                gotoMain()
+                finish()
             }
         })
         if(!AlertDialog.showCheck)
@@ -224,10 +240,6 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
         bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
     }
 
-    private fun setupToolbar() {
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-    }
 
     private fun difficultyAction() {
         binding.sbDifficulty.setOnRatingChangeListener(object : RatingBar.OnRatingChangeListener {
@@ -271,11 +283,6 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
-    private fun gotoMain() {
-//        val intent = Intent(this, MainActivity::class.java)
-//        startActivity(intent)
-        finish()
-    }
 
     companion object {
         fun getIntent(activity: AppCompatActivity) = Intent(activity, FeedWriteActivity::class.java)

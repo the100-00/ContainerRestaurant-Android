@@ -11,47 +11,46 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="120dp">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
+            android:paddingBottom="60dp">
+            <ImageView
+                android:id="@+id/iv_back"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_marginEnd="16dp"
-                android:theme="@style/BaseTheme"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/back"
+                android:src="@drawable/close_20px"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="11dp"
+                android:padding="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/iv_back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_close_outline_20_px" />
-
-            </androidx.appcompat.widget.Toolbar>
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
                 android:id="@+id/tv_container_name"
                 style="@style/TextAppearance.App.B.Gray07"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="33.9dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/restaurant_name"
-                android:textSize="16sp"
+                android:textSize="16dp"
                 app:layout_constraintBottom_toTopOf="@id/et_search_container"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+                app:layout_constraintTop_toBottomOf="@+id/iv_back"
+                tools:ignore="SpUsage" />
 
             <TextView
                 android:id="@+id/et_search_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="46dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:text="식당명 또는 지역 + 식당명 입력"
+                android:layout_height="48dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/edit_text_bg"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="13dp"
+                android:text="@string/restaurant_name_hint"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_container_name" />
 
             <ImageView
@@ -59,42 +58,35 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="20dp"
-                android:src="@drawable/ic_search_outline"
+                android:layout_marginEnd="7dp"
+                android:contentDescription="@string/search"
+                android:padding="5dp"
+                android:src="@drawable/ic_search_20px"
                 app:layout_constraintBottom_toBottomOf="@id/et_search_container"
-                app:layout_constraintStart_toEndOf="@id/et_search_container"
+                app:layout_constraintEnd_toEndOf="@id/et_search_container"
                 app:layout_constraintTop_toTopOf="@id/et_search_container" />
-
-            <ImageView
-                android:id="@+id/line_gray_0"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:src="@drawable/line_gray04"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/et_search_container" />
 
             <TextView
                 android:id="@+id/tv_category"
                 style="@style/TextAppearance.App.B.Gray07"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="37dp"
                 android:text="@string/food_category"
-                android:textSize="16sp"
+                android:textSize="16dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/et_search_container" />
+                app:layout_constraintTop_toBottomOf="@id/et_search_container"
+                tools:ignore="SpUsage" />
 
             <worker8.com.github.radiogroupplus.RadioGroupPlus
 
                 android:id="@+id/radio_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="12dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
                 android:orientation="vertical"
                 app:layout_constraintTop_toBottomOf="@id/tv_category">
 
@@ -217,7 +209,7 @@
                         android:id="@+id/rb_asian_food"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="6dp"
+                        android:layout_marginEnd="6dp"
                         android:autoSizeMaxTextSize="15dp"
                         android:autoSizeMinTextSize="10dp"
                         android:autoSizeTextType="uniform"
@@ -236,7 +228,7 @@
                         android:id="@+id/rb_desert"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="6dp"
+                        android:layout_marginEnd="6dp"
                         android:autoSizeMaxTextSize="15dp"
                         android:autoSizeMinTextSize="10dp"
                         android:autoSizeTextType="uniform"
@@ -296,48 +288,52 @@
                 android:layout_marginTop="34dp"
                 android:src="@drawable/line_gray03"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/radio_group" />
+                app:layout_constraintTop_toBottomOf="@id/radio_group"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/tv_detail"
                 style="@style/TextAppearance.App.B.Gray07"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="34dp"
                 android:text="@string/detail_list"
-                android:textSize="16sp"
+                android:textSize="16dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/line_gray_1" />
+                app:layout_constraintTop_toBottomOf="@id/line_gray_1"
+                tools:ignore="SpUsage" />
 
             <ImageView
                 android:id="@+id/ic_main_menu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="12dp"
                 android:src="@drawable/ic_main_menu_outline"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_detail" />
+                app:layout_constraintTop_toBottomOf="@id/tv_detail"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/tv_main_menu"
                 style="@style/TextAppearance.App.B.Gray07"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="6dp"
+                android:layout_marginStart="6dp"
                 android:text="@string/main_menu"
-                android:textSize="14sp"
+                android:textSize="14dp"
                 app:layout_constraintStart_toEndOf="@id/ic_main_menu"
-                app:layout_constraintTop_toTopOf="@id/ic_main_menu" />
+                app:layout_constraintTop_toTopOf="@id/ic_main_menu"
+                tools:ignore="SpUsage" />
 
             <LinearLayout
                 android:id="@+id/cl_main_menu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
                 android:orientation="vertical"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_main_menu">
@@ -349,30 +345,18 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:itemCount="3" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/tv_add_main_menu"
+                    style="@style/TextAppearance.App.B.Gray07"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="105dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginRight="120dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="8dp"
-                        android:src="@drawable/ic_add_outline" />
-
-                    <TextView
-                        android:id="@+id/tv_add_main_menu"
-                        style="@style/TextAppearance.App.B.Gray07"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/add_menu"
-                        android:textSize="14sp" />
-
-                </LinearLayout>
+                    android:layout_gravity="center"
+                    android:drawablePadding="8dp"
+                    android:padding="10dp"
+                    android:text="@string/add_menu"
+                    android:textSize="14dp"
+                    app:drawableStartCompat="@drawable/ic_add_outline"
+                    tools:ignore="SpUsage" />
             </LinearLayout>
 
 
@@ -380,20 +364,22 @@
                 android:id="@+id/iv_side_menu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="32dp"
                 android:src="@drawable/ic_side_menu_outline"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cl_main_menu" />
+                app:layout_constraintTop_toBottomOf="@id/cl_main_menu"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/tv_side_menu"
                 style="@style/TextAppearance.App.B.Gray07"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="6dp"
+                android:layout_marginStart="6dp"
                 android:text="@string/side_menu"
-                android:textSize="14sp"
+                android:textSize="14dp"
+                tools:ignore="SpUsage"
                 app:layout_constraintBottom_toBottomOf="@id/iv_side_menu"
                 app:layout_constraintStart_toEndOf="@id/iv_side_menu"
                 app:layout_constraintTop_toTopOf="@id/iv_side_menu" />
@@ -402,20 +388,21 @@
                 style="@style/TextAppearance.App.R.Gray06"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
+                android:layout_marginStart="3dp"
                 android:text="@string/optional_input"
-                android:textSize="10sp"
+                android:textSize="10dp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_side_menu"
                 app:layout_constraintStart_toEndOf="@id/tv_side_menu"
-                app:layout_constraintTop_toTopOf="@+id/tv_side_menu" />
+                app:layout_constraintTop_toTopOf="@+id/tv_side_menu"
+                tools:ignore="SpUsage" />
 
             <LinearLayout
                 android:id="@+id/cl_side_menu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
                 android:orientation="vertical"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_side_menu">
@@ -427,30 +414,18 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:itemCount="3" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/tv_add_side_menu"
+                    style="@style/TextAppearance.App.B.Gray07"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="105dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginRight="120dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="8dp"
-                        android:src="@drawable/ic_add_outline" />
-
-                    <TextView
-                        android:id="@+id/tv_add_side_menu"
-                        style="@style/TextAppearance.App.B.Gray07"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/add_menu"
-                        android:textSize="14sp" />
-
-                </LinearLayout>
+                    android:layout_gravity="center"
+                    android:drawablePadding="8dp"
+                    android:padding="10dp"
+                    android:text="@string/add_menu"
+                    android:textSize="14dp"
+                    app:drawableStartCompat="@drawable/ic_add_outline"
+                    tools:ignore="SpUsage" />
             </LinearLayout>
 
 
@@ -461,36 +436,39 @@
                 android:layout_marginTop="37dp"
                 android:src="@drawable/line_gray03"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cl_side_menu" />
+                app:layout_constraintTop_toBottomOf="@id/cl_side_menu"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/tv_level"
                 style="@style/TextAppearance.App.B.Gray07"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="34dp"
                 android:text="@string/level"
-                android:textSize="16sp"
+                android:textSize="16dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/line_gray_2" />
+                app:layout_constraintTop_toBottomOf="@id/line_gray_2"
+                tools:ignore="SpUsage" />
 
             <TextView
                 android:id="@+id/tv_difficulty_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:background="@drawable/bg_gray02_r12"
                 android:paddingLeft="8dp"
                 android:paddingTop="5dp"
                 android:paddingRight="8dp"
                 android:paddingBottom="5dp"
                 android:textColor="@color/gray_07"
-                android:textSize="10sp"
+                android:textSize="10dp"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@id/tv_level"
                 app:layout_constraintStart_toEndOf="@id/tv_level"
-                app:layout_constraintTop_toTopOf="@id/tv_level" />
+                app:layout_constraintTop_toTopOf="@id/tv_level"
+                tools:ignore="SpUsage" />
 
             <com.hedgehog.ratingbar.RatingBar
                 android:id="@+id/sb_difficulty"
@@ -511,52 +489,65 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_is_like"
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="16dp"
-                android:background="@drawable/shadow_box"
-                android:clickable="true"
-                android:focusable="true"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:paddingVertical="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/sb_difficulty">
+                app:layout_constraintTop_toBottomOf="@+id/sb_difficulty"
+                android:clickable="true"
+                android:focusable="true">
+
+
 
                 <ImageView
                     android:id="@+id/iv_badge_unfilled"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10.6dp"
-                    android:layout_marginTop="9dp"
-                    android:layout_marginBottom="11dp"
                     android:src="@drawable/like_badge_selector"
+                    android:elevation="10dp"
+                    android:layout_marginStart="14dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintStart_toStartOf="@id/card_view_welcome"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:contentDescription="@string/welcome_mark" />
 
                 <TextView
                     android:id="@+id/tv_is_like"
                     style="@style/TextAppearance.App.R.Gray07"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="7dp"
+                    android:layout_marginStart="9dp"
                     android:text="@string/owner_likes_multi_disposable"
-                    android:textSize="14sp"
+                    android:textSize="14dp"
+                    android:elevation="10dp"
                     app:layout_constraintBottom_toBottomOf="@id/iv_badge_unfilled"
                     app:layout_constraintStart_toEndOf="@id/iv_badge_unfilled"
-                    app:layout_constraintTop_toTopOf="@id/iv_badge_unfilled" />
+                    app:layout_constraintTop_toTopOf="@id/iv_badge_unfilled"
+                    tools:ignore="SpUsage" />
 
                 <TextView
                     style="@style/TextAppearance.App.R.Gray06"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
+                    android:layout_marginStart="3dp"
                     android:text="@string/optional_details"
-                    android:textSize="10sp"
+                    android:textSize="10dp"
+                    android:elevation="10dp"
                     app:layout_constraintBottom_toBottomOf="@id/tv_is_like"
                     app:layout_constraintStart_toEndOf="@id/tv_is_like"
-                    app:layout_constraintTop_toTopOf="@id/tv_is_like" />
-
+                    app:layout_constraintTop_toTopOf="@id/tv_is_like"
+                    tools:ignore="SpUsage" />
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_view_welcome"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginHorizontal="16dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:cardCornerRadius="14dp"
+                    />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <ImageView
                 android:id="@+id/line_gray_3"
@@ -565,7 +556,8 @@
                 android:layout_marginTop="34dp"
                 android:src="@drawable/line_gray03"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cl_is_like" />
+                app:layout_constraintTop_toBottomOf="@+id/cl_is_like"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/tv_content"
@@ -575,9 +567,10 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="34dp"
                 android:text="@string/write_courageous_experience"
-                android:textSize="16sp"
+                android:textSize="16dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/line_gray_3" />
+                app:layout_constraintTop_toBottomOf="@id/line_gray_3"
+                tools:ignore="SpUsage" />
 
             <TextView
                 style="@style/TextAppearance.App.R.Gray06"
@@ -585,17 +578,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:text="@string/optional_input"
-                android:textSize="10sp"
+                android:textSize="10dp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_content"
-                app:layout_constraintStart_toEndOf="@id/tv_content" />
+                app:layout_constraintStart_toEndOf="@id/tv_content"
+                app:layout_constraintTop_toTopOf="@id/tv_content"
+                tools:ignore="SpUsage" />
 
             <LinearLayout
                 android:id="@+id/lyt_feed_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="18dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
                 android:orientation="horizontal"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_content">
@@ -611,7 +606,8 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_photo_outline" />
+                        android:src="@drawable/ic_photo_outline"
+                        android:contentDescription="@string/add_photo" />
 
                     <TextView
                         android:id="@+id/tv_image_count"
@@ -619,7 +615,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0/1"
-                        android:textSize="10sp" />
+                        android:textSize="10dp"
+                        tools:ignore="SpUsage" />
                 </LinearLayout>
 
                 <FrameLayout
@@ -630,7 +627,8 @@
                         android:id="@+id/iv_upload_image"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:scaleType="centerCrop" />
+                        android:scaleType="centerCrop"
+                        tools:ignore="ContentDescription" />
 
                     <ImageView
                         android:id="@+id/iv_delete_image"
@@ -640,34 +638,35 @@
                         android:layout_marginTop="4.5dp"
                         android:layout_marginEnd="4.5dp"
                         android:src="@drawable/ic_close_filled_16_px"
-                        android:visibility="gone" />
+                        android:visibility="gone"
+                        tools:ignore="ContentDescription" />
                 </FrameLayout>
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/line_gray_4"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="16dp"
-                android:src="@drawable/line_gray04"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/lyt_feed_image" />
 
-            <EditText
-                android:id="@+id/et_content"
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/scroll_view_et"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                app:layout_constraintTop_toBottomOf="@id/lyt_feed_image"
+                android:layout_marginHorizontal="16dp"
+                android:background="@drawable/edit_text_bg"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="40dp"
-                android:background="@null"
-                android:hint="@string/write_content_hint"
-                android:textCursorDrawable="@color/green_02"
-                android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/line_gray_4" />
+                android:layout_height="148dp">
+                <EditText
+                    android:id="@+id/et_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/write_content_hint"
+                    android:padding="16dp"
+                    android:textCursorDrawable="@color/green_02"
+                    android:textSize="14dp"
+                    android:gravity="top"
+                    tools:ignore="SpUsage"
+                    android:background="@null"
+                    android:importantForAutofill="no"
+                    android:inputType="textMultiLine" />
+            </androidx.core.widget.NestedScrollView>
+
 
             <TextView
                 android:id="@+id/tv_content_caption"
@@ -677,24 +676,26 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
                 android:text="@string/write_content_caption"
-                android:textSize="10sp"
+                android:textSize="10dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/et_content" />
+                app:layout_constraintTop_toBottomOf="@id/scroll_view_et"
+                tools:ignore="SpUsage" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_feed_update"
                 style="@style/TextAppearance.App.B.Gray01"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="84dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="64dp"
+                android:layout_marginEnd="16dp"
                 android:background="@drawable/btn_write_r10"
                 android:text="@string/upload"
                 android:textColor="@color/gray_01"
-                android:textSize="14sp"
+                android:textSize="14dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_content_caption" />
+                app:layout_constraintTop_toBottomOf="@id/tv_content_caption"
+                tools:ignore="SpUsage" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>

@@ -39,7 +39,7 @@
     <string name="level">난이도</string>
     <string name="owner_likes_multi_disposable">사장님이 다회용기를 환영했어요!</string>
     <string name="write_courageous_experience">용기낸 경험담을 들려주세요</string>
-    <string name="write_content_hint">용기 구성 팁등 타인에게 용기를 줄 수 있는 소감을 적어주세요.</string>
+    <string name="write_content_hint">용기 구성 팁등 타인에게 용기를 줄 수 있는 소감을 적어주세요 :)</string>
     <string name="write_content_caption">* 무관한 내용이나 욕설 등 부적절한 내용은 통보 없이 삭제될 수 있습니다.</string>
     <string name="upload">저장하기</string>
     <string name="korean_food">한식</string>
@@ -114,5 +114,9 @@
     <string name="feed_image">피드 이미지</string>
     <string name="heart">좋아요</string>
 
+    <string name="restaurant_name_hint">\'식당명\' 또는 \'지역 + 식당명\' 입력</string>
+    <string name="search">검색하기</string>
+    <string name="welcome_mark">다회용기 환영 마크</string>
+    <string name="add_photo">사진 추가</string>
 
 </resources>

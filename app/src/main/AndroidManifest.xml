@@ -25,7 +25,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.feed.write.FeedWriteActivity" />
+        <activity android:name=".presentation.feed.write.FeedWriteActivity"
+            android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".presentation.MainActivity"
             android:windowSoftInputMode="adjustResize"/>
         <activity
