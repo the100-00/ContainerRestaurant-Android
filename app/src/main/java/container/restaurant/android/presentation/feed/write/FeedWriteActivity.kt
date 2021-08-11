@@ -31,6 +31,7 @@ import container.restaurant.android.util.EventObserver
 import container.restaurant.android.util.hide
 import container.restaurant.android.util.show
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 import java.io.InputStream
 
 class FeedWriteActivity : BaseActivity(), View.OnClickListener {
@@ -108,6 +109,18 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
                     onBackPressed()
                 }
             })
+            isWelcomedButtonClicked.observe(this@FeedWriteActivity , EventObserver {
+                Timber.d("onWelcomeButtonClick $it")
+                if(it) {
+                    binding.badgeFilled.visibility = View.VISIBLE
+                    binding.ivBadgeUnfilled.visibility = View.INVISIBLE
+                    binding.badgeFilled.playAnimation()
+                }
+                else {
+                    binding.badgeFilled.visibility = View.INVISIBLE
+                    binding.ivBadgeUnfilled.visibility = View.VISIBLE
+                }
+            })
         }
     }
 
@@ -135,7 +148,6 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
             etSearchContainer.setOnClickListener(this@FeedWriteActivity)
             llGetPicture.setOnClickListener(this@FeedWriteActivity)
             ivDeleteImage.setOnClickListener(this@FeedWriteActivity)
-            clIsLike.setOnClickListener(this@FeedWriteActivity)
             btnFeedUpdate.setOnClickListener(this@FeedWriteActivity)
         }
     }
@@ -225,12 +237,6 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
         binding.ivDeleteImage.visibility = View.GONE
     }
 
-    private fun isLikeAction() {
-        binding.ivBadgeUnfilled.isSelected = binding.ivBadgeUnfilled.isSelected != true
-        welcome = binding.ivBadgeUnfilled.isSelected
-
-    }
-
     private fun onClickNameSearch() {
         bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
     }
@@ -270,7 +276,6 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
             binding.etSearchContainer -> onClickNameSearch()
             binding.llGetPicture -> dispatchAlbumIntent()
             binding.ivDeleteImage -> onDeleteImage()
-            binding.clIsLike -> isLikeAction()
 //            binding.btnFeedUpdate -> observe(viewModel.tempLogin()) {}
         }
     }

@@ -28,6 +28,11 @@ class FeedWriteViewModel(private val feedWriteRepository: FeedWriteRepository) :
     private val _isBackButtonClicked:MutableLiveData<Event<Boolean>> = MutableLiveData()
     val isBackButtonClicked:LiveData<Event<Boolean>> = _isBackButtonClicked
 
+    private val _isWelcomedButtonClicked:MutableLiveData<Event<Boolean>> = MutableLiveData()
+    val isWelcomedButtonClicked:LiveData<Event<Boolean>> = _isWelcomedButtonClicked
+
+    var isWelcomed = false
+
     val categoryList = mutableListOf(
         CategorySelection(Category.KOREAN),
         CategorySelection(Category.NIGHT_MEAL),
@@ -45,6 +50,12 @@ class FeedWriteViewModel(private val feedWriteRepository: FeedWriteRepository) :
     fun onBackButtonClick() {
         _isBackButtonClicked.value = Event(true)
     }
+
+    fun onWelcomedButtonClick() {
+        isWelcomed = !isWelcomed
+        _isWelcomedButtonClicked.value = Event(isWelcomed)
+    }
+
 
     fun onAddMainMenuButtonClick() {
         _mainMenuList.value?.add(MainMenu())
