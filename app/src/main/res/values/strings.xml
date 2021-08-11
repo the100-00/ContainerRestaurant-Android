@@ -3,7 +3,7 @@
     <string name="home">홈</string>
     <string name="feed">피드</string>
     <string name="map">지도</string>
-    <string name="my">My</string>
+    <string name="my">마이</string>
     <string name="title_activity_feed_write">FeedWriteActivity</string>
     <!--
     This string is used for square devices and overridden by hello_world in
