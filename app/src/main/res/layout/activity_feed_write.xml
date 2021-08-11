@@ -28,6 +28,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="11dp"
                 android:padding="5dp"
+                android:onClick="@{()->viewModel.onBackButtonClick()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 
@@ -86,207 +87,24 @@
                 app:layout_constraintTop_toBottomOf="@id/et_search_container"
                 tools:ignore="SpUsage" />
 
-            <worker8.com.github.radiogroupplus.RadioGroupPlus
+            <androidx.recyclerview.widget.RecyclerView
 
-                android:id="@+id/radio_group"
+                android:id="@+id/rv_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="16dp"
                 android:orientation="vertical"
-                app:layout_constraintTop_toBottomOf="@id/tv_category">
+                app:layout_constraintTop_toBottomOf="@id/tv_category"
+                app:dino_itemLayout="@{@layout/item_category_selection}"
+                app:dino_items="@{viewModel.categoryList}"
+                app:dino_vm="@{viewModel}"
+                tools:listitem="@layout/item_category_selection"
+                tools:itemCount="3">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
 
-                    <RadioButton
-                        android:id="@+id/rb_korea_food"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:autoSizeMaxTextSize="15dp"
-                        android:autoSizeMinTextSize="10dp"
-                        android:autoSizeTextType="uniform"
-                        android:background="@drawable/category_bg_selector"
-                        android:button="@android:color/transparent"
-                        android:gravity="center"
-                        android:text="@string/korean_food"
-                        android:textColor="@drawable/category_text_selector"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias=".0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias=".0"
-                        app:layout_constraintWidth_percent=".15" />
-
-                    <RadioButton
-                        android:id="@+id/rb_midnight_meal"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:autoSizeMaxTextSize="15dp"
-                        android:autoSizeMinTextSize="10dp"
-                        android:autoSizeTextType="uniform"
-                        android:background="@drawable/category_bg_selector"
-                        android:button="@android:color/transparent"
-                        android:gravity="center"
-                        android:text="@string/midnight_snack"
-                        android:textColor="@drawable/category_text_selector"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/rb_china_food"
-                        app:layout_constraintStart_toEndOf="@id/rb_korea_food"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias=".0"
-                        app:layout_constraintWidth_percent=".15" />
-
-                    <RadioButton
-                        android:id="@+id/rb_china_food"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:autoSizeMaxTextSize="15dp"
-                        android:autoSizeMinTextSize="10dp"
-                        android:autoSizeTextType="uniform"
-                        android:background="@drawable/category_bg_selector"
-                        android:button="@android:color/transparent"
-                        android:gravity="center"
-                        android:text="@string/chinese_food"
-                        android:textColor="@drawable/category_text_selector"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/rb_fast_food"
-                        app:layout_constraintStart_toEndOf="@id/rb_korea_food"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias=".0"
-                        app:layout_constraintWidth_percent=".15" />
-
-                    <RadioButton
-                        android:id="@+id/rb_school_food"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:autoSizeMaxTextSize="15dp"
-                        android:autoSizeMinTextSize="10dp"
-                        android:autoSizeTextType="uniform"
-                        android:background="@drawable/category_bg_selector"
-                        android:button="@android:color/transparent"
-                        android:gravity="center"
-                        android:text="@string/snack"
-                        android:textColor="@drawable/category_text_selector"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/rb_fast_food"
-                        app:layout_constraintStart_toEndOf="@id/rb_china_food"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias=".0"
-                        app:layout_constraintWidth_percent=".15" />
-
-                    <RadioButton
-                        android:id="@+id/rb_fast_food"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:autoSizeMaxTextSize="15dp"
-                        android:autoSizeMinTextSize="10dp"
-                        android:autoSizeTextType="uniform"
-                        android:background="@drawable/category_bg_selector"
-                        android:button="@android:color/transparent"
-                        android:gravity="center"
-                        android:text="@string/fast_food"
-                        android:textColor="@drawable/category_text_selector"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="1"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias=".0"
-                        app:layout_constraintWidth_percent=".3" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/rb_asian_food"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="6dp"
-                        android:autoSizeMaxTextSize="15dp"
-                        android:autoSizeMinTextSize="10dp"
-                        android:autoSizeTextType="uniform"
-                        android:background="@drawable/category_bg_selector"
-                        android:button="@android:color/transparent"
-                        android:gravity="center"
-                        android:paddingLeft="16dp"
-                        android:paddingTop="7dp"
-                        android:paddingRight="16dp"
-                        android:paddingBottom="7dp"
-                        android:text="@string/asian_or_western_food"
-                        android:textColor="@drawable/category_text_selector"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/rb_desert"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="6dp"
-                        android:autoSizeMaxTextSize="15dp"
-                        android:autoSizeMinTextSize="10dp"
-                        android:autoSizeTextType="uniform"
-                        android:background="@drawable/category_bg_selector"
-                        android:button="@android:color/transparent"
-                        android:gravity="center"
-                        android:paddingLeft="16dp"
-                        android:paddingTop="7dp"
-                        android:paddingRight="16dp"
-                        android:paddingBottom="7dp"
-                        android:text="@string/cafe_or_dessert"
-                        android:textColor="@drawable/category_text_selector"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/rb_japan"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:autoSizeMaxTextSize="15dp"
-                        android:autoSizeMinTextSize="10dp"
-                        android:autoSizeTextType="uniform"
-                        android:background="@drawable/category_bg_selector"
-                        android:button="@android:color/transparent"
-                        android:gravity="center"
-                        android:paddingLeft="16dp"
-                        android:paddingTop="7dp"
-                        android:paddingRight="16dp"
-                        android:paddingBottom="7dp"
-                        android:text="@string/cutlet_or_japanese_food"
-                        android:textColor="@drawable/category_text_selector"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <RadioButton
-                    android:id="@+id/rb_chiken"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:autoSizeMaxTextSize="15dp"
-                    android:autoSizeMinTextSize="10dp"
-                    android:autoSizeTextType="uniform"
-                    android:background="@drawable/category_bg_selector"
-                    android:button="@android:color/transparent"
-                    android:gravity="center"
-                    android:paddingLeft="16dp"
-                    android:paddingTop="7dp"
-                    android:paddingRight="16dp"
-                    android:paddingBottom="7dp"
-                    android:text="@string/chicken_or_pizza"
-                    android:textColor="@drawable/category_text_selector"
-                    android:textStyle="bold" />
-            </worker8.com.github.radiogroupplus.RadioGroupPlus>
+            </androidx.recyclerview.widget.RecyclerView>
 
             <ImageView
                 android:id="@+id/line_gray_1"
@@ -295,7 +113,7 @@
                 android:layout_marginTop="34dp"
                 android:src="@drawable/line_gray03"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/radio_group"
+                app:layout_constraintTop_toBottomOf="@id/rv_category"
                 tools:ignore="ContentDescription" />
 
             <TextView

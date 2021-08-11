@@ -11,6 +11,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 import com.hedgehog.ratingbar.RatingBar
 import com.naver.maps.geometry.Tm128
 import container.restaurant.android.R
@@ -23,6 +27,7 @@ import container.restaurant.android.dialog.AlertDialog
 import container.restaurant.android.dialog.SimpleConfirmDialog
 import container.restaurant.android.presentation.base.BaseActivity
 import container.restaurant.android.util.CommUtils
+import container.restaurant.android.util.EventObserver
 import container.restaurant.android.util.hide
 import container.restaurant.android.util.show
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -79,10 +84,31 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
         binding.viewModel = this.viewModel
         binding.lifecycleOwner = this
 
+        observeData()
         setBindItem()
-        setCategory()
         subscribeUi()
         difficultyAction()
+        setUpRecyclerViewCategorySelection()
+    }
+
+    private fun setUpRecyclerViewCategorySelection() {
+        FlexboxLayoutManager(this).apply {
+            flexWrap = FlexWrap.WRAP
+            flexDirection = FlexDirection.ROW
+            justifyContent = JustifyContent.FLEX_START
+        }.let {
+            binding.rvCategory.layoutManager = it
+        }
+    }
+
+    private fun observeData() {
+        with(viewModel){
+            isBackButtonClicked.observe(this@FeedWriteActivity, EventObserver {
+                if(it) {
+                    onBackPressed()
+                }
+            })
+        }
     }
 
     override fun onBackPressed() {
@@ -107,13 +133,10 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
     private fun setBindItem() {
         binding.apply {
             etSearchContainer.setOnClickListener(this@FeedWriteActivity)
-            tvAddMainMenu.setOnClickListener(this@FeedWriteActivity)
-            tvAddSideMenu.setOnClickListener(this@FeedWriteActivity)
             llGetPicture.setOnClickListener(this@FeedWriteActivity)
             ivDeleteImage.setOnClickListener(this@FeedWriteActivity)
             clIsLike.setOnClickListener(this@FeedWriteActivity)
             btnFeedUpdate.setOnClickListener(this@FeedWriteActivity)
-            ivBack.setOnClickListener(this@FeedWriteActivity)
         }
     }
 
@@ -185,21 +208,6 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
 
     }
 
-    private fun setCategory() {
-        binding.radioGroup.setOnCheckedChangeListener { p0, p1 ->
-            when(p1) {
-                R.id.rb_asian_food -> categoryStr = "ASIAN_AND_WESTERN"
-                R.id.rb_chiken -> categoryStr = "CHICKEN_AND_PIZZA"
-                R.id.rb_china_food -> categoryStr = "CHINESE"
-                R.id.rb_desert -> categoryStr = "COFFEE_AND_DESSERT"
-                R.id.rb_fast_food -> categoryStr = "FAST_FOOD"
-                R.id.rb_japan -> categoryStr = "JAPANESE"
-                R.id.rb_korea_food -> categoryStr = "KOREAN"
-                R.id.rb_midnight_meal -> categoryStr = "NIGHT_MEAL"
-                R.id.rb_school_food -> categoryStr = "SCHOOL_FOOD"
-            }
-        }
-    }
 
     private fun getMainFoodList(list: List<MainFood>) {
 //        binding.rvMainFood.adapter = mainFoodAdapter
@@ -260,13 +268,10 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when(v) {
             binding.etSearchContainer -> onClickNameSearch()
-//            binding.tvAddMainMenu -> observe(viewModel.addMainFood(mainFoodAdapter.currentList)) {}
-//            binding.tvAddSideMenu -> observe(viewModel.addSideDish(sideDishAdapter.currentList)) {}
             binding.llGetPicture -> dispatchAlbumIntent()
             binding.ivDeleteImage -> onDeleteImage()
             binding.clIsLike -> isLikeAction()
 //            binding.btnFeedUpdate -> observe(viewModel.tempLogin()) {}
-            binding.ivBack -> onBackPressed()
         }
     }
 
