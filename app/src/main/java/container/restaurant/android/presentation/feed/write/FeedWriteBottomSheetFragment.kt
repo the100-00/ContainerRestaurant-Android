@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.view.Window
 import androidx.core.widget.addTextChangedListener
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import container.restaurant.android.R
 import container.restaurant.android.data.response.SearchLocalResponse
 import container.restaurant.android.databinding.FragmentFeedWriteBottomSheetBinding
 import container.restaurant.android.presentation.feed.write.adapter.SearchLocalAdapter
@@ -55,5 +56,7 @@ class FeedWriteBottomSheetFragment(private val clickItem:(SearchLocalResponse.It
         binding.rvRestaurantList.adapter = adapter
         adapter.submitList(searchLocalResponse.items)
     }
+
+    override fun getTheme(): Int = R.style.BottomSheetDialog
 
 }
