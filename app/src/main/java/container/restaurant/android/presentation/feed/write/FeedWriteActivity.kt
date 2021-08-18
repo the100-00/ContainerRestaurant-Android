@@ -9,14 +9,12 @@ import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
-import com.naver.maps.geometry.Tm128
 import container.restaurant.android.R
+import container.restaurant.android.data.FoodPhoto
 import container.restaurant.android.data.db.entity.MainFood
 import container.restaurant.android.data.db.entity.SideDish
 import container.restaurant.android.data.request.FeedWriteRequest
@@ -25,7 +23,6 @@ import container.restaurant.android.databinding.ActivityFeedWriteBinding
 import container.restaurant.android.dialog.AlertDialog
 import container.restaurant.android.dialog.SimpleConfirmDialog
 import container.restaurant.android.presentation.base.BaseActivity
-import container.restaurant.android.util.CommUtils
 import container.restaurant.android.util.EventObserver
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
@@ -52,14 +49,8 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
                         val inputStream: InputStream = contentResolver.openInputStream(imgUri)!!
                         val bmp: Bitmap = BitmapFactory.decodeStream(inputStream)
                         inputStream.close()
-                        val bmpFile = CommUtils.convertBitmapToFile(this, "userImg.jpeg", bmp)
-
-//                        observe(viewModel.uploadImg(bmpFile), ::imgUploadComplete)
-
-                        Glide.with(this).load(bmp).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(binding.ivUploadImage)
-                        binding.ivUploadImage.visibility = View.VISIBLE
-                        binding.ivDeleteImage.visibility = View.VISIBLE
-                        binding.tvImageCount.text = "1/1"
+                        viewModel.foodPhotoList.value?.add(FoodPhoto(bmp))
+                        viewModel.foodPhotoList.value = viewModel.foodPhotoList.value
 
                     } catch (ex: Exception) {
                         simpleDialog("Error", ex.message.toString(), AlertDialog.ERROR_TYPE)
@@ -112,7 +103,24 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
                     binding.ivBadgeUnfilled.visibility = View.VISIBLE
                 }
             })
+            isSearchEditTextClicked.observe(this@FeedWriteActivity, EventObserver {
+                if(it) {
+                    onClickNameSearch()
+                }
+            })
 
+            isAddPhotoButtonClicked.observe(this@FeedWriteActivity, EventObserver {
+                if(it) {
+                    addPhoto()
+                }
+            })
+
+        }
+    }
+
+    private fun addPhoto() {
+        if(viewModel.foodPhotoList.value?.isEmpty() == true) {
+            dispatchAlbumIntent()
         }
     }
 
@@ -137,9 +145,6 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
 
     private fun setBindItem() {
         binding.apply {
-            etSearchContainer.setOnClickListener(this@FeedWriteActivity)
-            llGetPicture.setOnClickListener(this@FeedWriteActivity)
-            ivDeleteImage.setOnClickListener(this@FeedWriteActivity)
             btnFeedUpdate.setOnClickListener(this@FeedWriteActivity)
         }
     }
@@ -224,9 +229,9 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun onDeleteImage(){
-        binding.tvImageCount.text = "0/1"
-        binding.ivUploadImage.setImageResource(0)
-        binding.ivDeleteImage.visibility = View.GONE
+//        binding.tvImageCount.text = "0/1"
+//        binding.ivUploadImage.setImageResource(0)
+//        binding.ivDeleteImage.visibility = View.GONE
     }
 
     private fun onClickNameSearch() {
@@ -263,9 +268,6 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when(v) {
-            binding.etSearchContainer -> onClickNameSearch()
-            binding.llGetPicture -> dispatchAlbumIntent()
-            binding.ivDeleteImage -> onDeleteImage()
 //            binding.btnFeedUpdate -> observe(viewModel.tempLogin()) {}
         }
     }

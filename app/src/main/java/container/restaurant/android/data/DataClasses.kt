@@ -1,5 +1,6 @@
 package container.restaurant.android.data
 
+import android.graphics.Bitmap
 import androidx.lifecycle.MutableLiveData
 
 data class MainMenu(
@@ -15,4 +16,8 @@ data class SubMenu(
 data class CategorySelection(
     var category: Category,
     var checked: MutableLiveData<Boolean> = MutableLiveData(false)
+)
+
+data class FoodPhoto(
+    val bitmap: Bitmap
 )

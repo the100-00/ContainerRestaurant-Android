@@ -6,4 +6,7 @@ interface RecyclerViewItemClickListeners {
     interface CategorySelectionItemClickListener {
         fun onClick(item: CategorySelection, adapterPosition: Int)
     }
+    interface FoodPhotoItemClickListener {
+        fun onDeleteClick(adapterPosition: Int)
+    }
 }

@@ -1,10 +1,7 @@
 package container.restaurant.android.presentation.feed.write
 
 import androidx.lifecycle.*
-import container.restaurant.android.data.Category
-import container.restaurant.android.data.CategorySelection
-import container.restaurant.android.data.MainMenu
-import container.restaurant.android.data.SubMenu
+import container.restaurant.android.data.*
 import container.restaurant.android.data.repository.FeedWriteRepository
 import container.restaurant.android.data.response.FeedListResponse
 import container.restaurant.android.data.response.SearchLocationResponse
@@ -15,37 +12,49 @@ import kotlinx.coroutines.flow.collect
 import okhttp3.internal.notify
 import timber.log.Timber
 
-class FeedWriteViewModel(private val feedWriteRepository: FeedWriteRepository) : ViewModel(), RecyclerViewItemClickListeners.CategorySelectionItemClickListener {
+class FeedWriteViewModel(private val feedWriteRepository: FeedWriteRepository) : ViewModel(),
+    RecyclerViewItemClickListeners.CategorySelectionItemClickListener,
+    RecyclerViewItemClickListeners.FoodPhotoItemClickListener {
     val getErrorMsg = MutableLiveData<String>()
     val viewLoading = MutableLiveData<Boolean>()
 
     private val _mainMenuList: MutableLiveData<MutableList<MainMenu>> = MutableLiveData(
-        mutableListOf()
+        mutableListOf(MainMenu())
     )
     val mainMenuList: LiveData<MutableList<MainMenu>> = _mainMenuList
 
     private val _subMenuList: MutableLiveData<MutableList<SubMenu>> = MutableLiveData(
-        mutableListOf()
+        mutableListOf(SubMenu())
     )
     val subMenuList: LiveData<MutableList<SubMenu>> = _subMenuList
 
-    private val _isBackButtonClicked:MutableLiveData<Event<Boolean>> = MutableLiveData()
-    val isBackButtonClicked:LiveData<Event<Boolean>> = _isBackButtonClicked
+    val foodPhotoList: MutableLiveData<MutableList<FoodPhoto>> = MutableLiveData(
+        mutableListOf()
+    )
 
-    private val _isWelcomedButtonClicked:MutableLiveData<Event<Boolean>> = MutableLiveData()
-    val isWelcomedButtonClicked:LiveData<Event<Boolean>> = _isWelcomedButtonClicked
+    private val _isAddPhotoButtonClicked: MutableLiveData<Event<Boolean>> = MutableLiveData()
+    val isAddPhotoButtonClicked: LiveData<Event<Boolean>> = _isAddPhotoButtonClicked
 
-    private val _isCloseSearchButtonClicked:MutableLiveData<Event<Boolean>> = MutableLiveData()
-    val isCloseSearchButtonClicked:LiveData<Event<Boolean>> = _isCloseSearchButtonClicked
+    private val _isBackButtonClicked: MutableLiveData<Event<Boolean>> = MutableLiveData()
+    val isBackButtonClicked: LiveData<Event<Boolean>> = _isBackButtonClicked
 
-    private val _isSearchButtonClicked:MutableLiveData<Event<Boolean>> = MutableLiveData()
-    val isSearchButtonClicked:LiveData<Event<Boolean>> = _isSearchButtonClicked
+    private val _isWelcomedButtonClicked: MutableLiveData<Event<Boolean>> = MutableLiveData()
+    val isWelcomedButtonClicked: LiveData<Event<Boolean>> = _isWelcomedButtonClicked
+
+    private val _isCloseSearchButtonClicked: MutableLiveData<Event<Boolean>> = MutableLiveData()
+    val isCloseSearchButtonClicked: LiveData<Event<Boolean>> = _isCloseSearchButtonClicked
+
+    private val _isSearchButtonClicked: MutableLiveData<Event<Boolean>> = MutableLiveData()
+    val isSearchButtonClicked: LiveData<Event<Boolean>> = _isSearchButtonClicked
+
+    private val _isSearchEditTextClicked: MutableLiveData<Event<Boolean>> = MutableLiveData()
+    val isSearchEditTextClicked: LiveData<Event<Boolean>> = _isSearchEditTextClicked
 
     private val _searchLocationList =
         MutableLiveData<List<SearchLocationResponse.Item>>()
     val searchLocationList: LiveData<List<SearchLocationResponse.Item>> = _searchLocationList
 
-    val placeName : MutableLiveData<String> = MutableLiveData()
+    val placeName: MutableLiveData<String> = MutableLiveData()
 
     var isWelcomed = false
 
@@ -64,6 +73,10 @@ class FeedWriteViewModel(private val feedWriteRepository: FeedWriteRepository) :
     // 사용자가 선택한 음식 카테고리를 저장하는 변수. 선택되지 않았으면 null임
     var selectedCategory: Category? = null
 
+    fun onAddPhotoButtonClick() {
+        _isAddPhotoButtonClicked.value = Event(true)
+    }
+
     fun onBackButtonClick() {
         _isBackButtonClicked.value = Event(true)
     }
@@ -79,6 +92,10 @@ class FeedWriteViewModel(private val feedWriteRepository: FeedWriteRepository) :
 
     fun onSearchButtonClick() {
         _isSearchButtonClicked.value = Event(true)
+    }
+
+    fun onSearchEditTextClick() {
+        _isSearchEditTextClicked.value = Event(true)
     }
 
     fun onAddMainMenuButtonClick() {
@@ -117,9 +134,9 @@ class FeedWriteViewModel(private val feedWriteRepository: FeedWriteRepository) :
 
     override fun onClick(item: CategorySelection, adapterPosition: Int) {
         Timber.d("$item, $adapterPosition")
-        if(item.checked.value!=null) {
+        if (item.checked.value != null) {
             //이미 체크가 되어있다면 체크 해제
-            if(item.checked.value!!){
+            if (item.checked.value!!) {
                 item.checked.value = false
                 selectedCategory = null
             }
@@ -127,13 +144,18 @@ class FeedWriteViewModel(private val feedWriteRepository: FeedWriteRepository) :
             else {
                 categoryList.forEachIndexed { index, categorySelection ->
                     categorySelection.checked.value = (index == adapterPosition)
-                    if(index == adapterPosition) selectedCategory = categorySelection.category
+                    if (index == adapterPosition) selectedCategory = categorySelection.category
                 }
             }
         }
     }
 
-//    val mainFoodList = feedWriteRepository.getMainFoodList().asLiveData()
+    override fun onDeleteClick(adapterPosition: Int) {
+        foodPhotoList.value?.removeAt(adapterPosition)
+        foodPhotoList.value = foodPhotoList.value
+    }
+
+    //    val mainFoodList = feedWriteRepository.getMainFoodList().asLiveData()
 //    val sideDishList = feedWriteRepository.getSideDishList().asLiveData()
 
 //    fun addMainFood(list: List<MainFood>) = feedWriteRepository.addMainFood(list).asLiveData()
