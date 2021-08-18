@@ -15,7 +15,6 @@ import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
-import com.hedgehog.ratingbar.RatingBar
 import com.naver.maps.geometry.Tm128
 import container.restaurant.android.R
 import container.restaurant.android.data.db.entity.MainFood
@@ -28,8 +27,6 @@ import container.restaurant.android.dialog.SimpleConfirmDialog
 import container.restaurant.android.presentation.base.BaseActivity
 import container.restaurant.android.util.CommUtils
 import container.restaurant.android.util.EventObserver
-import container.restaurant.android.util.hide
-import container.restaurant.android.util.show
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 import java.io.InputStream
@@ -38,14 +35,7 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityFeedWriteBinding
     private val viewModel: FeedWriteViewModel by viewModel()
-    private val bottomSheetFragment = FeedWriteBottomSheetFragment {
-
-        val tm128 = Tm128(it.mapx.toDouble(), it.mapy.toDouble())
-        val latLng = tm128.toLatLng()
-
-        restaurantCreateDto = FeedWriteRequest.RestaurantCreateDto(name = it.title, address = it.address, latitude = latLng.latitude, longitude = latLng.longitude)
-        binding.etSearchContainer.text = CommUtils.fromHtml(it.title)
-    }
+    private val bottomSheetFragment = FeedWriteBottomSheetFragment()
 
     private var restaurantCreateDto: FeedWriteRequest.RestaurantCreateDto? = null
     private var categoryStr = "CHINESE"
@@ -67,8 +57,8 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
 //                        observe(viewModel.uploadImg(bmpFile), ::imgUploadComplete)
 
                         Glide.with(this).load(bmp).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(binding.ivUploadImage)
-                        binding.ivUploadImage.show()
-                        binding.ivDeleteImage.show()
+                        binding.ivUploadImage.visibility = View.VISIBLE
+                        binding.ivDeleteImage.visibility = View.VISIBLE
                         binding.tvImageCount.text = "1/1"
 
                     } catch (ex: Exception) {
@@ -92,7 +82,8 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
         setUpRecyclerViewCategorySelection()
     }
 
-    private fun setUpRecyclerViewCategorySelection() {
+    // 음식 카테고리 메뉴를 폰 기종마다 다르게(길이가 부족하면 버튼이 다음줄로 넘어가게) 하기 위한 설정정
+   private fun setUpRecyclerViewCategorySelection() {
         FlexboxLayoutManager(this).apply {
             flexWrap = FlexWrap.WRAP
             flexDirection = FlexDirection.ROW
@@ -121,6 +112,7 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
                     binding.ivBadgeUnfilled.visibility = View.VISIBLE
                 }
             })
+
         }
     }
 
@@ -243,19 +235,17 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
 
 
     private fun difficultyAction() {
-        binding.sbDifficulty.setOnRatingChangeListener(object : RatingBar.OnRatingChangeListener {
-            override fun onRatingChange(RatingCount: Float) {
-                binding.tvDifficultyInfo.show()
-                when(RatingCount.toInt()) {
-                    0 -> binding.tvDifficultyInfo.hide()
-                    1 -> binding.tvDifficultyInfo.text = "쉬워요"
-                    2 -> binding.tvDifficultyInfo.text = "할 만 해요"
-                    3 -> binding.tvDifficultyInfo.text = "보통이에요"
-                    4 -> binding.tvDifficultyInfo.text = "까다로워요"
-                    5 -> binding.tvDifficultyInfo.text = "많이 어려워요"
-                }
+        binding.sbDifficulty.setOnRatingChangeListener { RatingCount ->
+            binding.tvDifficultyInfo.visibility = View.VISIBLE
+            when (RatingCount.toInt()) {
+                0 -> binding.tvDifficultyInfo.visibility = View.INVISIBLE
+                1 -> binding.tvDifficultyInfo.text = "쉬워요"
+                2 -> binding.tvDifficultyInfo.text = "할 만 해요"
+                3 -> binding.tvDifficultyInfo.text = "보통이에요"
+                4 -> binding.tvDifficultyInfo.text = "까다로워요"
+                5 -> binding.tvDifficultyInfo.text = "많이 어려워요"
             }
-        })
+        }
     }
 
     private fun dispatchAlbumIntent() {

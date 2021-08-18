@@ -6,8 +6,12 @@ import container.restaurant.android.data.CategorySelection
 import container.restaurant.android.data.MainMenu
 import container.restaurant.android.data.SubMenu
 import container.restaurant.android.data.repository.FeedWriteRepository
+import container.restaurant.android.data.response.FeedListResponse
+import container.restaurant.android.data.response.SearchLocationResponse
 import container.restaurant.android.util.Event
 import container.restaurant.android.util.RecyclerViewItemClickListeners
+import container.restaurant.android.util.handleApiResponse
+import kotlinx.coroutines.flow.collect
 import okhttp3.internal.notify
 import timber.log.Timber
 
@@ -31,6 +35,18 @@ class FeedWriteViewModel(private val feedWriteRepository: FeedWriteRepository) :
     private val _isWelcomedButtonClicked:MutableLiveData<Event<Boolean>> = MutableLiveData()
     val isWelcomedButtonClicked:LiveData<Event<Boolean>> = _isWelcomedButtonClicked
 
+    private val _isCloseSearchButtonClicked:MutableLiveData<Event<Boolean>> = MutableLiveData()
+    val isCloseSearchButtonClicked:LiveData<Event<Boolean>> = _isCloseSearchButtonClicked
+
+    private val _isSearchButtonClicked:MutableLiveData<Event<Boolean>> = MutableLiveData()
+    val isSearchButtonClicked:LiveData<Event<Boolean>> = _isSearchButtonClicked
+
+    private val _searchLocationList =
+        MutableLiveData<List<SearchLocationResponse.Item>>()
+    val searchLocationList: LiveData<List<SearchLocationResponse.Item>> = _searchLocationList
+
+    val placeName : MutableLiveData<String> = MutableLiveData()
+
     var isWelcomed = false
 
     val categoryList = mutableListOf(
@@ -45,6 +61,7 @@ class FeedWriteViewModel(private val feedWriteRepository: FeedWriteRepository) :
         CategorySelection(Category.CHICKEN_AND_PIZZA)
     )
 
+    // 사용자가 선택한 음식 카테고리를 저장하는 변수. 선택되지 않았으면 null임
     var selectedCategory: Category? = null
 
     fun onBackButtonClick() {
@@ -56,6 +73,13 @@ class FeedWriteViewModel(private val feedWriteRepository: FeedWriteRepository) :
         _isWelcomedButtonClicked.value = Event(isWelcomed)
     }
 
+    fun onCloseSearchButtonClick() {
+        _isCloseSearchButtonClicked.value = Event(true)
+    }
+
+    fun onSearchButtonClick() {
+        _isSearchButtonClicked.value = Event(true)
+    }
 
     fun onAddMainMenuButtonClick() {
         _mainMenuList.value?.add(MainMenu())
@@ -65,6 +89,30 @@ class FeedWriteViewModel(private val feedWriteRepository: FeedWriteRepository) :
     fun onAddSubMenuButtonClick() {
         _subMenuList.value?.add(SubMenu())
         _subMenuList.value = _subMenuList.value
+    }
+
+    suspend fun getSearchPlace(placeName: String) {
+        feedWriteRepository.getSearchLocation(placeName)
+            .collect { response ->
+                handleApiResponse(
+                    response = response,
+                    onSuccess = {
+                        _searchLocationList.value = it.data?.items
+                        Timber.d("it.data.items : ${searchLocationList.value}")
+                    },
+                    onError = {
+                        Timber.d("it.errorBody : ${it.errorBody}")
+                        Timber.d("it.headers : ${it.headers}")
+                        Timber.d("it.raw : ${it.raw}")
+                        Timber.d("it.response : ${it.response}")
+                        Timber.d("it.statusCode : ${it.statusCode}")
+                    },
+                    onException = {
+                        Timber.d("it.message : ${it.message}")
+                        Timber.d("it.exception : ${it.exception}")
+                    }
+                )
+            }
     }
 
     override fun onClick(item: CategorySelection, adapterPosition: Int) {

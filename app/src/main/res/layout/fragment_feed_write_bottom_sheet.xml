@@ -2,7 +2,14 @@
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="container.restaurant.android.presentation.feed.write.FeedWriteViewModel" />
+    </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -27,7 +34,7 @@
                 android:src="@drawable/bg_gray04_r10"
                 tools:ignore="ContentDescription" />
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
@@ -37,6 +44,9 @@
 
                 <TextView
                     style="@style/TextAppearance.App.B.Gray07"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/restaurant_name"
@@ -44,16 +54,17 @@
                     tools:ignore="SpUsage" />
 
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
-                <TextView
                     android:id="@+id/tv_close"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/close" />
-            </LinearLayout>
+                    android:padding="5dp"
+                    android:text="@string/close"
+                    android:onClick="@{()->viewModel.onCloseSearchButtonClick()}"
+                    tools:ignore="RtlSymmetry" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -70,6 +81,7 @@
                     android:layout_marginBottom="10dp"
                     android:backgroundTint="@color/green_03"
                     android:hint="@string/restaurant_name_hint"
+                    android:text="@={viewModel.placeName}"
                     android:paddingBottom="17dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -83,10 +95,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginBottom="19dp"
+                    android:padding="5dp"
+                    android:layout_marginBottom="14dp"
                     android:src="@drawable/ic_search_20px"
                     app:layout_constraintBottom_toBottomOf="@id/et_name_search"
                     app:layout_constraintEnd_toEndOf="parent"
+                    android:onClick="@{()->viewModel.onSearchButtonClick()}"
                     android:contentDescription="@string/search"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -96,6 +110,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                bind:dino_itemLayout="@{@layout/item_search_name}"
+                bind:dino_items="@{viewModel.searchLocationList}"
+                bind:dino_vm="@{viewModel}"
                 tools:listitem="@layout/item_search_name" />
         </LinearLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

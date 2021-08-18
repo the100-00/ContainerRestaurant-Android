@@ -5,28 +5,24 @@
 
     <data>
         <variable
-            name="clickListener"
-            type="android.view.View.OnClickListener" />
-
-        <variable
-            name="place"
-            type="container.restaurant.android.data.response.SearchLocalResponse.Item" />
+            name="item"
+            type="container.restaurant.android.data.response.SearchLocationResponse.Item" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:onClick="@{clickListener}">
+        android:layout_height="64dp">
 
-        <org.sufficientlysecure.htmltextview.HtmlTextView
+        <TextView
             android:id="@+id/tv_restaurant_name"
-            style="@style/TextAppearance.App.B.Gray07"
+            android:textAppearance="@style/TextAppearance.App.B.Gray07"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="14dp"
-            app:html_text="@{place.title}"
-            android:textSize="12sp"
+            android:text="@{item.title}"
+            android:textSize="12dp"
+            tools:ignore="SpUsage"
             tools:text="라공방 강남 1호 본점"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -38,7 +34,7 @@
             android:layout_marginBottom="14dp"
             android:textSize="12dp"
             tools:ignore="SpUsage"
-            android:text="@{place.address}"
+            android:text="@{item.address}"
             tools:text="서울특별시 강남구 테헤란로 4길"
             app:layout_constraintStart_toStartOf="@id/tv_restaurant_name"
             app:layout_constraintTop_toBottomOf="@id/tv_restaurant_name" />

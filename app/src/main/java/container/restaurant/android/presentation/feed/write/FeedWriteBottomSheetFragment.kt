@@ -8,15 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import container.restaurant.android.R
-import container.restaurant.android.data.response.SearchLocalResponse
 import container.restaurant.android.databinding.FragmentFeedWriteBottomSheetBinding
-import container.restaurant.android.presentation.feed.write.adapter.SearchLocalAdapter
-import container.restaurant.android.util.observe
+import container.restaurant.android.util.EventObserver
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class FeedWriteBottomSheetFragment(private val clickItem:(SearchLocalResponse.Item) -> Unit) : BottomSheetDialogFragment() {
+class FeedWriteBottomSheetFragment() : BottomSheetDialogFragment() {
 
     private val viewModel: FeedWriteViewModel by viewModel()
 
@@ -24,22 +23,44 @@ class FeedWriteBottomSheetFragment(private val clickItem:(SearchLocalResponse.It
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentFeedWriteBottomSheetBinding.inflate(inflater,container,false)
-        context ?: return binding.root
+            .apply {
+                viewModel = this@FeedWriteBottomSheetFragment.viewModel
+                lifecycleOwner = this@FeedWriteBottomSheetFragment
+            }
 
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
 
-        setBindItem()
-
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        setBindItem()
+        observeData()
+
+    }
+
+    private fun observeData() {
+        with(viewModel) {
+            isCloseSearchButtonClicked.observe(this@FeedWriteBottomSheetFragment, EventObserver {
+                if (it) {
+                    dismiss()
+                }
+            })
+            isSearchButtonClicked.observe(this@FeedWriteBottomSheetFragment, EventObserver {
+                if(it) {
+                    placeName.value?.let {
+                        lifecycleScope.launchWhenCreated {
+                            viewModel.getSearchPlace(it)
+                        }
+                    }
+                }
+            })
+        }
     }
 
     private fun setBindItem() {
         binding.apply {
-            tvClose.setOnClickListener {
-                dismiss()
-            }
-
             etNameSearch.addTextChangedListener {
 //                if(!viewModel.searchProgressChk.value && etNameSearch.text.length >= 2) {
 //                    observe(viewModel.getSearchPlace(it.toString()), ::searchPlaceComplete)
@@ -48,15 +69,7 @@ class FeedWriteBottomSheetFragment(private val clickItem:(SearchLocalResponse.It
         }
     }
 
-    private fun searchPlaceComplete(searchLocalResponse: SearchLocalResponse) {
-        val adapter = SearchLocalAdapter {
-            clickItem(it)
-            dismiss()
-        }
-        binding.rvRestaurantList.adapter = adapter
-        adapter.submitList(searchLocalResponse.items)
-    }
-
+    // 둥근 모서리의 배경을 적용하기 위한 코드!!!
     override fun getTheme(): Int = R.style.BottomSheetDialog
 
 }
