@@ -3,15 +3,14 @@ package container.restaurant.android.presentation.feed.write
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
-import androidx.core.widget.addTextChangedListener
+import android.view.*
+import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import container.restaurant.android.R
 import container.restaurant.android.databinding.FragmentFeedWriteBottomSheetBinding
+import container.restaurant.android.util.CommUtils
 import container.restaurant.android.util.EventObserver
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -21,8 +20,12 @@ class FeedWriteBottomSheetFragment() : BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentFeedWriteBottomSheetBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentFeedWriteBottomSheetBinding.inflate(inflater,container,false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentFeedWriteBottomSheetBinding.inflate(inflater, container, false)
             .apply {
                 viewModel = this@FeedWriteBottomSheetFragment.viewModel
                 lifecycleOwner = this@FeedWriteBottomSheetFragment
@@ -35,9 +38,33 @@ class FeedWriteBottomSheetFragment() : BottomSheetDialogFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        setBindItem()
+        super.onViewCreated(view, savedInstanceState)
+
+        bottomSheetBehaviorSetting()
+        searchKeyBoardSetting()
+
         observeData()
 
+    }
+
+    private fun bottomSheetBehaviorSetting() {
+        val bottomSheet =
+            dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+        val behavior = BottomSheetBehavior.from<View>(bottomSheet!!)
+        // 초기에 확장된 상태로 보여줌
+        behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        // 드래그해서 중간쯤 걸치는 효과 제거
+        behavior.skipCollapsed = true
+    }
+
+    private fun searchKeyBoardSetting() {
+        binding.etNameSearch.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                searchPlace(v.text.toString())
+                return@setOnEditorActionListener true
+            }
+            false
+        }
     }
 
     private fun observeData() {
@@ -48,24 +75,25 @@ class FeedWriteBottomSheetFragment() : BottomSheetDialogFragment() {
                 }
             })
             isSearchButtonClicked.observe(this@FeedWriteBottomSheetFragment, EventObserver {
-                if(it) {
-                    placeName.value?.let {
-                        lifecycleScope.launchWhenCreated {
-                            viewModel.getSearchPlace(it)
-                        }
+                if (it) {
+                    placeName.value?.let { placeName ->
+                        searchPlace(placeName)
                     }
                 }
             })
         }
     }
 
-    private fun setBindItem() {
-        binding.apply {
-            etNameSearch.addTextChangedListener {
-//                if(!viewModel.searchProgressChk.value && etNameSearch.text.length >= 2) {
-//                    observe(viewModel.getSearchPlace(it.toString()), ::searchPlaceComplete)
-//                }
-            }
+    private fun searchPlace(placeName: String) {
+        // 에딧 텍스트 포커스 없애고 키보드 가림
+        binding.etNameSearch.clearFocus()
+        activity?.let {
+            CommUtils.hideSoftKeyboard(it, binding.etNameSearch)
+        }
+
+        // naver api를 통한 검색
+        lifecycleScope.launchWhenCreated {
+            viewModel.getSearchPlace(placeName)
         }
     }
 
