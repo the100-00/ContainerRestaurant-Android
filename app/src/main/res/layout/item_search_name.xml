@@ -8,11 +8,15 @@
         <variable
             name="item"
             type="container.restaurant.android.data.response.SearchLocationResponse.Item" />
+        <variable
+            name="eventHolder"
+            type="container.restaurant.android.util.RecyclerViewItemClickListeners.SearchResultItemClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="64dp">
+        android:layout_height="64dp"
+        android:onClick="@{()->eventHolder.onSearchResultItemClick(item)}">
 
         <TextView
             android:id="@+id/tv_restaurant_name"

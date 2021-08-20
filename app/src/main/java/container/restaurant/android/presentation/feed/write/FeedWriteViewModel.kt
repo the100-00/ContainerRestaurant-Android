@@ -14,7 +14,8 @@ import timber.log.Timber
 
 class FeedWriteViewModel(private val feedWriteRepository: FeedWriteRepository) : ViewModel(),
     RecyclerViewItemClickListeners.CategorySelectionItemClickListener,
-    RecyclerViewItemClickListeners.FoodPhotoItemClickListener {
+    RecyclerViewItemClickListeners.FoodPhotoItemClickListener,
+    RecyclerViewItemClickListeners.SearchResultItemClickListener{
     val getErrorMsg = MutableLiveData<String>()
     val viewLoading = MutableLiveData<Boolean>()
 
@@ -50,11 +51,25 @@ class FeedWriteViewModel(private val feedWriteRepository: FeedWriteRepository) :
     private val _isSearchEditTextClicked: MutableLiveData<Event<Boolean>> = MutableLiveData()
     val isSearchEditTextClicked: LiveData<Event<Boolean>> = _isSearchEditTextClicked
 
+    private val _isSearchResultItemClicked: MutableLiveData<Event<Boolean>> = MutableLiveData()
+    val isSearchResultItemClicked: LiveData<Event<Boolean>> = _isSearchResultItemClicked
+
+    private val _isErasePlaceNameClicked: MutableLiveData<Event<Boolean>> = MutableLiveData()
+    val isErasePlaceNameClicked: LiveData<Event<Boolean>> = _isErasePlaceNameClicked
+
+    private val _isEraseSearchPlaceNameClicked: MutableLiveData<Event<Boolean>> = MutableLiveData()
+    val isEraseSearchPlaceNameClicked: LiveData<Event<Boolean>> = _isEraseSearchPlaceNameClicked
+
     private val _searchLocationList =
         MutableLiveData<List<SearchLocationResponse.Item>>()
     val searchLocationList: LiveData<List<SearchLocationResponse.Item>> = _searchLocationList
 
-    val placeName: MutableLiveData<String> = MutableLiveData()
+    // 식당 검색 결과 선택 시 바뀌는 이름
+    private val _placeName: MutableLiveData<String> = MutableLiveData()
+    val placeName: LiveData<String> = _placeName
+
+    // 검색창에 입력이 일어날 때마다 바뀌는 이름
+    val searchPlaceName: MutableLiveData<String> = MutableLiveData()
 
     var isWelcomed = false
 
@@ -108,6 +123,23 @@ class FeedWriteViewModel(private val feedWriteRepository: FeedWriteRepository) :
         _subMenuList.value = _subMenuList.value
     }
 
+    fun onErasePlaceNameClick() {
+        _isErasePlaceNameClicked.value = Event(true)
+    }
+
+    fun onEraseSearchPlaceNameClick() {
+        _isEraseSearchPlaceNameClicked.value = Event(true)
+    }
+
+    fun erasePlaceName() {
+        _placeName.value = ""
+    }
+
+    fun makeSearchResultEmpty() {
+        _searchLocationList.value = listOf()
+    }
+
+
     suspend fun getSearchPlace(placeName: String) {
         feedWriteRepository.getSearchLocation(placeName)
             .collect { response ->
@@ -132,7 +164,7 @@ class FeedWriteViewModel(private val feedWriteRepository: FeedWriteRepository) :
             }
     }
 
-    override fun onClick(item: CategorySelection, adapterPosition: Int) {
+    override fun onCategorySelectionItemClick(item: CategorySelection, adapterPosition: Int) {
         Timber.d("$item, $adapterPosition")
         if (item.checked.value != null) {
             //이미 체크가 되어있다면 체크 해제
@@ -153,6 +185,11 @@ class FeedWriteViewModel(private val feedWriteRepository: FeedWriteRepository) :
     override fun onDeleteClick(adapterPosition: Int) {
         foodPhotoList.value?.removeAt(adapterPosition)
         foodPhotoList.value = foodPhotoList.value
+    }
+
+    override fun onSearchResultItemClick(item: SearchLocationResponse.Item) {
+        _placeName.value = item.title
+        _isSearchResultItemClicked.value = Event(true)
     }
 
     //    val mainFoodList = feedWriteRepository.getMainFoodList().asLiveData()

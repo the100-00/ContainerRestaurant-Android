@@ -36,7 +36,7 @@
             android:textStyle="bold"
             android:text="@{item.category.menuKorean}"
             android:checked="@{item.checked}"
-            android:onClick="@{()->eventHolder.onClick(item, adapterPosition)}"
+            android:onClick="@{()->eventHolder.onCategorySelectionItemClick(item, adapterPosition)}"
             android:layout_marginBottom="10dp"
             android:layout_marginEnd="10dp"
             tools:text="@string/asian_or_western_food"

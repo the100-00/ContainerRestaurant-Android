@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="container.restaurant.android.presentation.feed.write.FeedWriteViewModel" />
@@ -58,18 +58,32 @@
                 android:background="@drawable/edit_text_bg"
                 android:gravity="center_vertical"
                 android:paddingHorizontal="13dp"
-                android:text="@string/restaurant_name_hint"
-                android:textAppearance="@style/TextAppearance.App.R.Gray05"
+                bind:stripHtmlText="@{viewModel.placeName}"
+                android:hint="@string/restaurant_name_hint"
+                android:textColorHint="@color/gray_05"
+                android:fontFamily="@font/spoqa_hans_sans_regular"
+                android:textColor="@color/gray_07"
                 android:onClick="@{()->viewModel.onSearchEditTextClick()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_container_name" />
 
             <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_erase"
+                android:padding="5dp"
+                app:layout_constraintTop_toTopOf="@id/et_search_container"
+                app:layout_constraintBottom_toBottomOf="@id/et_search_container"
+                app:layout_constraintEnd_toStartOf="@id/iv_search_restaurant_name"
+                android:onClick="@{()->viewModel.onErasePlaceNameClick()}"
+                android:visibility='@{viewModel.placeName!=null &amp;&amp; viewModel.placeName != ""? View.VISIBLE: View.GONE}'
+                android:contentDescription="@string/erase" />
+
+            <ImageView
                 android:id="@+id/iv_search_restaurant_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:layout_marginEnd="7dp"
                 android:contentDescription="@string/search"
                 android:padding="5dp"

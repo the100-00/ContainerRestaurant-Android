@@ -122,5 +122,6 @@
     <string name="side_count_example_hint">ex. 단무지, 멸치 볶음</string>
     <string name="side_container_example_hint">ex. 3칸 칸막이 1개</string>
     <string name="close">닫기</string>
+    <string name="erase">지우기</string>
 
 </resources>

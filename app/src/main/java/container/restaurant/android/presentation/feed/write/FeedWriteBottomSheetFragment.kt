@@ -12,11 +12,12 @@ import container.restaurant.android.R
 import container.restaurant.android.databinding.FragmentFeedWriteBottomSheetBinding
 import container.restaurant.android.util.CommUtils
 import container.restaurant.android.util.EventObserver
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FeedWriteBottomSheetFragment() : BottomSheetDialogFragment() {
 
-    private val viewModel: FeedWriteViewModel by viewModel()
+    private val viewModel: FeedWriteViewModel by sharedViewModel()
 
     private lateinit var binding: FragmentFeedWriteBottomSheetBinding
 
@@ -60,7 +61,7 @@ class FeedWriteBottomSheetFragment() : BottomSheetDialogFragment() {
     private fun searchKeyBoardSetting() {
         binding.etNameSearch.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                searchPlace(v.text.toString())
+                searchPlaceAction(v.text.toString())
                 return@setOnEditorActionListener true
             }
             false
@@ -74,17 +75,42 @@ class FeedWriteBottomSheetFragment() : BottomSheetDialogFragment() {
                     dismiss()
                 }
             })
+            isSearchResultItemClicked.observe(this@FeedWriteBottomSheetFragment, EventObserver {
+                if(it) {
+                    dismiss()
+                }
+            })
             isSearchButtonClicked.observe(this@FeedWriteBottomSheetFragment, EventObserver {
                 if (it) {
-                    placeName.value?.let { placeName ->
-                        searchPlace(placeName)
+                    searchPlaceName.value?.let { placeName ->
+                        searchPlaceAction(placeName)
                     }
                 }
             })
+            isEraseSearchPlaceNameClicked.observe(this@FeedWriteBottomSheetFragment, EventObserver {
+                if(it) {
+                    searchPlaceName.value = ""
+                }
+            })
+            searchPlaceName.observe(this@FeedWriteBottomSheetFragment) {
+                if(it.isNullOrEmpty()) {
+                    makeSearchResultEmpty()
+                }
+                else{
+                    searchPlace(it)
+                }
+            }
         }
     }
 
     private fun searchPlace(placeName: String) {
+        // naver api를 통한 검색
+        lifecycleScope.launchWhenCreated {
+            viewModel.getSearchPlace(placeName)
+        }
+    }
+
+    private fun searchPlaceAction(placeName: String) {
         // 에딧 텍스트 포커스 없애고 키보드 가림
         binding.etNameSearch.clearFocus()
         activity?.let {

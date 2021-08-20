@@ -158,6 +158,13 @@ fun TextView.setHtmlText(htmlText: String?) {
     }
 }
 
+@BindingAdapter("bind:stripHtmlText")
+fun TextView.setStrippedHtmlText(htmlText: String?) {
+    htmlText?.let{
+        text = HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_LEGACY).toString()
+    }
+}
+
 @BindingAdapter("bind:srcBitmap")
 fun ImageView.setBitmap(bitmap: Bitmap) {
     Glide.with(this)

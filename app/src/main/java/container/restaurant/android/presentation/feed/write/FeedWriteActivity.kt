@@ -115,6 +115,14 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
                 }
             })
 
+            isErasePlaceNameClicked.observe(this@FeedWriteActivity, EventObserver {
+                if(it) {
+                    if(placeName.value != null && placeName.value != "") {
+                        erasePlaceName()
+                    }
+                }
+            })
+
         }
     }
 
