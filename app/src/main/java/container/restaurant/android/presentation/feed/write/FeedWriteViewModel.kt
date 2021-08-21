@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.collect
 import okhttp3.internal.notify
 import timber.log.Timber
 
-class FeedWriteViewModel(private val feedWriteRepository: FeedWriteRepository) : ViewModel(),
+internal class FeedWriteViewModel(private val feedWriteRepository: FeedWriteRepository) : ViewModel(),
     RecyclerViewItemClickListeners.CategorySelectionItemClickListener,
     RecyclerViewItemClickListeners.FoodPhotoItemClickListener,
     RecyclerViewItemClickListeners.SearchResultItemClickListener{

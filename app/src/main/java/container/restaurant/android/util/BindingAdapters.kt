@@ -1,6 +1,7 @@
 package container.restaurant.android.util
 
 import android.graphics.Bitmap
+import android.graphics.Typeface
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.StyleSpan
@@ -116,7 +117,7 @@ fun TextView.setSpannableString(
     val str = SpannableStringBuilder(text)
     if (isBold.toBoolean()) {
         str.setSpan(
-            StyleSpan(android.graphics.Typeface.BOLD),
+            StyleSpan(Typeface.BOLD),
             start,
             end,
             Spannable.SPAN_INCLUSIVE_EXCLUSIVE
@@ -172,4 +173,16 @@ fun ImageView.setBitmap(bitmap: Bitmap) {
         .diskCacheStrategy(DiskCacheStrategy.NONE)
         .skipMemoryCache(true)
         .into(this)
+}
+
+@BindingAdapter("bind:feedCategorySelected")
+fun TextView.setFeedCategorySelected(boolean: Boolean?) {
+    if(boolean == true) {
+        isSelected = true
+        setTypeface(typeface, Typeface.BOLD)
+    }
+    else {
+        isSelected = false
+        setTypeface(Typeface.create(typeface, Typeface.NORMAL), Typeface.NORMAL)
+    }
 }

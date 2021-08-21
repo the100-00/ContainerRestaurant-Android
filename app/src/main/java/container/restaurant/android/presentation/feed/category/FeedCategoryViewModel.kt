@@ -5,9 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.tak8997.github.domain.ResultState
+import container.restaurant.android.data.SortingCategory
 import container.restaurant.android.data.response.FeedResponse
 import container.restaurant.android.data.repository.FeedRepository
-import container.restaurant.android.presentation.feed.item.FeedSort
 import container.restaurant.android.util.SingleLiveEvent
 import kotlinx.coroutines.launch
 
@@ -17,7 +17,7 @@ internal class FeedCategoryViewModel(
 ) : ViewModel() {
 
     private val feedResponse = MutableLiveData<FeedResponse>()
-    private var feedSort: FeedSort = FeedSort.LATEST
+    private var feedSort: SortingCategory = SortingCategory.LATEST
 
     val feeds = feedResponse.map {
         it.feedModel?.feeds ?: emptyList()
@@ -33,7 +33,7 @@ internal class FeedCategoryViewModel(
         fetchFeedsByCategory(FeedCategoryFragment.page)
     }
 
-    fun onClickSort(sort: FeedSort) {
+    fun onClickSort(sort: SortingCategory) {
         this.feedSort = sort
     }
 

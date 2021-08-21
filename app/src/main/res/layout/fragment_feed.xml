@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="container.restaurant.android.presentation.feed.FeedExploreViewModel" />
+    </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -20,6 +25,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/feed_search"
                 android:textSize="16dp"
+                tools:ignore="SpUsage"
                 android:layout_gravity="center_horizontal" />
         </androidx.appcompat.widget.Toolbar>
         <com.google.android.material.tabs.TabLayout
@@ -33,10 +39,16 @@
             android:id="@+id/rv_feed_sort"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="9dp"
-            android:layout_marginTop="14dp"
+            android:paddingHorizontal="16dp"
+            android:layout_marginTop="12dp"
             android:clipChildren="false"
             android:clipToPadding="false"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:dino_itemLayout="@{@layout/item_sort}"
+            app:dino_items="@{viewModel.sortingCategoryList}"
+            app:dino_vm="@{viewModel}"
+            tools:listitem="@layout/item_sort"
             app:layout_constraintTop_toBottomOf="@+id/tablayout_feed_type" />
 
         <androidx.viewpager2.widget.ViewPager2
@@ -47,8 +59,4 @@
             app:layout_constraintTop_toBottomOf="@+id/rv_feed_sort"
             app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <data>
-
-    </data>
 </layout>

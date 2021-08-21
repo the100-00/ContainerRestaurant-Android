@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -17,9 +16,11 @@ import container.restaurant.android.databinding.TabFeedCategoryBinding
 import container.restaurant.android.presentation.feed.category.FeedCategory
 import container.restaurant.android.presentation.feed.category.FeedCategoryFragment
 import container.restaurant.android.presentation.feed.category.FeedCategoryViewModel
-import container.restaurant.android.presentation.feed.item.FeedSortAdapter
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 internal class FeedFragment : Fragment() {
+
+    private val viewModel: FeedExploreViewModel by viewModel()
 
     private val tabViewModelMap = HashMap<Int, FeedCategoryViewModel>()
 
@@ -29,8 +30,12 @@ internal class FeedFragment : Fragment() {
 
     private lateinit var binding: FragmentFeedBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentFeedBinding.inflate(layoutInflater, container, false)
+            .apply {
+                this.viewModel = this@FeedFragment.viewModel
+                this.lifecycleOwner = this@FeedFragment
+            }
         feedAdapter = object : FragmentStateAdapter(this) {
             override fun getItemCount(): Int {
                 return FeedCategory.values().size
@@ -52,16 +57,8 @@ internal class FeedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupSortRecycler()
         setupFeedPager()
         setupTabLayoutListener()
-    }
-
-    private fun setupSortRecycler() {
-        with(binding.rvFeedSort) {
-            layoutManager = LinearLayoutManager(context ?: return, LinearLayoutManager.HORIZONTAL, false)
-            adapter = FeedSortAdapter(tabViewModelMap[currentTabPos])
-        }
     }
 
     private fun setupFeedPager() {
