@@ -1,51 +1,38 @@
 package container.restaurant.android.presentation.feed.write
 
 import android.app.Activity
-import android.app.Dialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.View
-import android.view.Window
-import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.hedgehog.ratingbar.RatingBar
-import com.naver.maps.geometry.Tm128
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 import container.restaurant.android.R
+import container.restaurant.android.data.FoodPhoto
 import container.restaurant.android.data.db.entity.MainFood
 import container.restaurant.android.data.db.entity.SideDish
 import container.restaurant.android.data.request.FeedWriteRequest
 import container.restaurant.android.data.response.ImageUploadResponse
 import container.restaurant.android.databinding.ActivityFeedWriteBinding
 import container.restaurant.android.dialog.AlertDialog
+import container.restaurant.android.dialog.SimpleConfirmDialog
 import container.restaurant.android.presentation.base.BaseActivity
-import container.restaurant.android.presentation.feed.write.adapter.MainFoodAdapter
-import container.restaurant.android.presentation.feed.write.adapter.SideDishAdapter
-import container.restaurant.android.util.CommUtils
-import container.restaurant.android.util.hide
-import container.restaurant.android.util.show
+import container.restaurant.android.util.EventObserver
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 import java.io.InputStream
 
 class FeedWriteActivity : BaseActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityFeedWriteBinding
     private val viewModel: FeedWriteViewModel by viewModel()
-    private val bottomSheetFragment = FeedWriteBottomSheetFragment {
-
-        val tm128 = Tm128(it.mapx.toDouble(), it.mapy.toDouble())
-        val latLng = tm128.toLatLng()
-
-        restaurantCreateDto = FeedWriteRequest.RestaurantCreateDto(name = it.title, address = it.address, latitude = latLng.latitude, longitude = latLng.longitude)
-        binding.etSearchContainer.text = CommUtils.fromHtml(it.title)
-    }
-    private val mainFoodAdapter = MainFoodAdapter()
-    private val sideDishAdapter = SideDishAdapter()
+    private val bottomSheetFragment = FeedWriteBottomSheetFragment()
 
     private var restaurantCreateDto: FeedWriteRequest.RestaurantCreateDto? = null
     private var categoryStr = "CHINESE"
@@ -62,14 +49,8 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
                         val inputStream: InputStream = contentResolver.openInputStream(imgUri)!!
                         val bmp: Bitmap = BitmapFactory.decodeStream(inputStream)
                         inputStream.close()
-                        val bmpFile = CommUtils.convertBitmapToFile(this, "userImg.jpeg", bmp)
-
-//                        observe(viewModel.uploadImg(bmpFile), ::imgUploadComplete)
-
-                        Glide.with(this).load(bmp).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(binding.ivUploadImage)
-                        binding.ivUploadImage.show()
-                        binding.ivDeleteImage.show()
-                        binding.tvImageCount.text = "1/1"
+                        viewModel.foodPhotoList.value?.add(FoodPhoto(bmp))
+                        viewModel.foodPhotoList.value = viewModel.foodPhotoList.value
 
                     } catch (ex: Exception) {
                         simpleDialog("Error", ex.message.toString(), AlertDialog.ERROR_TYPE)
@@ -82,35 +63,97 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_feed_write)
+        binding.viewModel = this.viewModel
+        binding.lifecycleOwner = this
 
-        setupToolbar()
+        observeData()
         setBindItem()
-        setCategory()
         subscribeUi()
         difficultyAction()
+        setUpRecyclerViewCategorySelection()
+    }
+
+    // 음식 카테고리 메뉴를 폰 기종마다 다르게(길이가 부족하면 버튼이 다음줄로 넘어가게) 하기 위한 설정정
+   private fun setUpRecyclerViewCategorySelection() {
+        FlexboxLayoutManager(this).apply {
+            flexWrap = FlexWrap.WRAP
+            flexDirection = FlexDirection.ROW
+            justifyContent = JustifyContent.FLEX_START
+        }.let {
+            binding.rvCategory.layoutManager = it
+        }
+    }
+
+    private fun observeData() {
+        with(viewModel){
+            isBackButtonClicked.observe(this@FeedWriteActivity, EventObserver {
+                if(it) {
+                    onBackPressed()
+                }
+            })
+            isWelcomedButtonClicked.observe(this@FeedWriteActivity , EventObserver {
+                Timber.d("onWelcomeButtonClick $it")
+                if(it) {
+                    binding.badgeFilled.visibility = View.VISIBLE
+                    binding.ivBadgeUnfilled.visibility = View.INVISIBLE
+                    binding.badgeFilled.playAnimation()
+                }
+                else {
+                    binding.badgeFilled.visibility = View.INVISIBLE
+                    binding.ivBadgeUnfilled.visibility = View.VISIBLE
+                }
+            })
+            isSearchEditTextClicked.observe(this@FeedWriteActivity, EventObserver {
+                if(it) {
+                    onClickNameSearch()
+                }
+            })
+
+            isAddPhotoButtonClicked.observe(this@FeedWriteActivity, EventObserver {
+                if(it) {
+                    addPhoto()
+                }
+            })
+
+            isErasePlaceNameClicked.observe(this@FeedWriteActivity, EventObserver {
+                if(it) {
+                    if(placeName.value != null && placeName.value != "") {
+                        erasePlaceName()
+                    }
+                }
+            })
+
+        }
+    }
+
+    private fun addPhoto() {
+        if(viewModel.foodPhotoList.value?.isEmpty() == true) {
+            dispatchAlbumIntent()
+        }
     }
 
     override fun onBackPressed() {
-        val dialog = Dialog(this)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.dialog_cancle_write)
-        dialog.show()
-        val btnOk = dialog.findViewById<Button>(R.id.btn_ok)
-        btnOk.setOnClickListener { gotoMain() }
-        val btnCancel = dialog.findViewById<Button>(R.id.btn_cancel)
-        btnCancel.setOnClickListener { dialog.dismiss() }
+        val dialog = SimpleConfirmDialog(
+            "작성을 종료할까요?",
+            "지금까지 작성한 내용은 저장되지 않아요",
+            "취소",
+            "확인"
+        )
+        dialog.setMultiEventListener(object: SimpleConfirmDialog.MultiEventListener {
+            override fun onLeftBtnClick(dialogSelf: SimpleConfirmDialog) {
+                dialog.dismiss()
+            }
+
+            override fun onRightBtnClick(dialogSelf: SimpleConfirmDialog) {
+                finish()
+            }
+        })
+        dialog.show(supportFragmentManager,"SimpleConfirmDialog")
     }
 
     private fun setBindItem() {
         binding.apply {
-            etSearchContainer.setOnClickListener(this@FeedWriteActivity)
-            tvAddMainMenu.setOnClickListener(this@FeedWriteActivity)
-            tvAddSideMenu.setOnClickListener(this@FeedWriteActivity)
-            llGetPicture.setOnClickListener(this@FeedWriteActivity)
-            ivDeleteImage.setOnClickListener(this@FeedWriteActivity)
-            clIsLike.setOnClickListener(this@FeedWriteActivity)
             btnFeedUpdate.setOnClickListener(this@FeedWriteActivity)
-            ivBack.setOnClickListener(this@FeedWriteActivity)
         }
     }
 
@@ -137,13 +180,13 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
                 val thumbnailImageId = imageUploadId ?: 9
                 val content = binding.etContent.text.toString()
                 val mainMenuList: MutableList<FeedWriteRequest.MainMenu> = mutableListOf()
-                mainFoodAdapter.currentList.forEach {
-                    mainMenuList.add(FeedWriteRequest.MainMenu(it.foodName, it.bottle))
-                }
+//                mainFoodAdapter.currentList.forEach {
+//                    mainMenuList.add(FeedWriteRequest.MainMenu(it.foodName, it.bottle))
+//                }
                 val subMenuList: MutableList<FeedWriteRequest.SubMenu> = mutableListOf()
-                sideDishAdapter.currentList.forEach {
-                    subMenuList.add(FeedWriteRequest.SubMenu(it.quantity, it.bottle))
-                }
+//                sideDishAdapter.currentList.forEach {
+//                    subMenuList.add(FeedWriteRequest.SubMenu(it.quantity, it.bottle))
+//                }
 
                 val feedWriteRequest = FeedWriteRequest(
                     restaurantCreateDto= restaurantCreateDto!!,
@@ -174,7 +217,7 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
         dialog.setSingleEventListener(object : AlertDialog.SingleEventListener {
             override fun confirmClick(dialogSelf: AlertDialog) {
                 dialogSelf.dismiss()
-                gotoMain()
+                finish()
             }
         })
         if(!AlertDialog.showCheck)
@@ -182,67 +225,40 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
 
     }
 
-    private fun setCategory() {
-        binding.radioGroup.setOnCheckedChangeListener { p0, p1 ->
-            when(p1) {
-                R.id.rb_asian_food -> categoryStr = "ASIAN_AND_WESTERN"
-                R.id.rb_chiken -> categoryStr = "CHICKEN_AND_PIZZA"
-                R.id.rb_china_food -> categoryStr = "CHINESE"
-                R.id.rb_desert -> categoryStr = "COFFEE_AND_DESSERT"
-                R.id.rb_fast_food -> categoryStr = "FAST_FOOD"
-                R.id.rb_japan -> categoryStr = "JAPANESE"
-                R.id.rb_korea_food -> categoryStr = "KOREAN"
-                R.id.rb_midnight_meal -> categoryStr = "NIGHT_MEAL"
-                R.id.rb_school_food -> categoryStr = "SCHOOL_FOOD"
-            }
-        }
-    }
 
     private fun getMainFoodList(list: List<MainFood>) {
-        binding.rvMainFood.adapter = mainFoodAdapter
-        mainFoodAdapter.submitList(list)
+//        binding.rvMainFood.adapter = mainFoodAdapter
+//        mainFoodAdapter.submitList(list)
     }
 
     private fun getSideDishList(list: List<SideDish>) {
-        binding.rvSideDish.adapter = sideDishAdapter
-        sideDishAdapter.submitList(list)
+//        binding.rvSideDish.adapter = sideDishAdapter
+//        sideDishAdapter.submitList(list)
     }
 
     private fun onDeleteImage(){
-        binding.tvImageCount.text = "0/1"
-        binding.ivUploadImage.setImageResource(0)
-        binding.ivDeleteImage.visibility = View.GONE
-    }
-
-    private fun isLikeAction() {
-        binding.ivBadgeUnfilled.isSelected = binding.ivBadgeUnfilled.isSelected != true
-        welcome = binding.ivBadgeUnfilled.isSelected
-
+//        binding.tvImageCount.text = "0/1"
+//        binding.ivUploadImage.setImageResource(0)
+//        binding.ivDeleteImage.visibility = View.GONE
     }
 
     private fun onClickNameSearch() {
         bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
     }
 
-    private fun setupToolbar() {
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-    }
 
     private fun difficultyAction() {
-        binding.sbDifficulty.setOnRatingChangeListener(object : RatingBar.OnRatingChangeListener {
-            override fun onRatingChange(RatingCount: Float) {
-                binding.tvDifficultyInfo.show()
-                when(RatingCount.toInt()) {
-                    0 -> binding.tvDifficultyInfo.hide()
-                    1 -> binding.tvDifficultyInfo.text = "쉬워요"
-                    2 -> binding.tvDifficultyInfo.text = "할 만 해요"
-                    3 -> binding.tvDifficultyInfo.text = "보통이에요"
-                    4 -> binding.tvDifficultyInfo.text = "까다로워요"
-                    5 -> binding.tvDifficultyInfo.text = "많이 어려워요"
-                }
+        binding.sbDifficulty.setOnRatingChangeListener { RatingCount ->
+            binding.tvDifficultyInfo.visibility = View.VISIBLE
+            when (RatingCount.toInt()) {
+                0 -> binding.tvDifficultyInfo.visibility = View.INVISIBLE
+                1 -> binding.tvDifficultyInfo.text = "쉬워요"
+                2 -> binding.tvDifficultyInfo.text = "할 만 해요"
+                3 -> binding.tvDifficultyInfo.text = "보통이에요"
+                4 -> binding.tvDifficultyInfo.text = "까다로워요"
+                5 -> binding.tvDifficultyInfo.text = "많이 어려워요"
             }
-        })
+        }
     }
 
     private fun dispatchAlbumIntent() {
@@ -260,22 +276,10 @@ class FeedWriteActivity : BaseActivity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when(v) {
-            binding.etSearchContainer -> onClickNameSearch()
-//            binding.tvAddMainMenu -> observe(viewModel.addMainFood(mainFoodAdapter.currentList)) {}
-//            binding.tvAddSideMenu -> observe(viewModel.addSideDish(sideDishAdapter.currentList)) {}
-            binding.llGetPicture -> dispatchAlbumIntent()
-            binding.ivDeleteImage -> onDeleteImage()
-            binding.clIsLike -> isLikeAction()
 //            binding.btnFeedUpdate -> observe(viewModel.tempLogin()) {}
-            binding.ivBack -> onBackPressed()
         }
     }
 
-    private fun gotoMain() {
-//        val intent = Intent(this, MainActivity::class.java)
-//        startActivity(intent)
-        finish()
-    }
 
     companion object {
         fun getIntent(activity: AppCompatActivity) = Intent(activity, FeedWriteActivity::class.java)

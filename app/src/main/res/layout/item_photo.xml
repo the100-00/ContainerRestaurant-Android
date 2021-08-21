@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="item"
+            type="container.restaurant.android.data.FoodPhoto" />
+        <variable
+            name="adapterPosition"
+            type="int" />
+        <variable
+            name="eventHolder"
+            type="container.restaurant.android.util.RecyclerViewItemClickListeners.FoodPhotoItemClickListener" />
+    </data>
+
+
+    <FrameLayout
+        android:layout_height="72dp"
+        android:layout_marginHorizontal="4dp"
+        android:layout_width="72dp">
+
+        <androidx.cardview.widget.CardView
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            app:cardCornerRadius="6dp"
+            app:cardElevation="0dp">
+
+            <ImageView
+                android:id="@+id/iv_upload_image"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:scaleType="centerCrop"
+                bind:srcBitmap="@{item.bitmap}"
+                tools:ignore="ContentDescription" />
+        </androidx.cardview.widget.CardView>
+
+        <ImageView
+            android:id="@+id/iv_delete_image"
+            android:layout_gravity="end"
+            android:layout_height="20dp"
+            android:layout_marginEnd="4.5dp"
+            android:layout_marginTop="4.5dp"
+            android:layout_width="20dp"
+            android:src="@drawable/ic_close_filled_16_px"
+            android:onClick="@{()->eventHolder.onDeleteClick(adapterPosition)}"
+            tools:ignore="ContentDescription" />
+    </FrameLayout>
+</layout>

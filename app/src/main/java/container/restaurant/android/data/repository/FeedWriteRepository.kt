@@ -1,13 +1,11 @@
 package container.restaurant.android.data.repository
 
 import androidx.annotation.WorkerThread
-import com.skydoves.sandwich.map
-import com.skydoves.sandwich.onError
-import com.skydoves.sandwich.onException
-import com.skydoves.sandwich.suspendOnSuccess
+import com.skydoves.sandwich.*
 import container.restaurant.android.data.db.AppDatabase
 import container.restaurant.android.data.db.entity.MainFood
 import container.restaurant.android.data.db.entity.SideDish
+import container.restaurant.android.data.remote.LocationService
 import container.restaurant.android.data.remote.MyService
 import container.restaurant.android.data.request.FeedWriteRequest
 import container.restaurant.android.presentation.feed.write.PlaceService
@@ -23,14 +21,31 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 
-class FeedWriteRepository(private val roomDatabase: AppDatabase, private val myService: MyService) {
-    private val placeService = PlaceService.create()
+class FeedWriteRepository(
+    private val roomDatabase: AppDatabase,
+    private val locationService: LocationService
+) {
 
     private val mainFoodDao by lazy { roomDatabase.mainFoodDao() }
     private val sideDishDao by lazy { roomDatabase.sideDishDao() }
 
     fun getMainFoodList() = mainFoodDao.getMainFoodList()
     fun getSideDishList() = sideDishDao.getSideDishList()
+
+    @WorkerThread
+    suspend fun getSearchLocation(placeName: String) = flow {
+        val response = locationService.searchPlace(placeName)
+        response
+            .suspendOnSuccess {
+                emit(this)
+            }
+            .suspendOnError {
+                emit(this)
+            }
+            .suspendOnException {
+                emit(this)
+            }
+    }.flowOn(Dispatchers.IO)
 
 //    @WorkerThread
 //    fun addMainFood(list: List<MainFood>) = flow {

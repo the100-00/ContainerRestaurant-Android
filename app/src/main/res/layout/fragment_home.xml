@@ -353,7 +353,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{@string/app_mail_phrase (@string/app_mail)}"
-                    android:layout_marginTop="26dp"
                     android:textSize="14dp"
                     tools:ignore="SpUsage"
                     tools:text="용기낸 식당 con-restaurant@test.com" />

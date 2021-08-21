@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
         <variable
             name="item"
-            type="container.restaurant.android.data.MainMenu" />
+            type="container.restaurant.android.data.SubMenu" />
     </data>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,19 +33,18 @@
                 android:text="@string/food" />
 
             <EditText
-                android:id="@+id/et_menu_name"
+                android:id="@+id/et_quantity"
                 android:textSize="14dp"
                 tools:ignore="SpUsage"
-                android:importantForAutofill="no"
-                android:inputType="text"
-                android:fontFamily="@font/spoqa_hans_sans_regular"
-                android:textColorHint="@color/gray_04"
-                android:layout_width="match_parent"
+                android:layout_width="229dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="17dp"
-                android:hint="@string/main_food_example_hint"
+                android:text="@={item.menuName}"
+                android:textColorHint="@color/gray_04"
+                android:hint="@string/side_count_example_hint"
                 android:backgroundTint="@android:color/transparent"
-                android:text="@={item.menuName}" />
+                android:importantForAutofill="no"
+                android:inputType="text" />
         </LinearLayout>
 
         <ImageView
@@ -75,17 +74,16 @@
                 android:text="@string/container" />
 
             <EditText
-                android:id="@+id/et_container"
-                android:layout_width="match_parent"
+                android:id="@+id/et_bottle"
+                android:layout_width="229dp"
                 android:textSize="14dp"
-                tools:ignore="SpUsage"
-                android:fontFamily="@font/spoqa_hans_sans_regular"
                 android:textColorHint="@color/gray_04"
+                tools:ignore="SpUsage"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="17dp"
-                android:hint="@string/main_container_example_hint"
-                android:backgroundTint="@android:color/transparent"
                 android:text="@={item.container}"
+                android:hint="@string/side_container_example_hint"
+                android:backgroundTint="@android:color/transparent"
                 android:importantForAutofill="no"
                 android:inputType="text" />
         </LinearLayout>

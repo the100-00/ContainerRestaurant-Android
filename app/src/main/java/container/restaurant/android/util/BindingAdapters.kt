@@ -1,5 +1,6 @@
 package container.restaurant.android.util
 
+import android.graphics.Bitmap
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.StyleSpan
@@ -155,4 +156,20 @@ fun TextView.setHtmlText(htmlText: String?) {
     htmlText?.let{
         text = HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_LEGACY)
     }
+}
+
+@BindingAdapter("bind:stripHtmlText")
+fun TextView.setStrippedHtmlText(htmlText: String?) {
+    htmlText?.let{
+        text = HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_LEGACY).toString()
+    }
+}
+
+@BindingAdapter("bind:srcBitmap")
+fun ImageView.setBitmap(bitmap: Bitmap) {
+    Glide.with(this)
+        .load(bitmap)
+        .diskCacheStrategy(DiskCacheStrategy.NONE)
+        .skipMemoryCache(true)
+        .into(this)
 }
