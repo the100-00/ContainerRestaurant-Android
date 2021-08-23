@@ -194,7 +194,7 @@
 
                 <TextView
                     android:id="@+id/tv_add_main_menu"
-                    style="@style/TextAppearance.App.B.Gray07"
+                    android:textAppearance="@style/TextAppearance.App.R.Gray07"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -268,7 +268,7 @@
 
                 <TextView
                     android:id="@+id/tv_add_side_menu"
-                    style="@style/TextAppearance.App.B.Gray07"
+                    android:textAppearance="@style/TextAppearance.App.R.Gray07"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

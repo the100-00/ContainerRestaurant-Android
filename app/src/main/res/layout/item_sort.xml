@@ -32,7 +32,7 @@
             android:paddingVertical="4dp"
             android:paddingHorizontal="12dp"
             android:text="@{item.title}"
-            bind:feedCategorySelected="@{item.selected}"
+            bind:feedCategorySelected="@{item.isItemSelected}"
             android:textColor="@drawable/selector_feed_sort_text"
             android:background="@drawable/selector_feed_sort"
             app:layout_constraintStart_toStartOf="parent"

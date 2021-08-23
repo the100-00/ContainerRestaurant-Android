@@ -15,10 +15,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="6dp"
-        android:layout_marginBottom="10dp">
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginVertical="10dp">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_view_img_feed"
@@ -28,6 +26,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:cardElevation="0dp"
             >
             <ImageView
                 android:id="@+id/img_feed"
@@ -56,7 +55,7 @@
 
         <TextView
             android:id="@+id/tv_nickname"
-            style="@style/TextAppearance.App.B.Gray07"
+            android:textAppearance="@style/TextAppearance.App.B.Gray07"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -71,7 +70,7 @@
 
         <TextView
             android:id="@+id/tv_contents"
-            style="@style/TextAppearance.App.R.Gray06"
+            android:textAppearance="@style/TextAppearance.App.R.Gray06"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
@@ -85,14 +84,13 @@
 
 
         <TextView
-            style="@style/TextAppearance.App.B.Gray05"
+            android:textAppearance="@style/TextAppearance.App.B.Gray05"
             android:id="@+id/tv_like_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{String.valueOf(item.likeCount)}"
             android:textSize="12dp"
             tools:ignore="SpUsage"
-            android:layout_marginStart="4dp"
             tools:text="99"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_contents"
@@ -103,7 +101,7 @@
 
 
         <TextView
-            style="@style/TextAppearance.App.B.Gray05"
+            android:textAppearance="@style/TextAppearance.App.B.Gray05"
             android:id="@+id/tv_comment_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

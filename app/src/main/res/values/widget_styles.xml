@@ -13,7 +13,7 @@
         <item name="tabIndicatorHeight">2dp</item>
         <item name="tabIndicatorColor">@color/gray_07</item>
         <item name="elevation">0dp</item>
-        <item name="background">@android:color/transparent</item>
+        <item name="background">@drawable/bg_feed_tab</item>
         <item name="tabIndicatorFullWidth">false</item>
         <item name="tabTextAppearance">@style/TextAppearance.App.R.Gray06</item>
     </style>

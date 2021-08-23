@@ -8,12 +8,17 @@ import android.text.style.StyleSpan
 import android.view.Gravity
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.HtmlCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.tabs.TabLayout
 import container.restaurant.android.R
 import container.restaurant.android.di.BASE_URL
 import timber.log.Timber
@@ -185,4 +190,9 @@ fun TextView.setFeedCategorySelected(boolean: Boolean?) {
         isSelected = false
         setTypeface(Typeface.create(typeface, Typeface.NORMAL), Typeface.NORMAL)
     }
+}
+
+@BindingAdapter("bind:addTabSelectedListener")
+fun TabLayout.addTabSelectedListener(listener: TabLayout.OnTabSelectedListener){
+    addOnTabSelectedListener(listener)
 }

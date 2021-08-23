@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import container.restaurant.android.presentation.MainViewModel
 import container.restaurant.android.presentation.NavigationController
 import container.restaurant.android.presentation.auth.AuthViewModel
-import container.restaurant.android.presentation.feed.FeedExploreViewModel
+import container.restaurant.android.presentation.feed.explore.FeedExploreViewModel
 import container.restaurant.android.presentation.feed.all.FeedAllViewModel
 import container.restaurant.android.presentation.feed.category.FeedCategoryViewModel
 import container.restaurant.android.presentation.feed.write.FeedWriteViewModel
