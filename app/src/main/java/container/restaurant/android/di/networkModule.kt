@@ -36,12 +36,13 @@ val networkModule = module {
     single { createRetrofit(get(), BASE_URL) }
 
     //ApiService 생성
-    single { createFeedService(get()) }
+    single { createFeedExploreService(get()) }
     single { createResService(get()) }
     single { createAuthService(get()) }
     single { createHomeService(get())}
     single { createMyService(get()) }
     single { createLocationService()}
+    single { createFeedDetailService(get())}
 }
 
 fun createOkHttp(): OkHttpClient {
@@ -64,7 +65,7 @@ fun createRetrofit(okHttpClient: OkHttpClient, url: String): Retrofit {
         .build()
 }
 
-fun createFeedService(retrofit: Retrofit): FeedService = retrofit.create(FeedService::class.java)
+fun createFeedExploreService(retrofit: Retrofit): FeedExploreService = retrofit.create(FeedExploreService::class.java)
 
 fun createResService(retrofit: Retrofit): RestaurantService = retrofit.create(RestaurantService::class.java)
 
@@ -73,6 +74,8 @@ fun createAuthService(retrofit: Retrofit): AuthService = retrofit.create(AuthSer
 fun createMyService(retrofit: Retrofit): MyService = retrofit.create(MyService::class.java)
 
 fun createHomeService(retrofit: Retrofit): HomeService = retrofit.create(HomeService::class.java)
+
+fun createFeedDetailService(retrofit: Retrofit): FeedDetailService = retrofit.create(FeedDetailService::class.java)
 
 fun createLocationService(): LocationService {
     val httpLoggingInterceptor = HttpLoggingInterceptor()

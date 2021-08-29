@@ -8,6 +8,9 @@
         <variable
             name="item"
             type="container.restaurant.android.data.response.FeedListResponse.FeedPreviewDtoList.FeedPreviewDto" />
+        <variable
+            name="eventHolder"
+            type="container.restaurant.android.util.RecyclerViewItemClickListeners.ExploreFeedItemClickListener" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -28,11 +31,12 @@
             <ImageView
                 android:id="@+id/img_feed"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:src="@drawable/ic_empty_feed_img"
                 android:scaleType="centerCrop"
                 bind:imageUrlWithBaseUrl="@{item.thumbnailUrl}"
                 bind:emptyFeedBackgroundSetup='@{"true"}'
+                android:onClick="@{()->eventHolder.onExploreFeedItemClick(item.id)}"
                 android:contentDescription="@string/feed_image" />
         </androidx.cardview.widget.CardView>
 

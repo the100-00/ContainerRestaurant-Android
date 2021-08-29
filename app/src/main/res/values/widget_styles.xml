@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="BaseButtonStyle" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:insetTop">0dp</item>
@@ -16,6 +16,11 @@
         <item name="background">@drawable/bg_feed_tab</item>
         <item name="tabIndicatorFullWidth">false</item>
         <item name="tabTextAppearance">@style/TextAppearance.App.R.Gray06</item>
+    </style>
+
+    <style name="DetailTabLayout" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize" tools:ignore="SpUsage">14dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.App.R.Gray05</item>
     </style>
 
     <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">

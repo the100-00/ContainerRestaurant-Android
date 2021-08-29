@@ -14,7 +14,10 @@ import androidx.recyclerview.widget.RecyclerView
 import container.restaurant.android.data.FeedCategory
 import container.restaurant.android.data.SortingCategory
 import container.restaurant.android.databinding.FragmentFeedCategoryBinding
+import container.restaurant.android.presentation.feed.detail.FeedDetailActivity
 import container.restaurant.android.presentation.feed.item.ContainerFeedAdapter
+import container.restaurant.android.util.DataTransfer
+import container.restaurant.android.util.EventObserver
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -22,10 +25,6 @@ import org.koin.core.parameter.parametersOf
 internal class FeedCategoryFragment : Fragment() {
 
     private lateinit var binding: FragmentFeedCategoryBinding
-
-    private val containerFeedAdapter = ContainerFeedAdapter()
-
-    private var feedCategory: FeedCategory? = null
 
     private val viewModel: FeedCategoryViewModel by viewModel {
         parametersOf(feedCategory)
@@ -49,50 +48,24 @@ internal class FeedCategoryFragment : Fragment() {
         lifecycleScope.launchWhenCreated {
             viewModel.getFeedList(SortingCategory.LATEST)
         }
-//        with(viewModel) {
-//            feeds.observe(viewLifecycleOwner, Observer {
-//                if (page == 1) {
-//                    containerFeedAdapter.setItems(it)
-//                } else {
-//                    containerFeedAdapter.addItems(it)
-//                }
-//            })
-//            errorToast.observe(viewLifecycleOwner, Observer {
-//                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-//            })
-//        }
-
-//        setupContainerFeedRecycler()
+        observeData()
     }
 
-    private fun setupContainerFeedRecycler() {
-//        with(binding.rvContainerFeed) {
-//            adapter = containerFeedAdapter
-//            addOnScrollListener(object : RecyclerView.OnScrollListener() {
-//                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-//                    super.onScrolled(recyclerView, dx, dy)
-//                    val layoutManager = layoutManager
-//                    if (layoutManager is GridLayoutManager) {
-//                        val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
-//                        val visibleItemCount = layoutManager.childCount
-//                        val totalItemCount = layoutManager.itemCount
-//
-//                        if (visibleItemCount + firstVisibleItemPosition >= totalItemCount
-//                            && firstVisibleItemPosition >= 0
-//                            && viewModel.loading.value == false
-//                            && page < viewModel.lastPage.value ?: 0
-//                        ) {
-//                            viewModel.fetchMore(++page)
-//                        }
-//                    }
-//                }
-//            })
-//        }
+    private fun observeData() {
+        with(viewModel) {
+            isExploreFeedItemClicked.observe(viewLifecycleOwner, EventObserver{
+                if(it){
+                    val intent = FeedDetailActivity.getIntent(requireActivity())
+                    intent.putExtra(DataTransfer.FEED_ID, selectedFeedId)
+                    startActivity(intent)
+                }
+            })
+        }
     }
+
+    private var feedCategory: FeedCategory? = null
 
     companion object {
-        var page = 1
-
         fun newInstance(feedCategory: FeedCategory) = FeedCategoryFragment()
             .apply {
                 this.feedCategory = feedCategory

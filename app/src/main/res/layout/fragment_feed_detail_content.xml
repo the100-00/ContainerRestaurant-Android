@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".presentation.feed.detail.FeedDetailContentFragment">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="container.restaurant.android.presentation.feed.detail.FeedDetailViewModel" />
+    </data>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="20dp"
+        android:paddingHorizontal="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="@style/TextAppearance.App.R.Gray07"
+            android:text="@{viewModel.content}"
+            tools:text="신전떡볶이 용기낸 후기입니다 사장님이 다회용기를 환영하는 뱃지를 보고 바로 가서 담아왔습니다! 생각보다 어렵지 않고 환경을 지키는 것에 대해 동참한다는 게 뿌듯하네요 신전떡볶이 용기낸 후기입니다" />
+
+    </FrameLayout>
+</layout>

@@ -16,4 +16,7 @@ interface RecyclerViewItemClickListeners {
     interface SortingCategoryItemClickListener {
         fun onSortingCategoryItemClick(adapterPosition: Int)
     }
+    interface ExploreFeedItemClickListener {
+        fun onExploreFeedItemClick(feedId: Int)
+    }
 }

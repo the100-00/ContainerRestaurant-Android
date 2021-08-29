@@ -7,6 +7,8 @@ import container.restaurant.android.data.SortingCategory
 import container.restaurant.android.data.repository.FeedExploreRepository
 import container.restaurant.android.data.response.FeedListResponse
 import container.restaurant.android.data.response.FeedResponse
+import container.restaurant.android.util.Event
+import container.restaurant.android.util.RecyclerViewItemClickListeners
 import container.restaurant.android.util.SingleLiveEvent
 import container.restaurant.android.util.handleApiResponse
 import kotlinx.coroutines.flow.collect
@@ -16,11 +18,17 @@ import timber.log.Timber
 internal class FeedCategoryViewModel(
     private val feedExploreRepository: FeedExploreRepository,
     private val feedCategory: FeedCategory
-) : ViewModel() {
+) : ViewModel(),
+    RecyclerViewItemClickListeners.ExploreFeedItemClickListener {
 
     private val _feedList: MutableLiveData<List<FeedListResponse.FeedPreviewDtoList.FeedPreviewDto>> =
         MutableLiveData()
     val feedList: LiveData<List<FeedListResponse.FeedPreviewDtoList.FeedPreviewDto>> = _feedList
+
+    private val _isExploreFeedItemClicked: MutableLiveData<Event<Boolean>> = MutableLiveData()
+    val isExploreFeedItemClicked: LiveData<Event<Boolean>> = _isExploreFeedItemClicked
+
+    var selectedFeedId: Int = -1
 
     suspend fun getFeedList(sortingCategory: SortingCategory) {
         val categoryName =
@@ -38,6 +46,11 @@ internal class FeedCategoryViewModel(
             }
     }
 
+    override fun onExploreFeedItemClick(feedId: Int) {
+        selectedFeedId = feedId
+        Timber.d("onExploreFeedItemClick, selectedFeedId : $selectedFeedId")
+        _isExploreFeedItemClicked.value = Event(true)
+    }
     /** 여기부터는 원래 있던 코드 **/
 //    private val feedResponse = MutableLiveData<FeedResponse>()
 //    private var feedSort: SortingCategory = SortingCategory.LATEST

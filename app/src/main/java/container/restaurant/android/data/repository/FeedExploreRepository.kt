@@ -6,7 +6,7 @@ import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
 import com.tak8997.github.domain.ResultState
 import container.restaurant.android.data.SortingCategory
-import container.restaurant.android.data.remote.FeedService
+import container.restaurant.android.data.remote.FeedExploreService
 import container.restaurant.android.data.response.FeedResponse
 import container.restaurant.android.data.safeApiCall
 import container.restaurant.android.data.FeedCategory
@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.flowOn
 private const val perPage = 20
 
 class FeedExploreRepository(
-    private val feedService: FeedService
+    private val feedExploreService: FeedExploreService
 ) {
 
     private var feedCategory: String? = null
@@ -33,7 +33,7 @@ class FeedExploreRepository(
         }
 
         return safeApiCall {
-            feedService.fetchFeeds(
+            feedExploreService.fetchFeeds(
                 feedCategory,
                 sortingCategory.sort,
                 page,
@@ -43,12 +43,12 @@ class FeedExploreRepository(
     }
 
     suspend fun fetchResFeed(resId: Long): ResultState<FeedResponse> {
-        return safeApiCall { feedService.fetchResFeed(resId) }
+        return safeApiCall { feedExploreService.fetchResFeed(resId) }
     }
 
     @WorkerThread
     suspend fun getFeedList(categoryName: String?, sortingCategory: SortingCategory, page: Int) = flow {
-        val response = feedService.feedList(categoryName, sortingCategory.sort, page, perPage)
+        val response = feedExploreService.feedList(categoryName, sortingCategory.sort, page, perPage)
         response
             .suspendOnSuccess {
                 emit(this)

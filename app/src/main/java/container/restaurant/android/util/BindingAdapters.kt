@@ -6,6 +6,7 @@ import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.StyleSpan
 import android.view.Gravity
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.ColorInt
@@ -15,12 +16,15 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.HtmlCompat
 import androidx.databinding.BindingAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.tabs.TabLayout
+import com.hedgehog.ratingbar.RatingBar
 import container.restaurant.android.R
 import container.restaurant.android.di.BASE_URL
+import de.hdodenhof.circleimageview.CircleImageView
 import timber.log.Timber
 import java.util.*
 
@@ -99,12 +103,32 @@ fun ImageView.setImageUrlWithoutBaseUrl(url: String?) {
     }
 }
 
+@BindingAdapter("bind:imageUrlWithOutBaseUrl")
+fun CircleImageView.setImageUrlWithoutBaseUrl(url: String?){
+    url?.let {
+        val baseUrl = BASE_URL.substring(0, BASE_URL.lastIndex)
+        val fullUrl = "$baseUrl$url"
+        Glide.with(this)
+            .load(fullUrl)
+            .into(this)
+    }
+}
+
+
 @BindingAdapter("bind:emptyProfileRes")
 fun ImageView.setEmptyProfileRes(@DrawableRes res: Int) {
     Glide.with(this)
         .load(res)
         .into(this)
 }
+
+@BindingAdapter("bind:emptyProfileRes")
+fun CircleImageView.setEmptyProfileRes(@DrawableRes res: Int) {
+    Glide.with(this)
+        .load(res)
+        .into(this)
+}
+
 
 @BindingAdapter(
     value = ["bind:spannableText"
@@ -133,6 +157,15 @@ fun TextView.setSpannableString(
 
 @BindingAdapter("bind:imageUrlWithBaseUrl")
 fun ImageView.setImageUrlWithBaseUrl(url: String?) {
+    url?.let {
+        Glide.with(this)
+            .load(url)
+            .into(this)
+    }
+}
+
+@BindingAdapter("bind:imageUrlWithBaseUrl")
+fun CircleImageView.setImageUrlWithBaseUrl(url: String?) {
     url?.let {
         Glide.with(this)
             .load(url)
@@ -195,4 +228,32 @@ fun TextView.setFeedCategorySelected(boolean: Boolean?) {
 @BindingAdapter("bind:addTabSelectedListener")
 fun TabLayout.addTabSelectedListener(listener: TabLayout.OnTabSelectedListener){
     addOnTabSelectedListener(listener)
+}
+
+@BindingAdapter("bind:registerOnPageChangeCallback")
+fun ViewPager2.registerOnPageChangeCallback(onPageChangeCallback: ViewPager2.OnPageChangeCallback){
+    registerOnPageChangeCallback(onPageChangeCallback)
+}
+
+@BindingAdapter("bind:setRating")
+fun RatingBar.setRating(rating: Int){
+    setStar(rating.toFloat())
+}
+
+@BindingAdapter("bind:clickable")
+fun RatingBar.setClickable(boolean: String){
+    setmClickable(boolean.toBoolean())
+}
+
+@BindingAdapter("bind:difficultyIntToText")
+fun TextView.setDifficultyText(rating: Int){
+    visibility = View.VISIBLE
+    when(rating){
+        1-> text = resources.getString(R.string.difficulty_lv1)
+        2-> text = resources.getString(R.string.difficulty_lv2)
+        3-> text = resources.getString(R.string.difficulty_lv3)
+        4-> text = resources.getString(R.string.difficulty_lv4)
+        5-> text = resources.getString(R.string.difficulty_lv5)
+        else -> visibility = View.GONE
+    }
 }

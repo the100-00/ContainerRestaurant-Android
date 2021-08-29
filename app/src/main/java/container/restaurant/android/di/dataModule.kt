@@ -28,6 +28,7 @@ val dataModule = module {
     single<MyRepository> { MyRepository(get())  }
     single<RestaurantRepository> { ResDataRepository(get()) }
     single<HomeRepository> { HomeRepository(get())}
+    single<FeedDetailRepository> { FeedDetailRepository(get())}
 }
 
 val roomDBModule = module {

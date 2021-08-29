@@ -7,6 +7,7 @@ import container.restaurant.android.presentation.auth.AuthViewModel
 import container.restaurant.android.presentation.feed.explore.FeedExploreViewModel
 import container.restaurant.android.presentation.feed.all.FeedAllViewModel
 import container.restaurant.android.presentation.feed.category.FeedCategoryViewModel
+import container.restaurant.android.presentation.feed.detail.FeedDetailViewModel
 import container.restaurant.android.presentation.feed.write.FeedWriteViewModel
 import container.restaurant.android.presentation.home.HomeViewModel
 import container.restaurant.android.presentation.map.item.FeedRestaurantViewModel
@@ -28,4 +29,5 @@ val presentationModule = module {
     viewModel { MapsViewModel(get()) }
     viewModel { FeedRestaurantViewModel(get()) }
     viewModel { AuthViewModel(get()) }
+    viewModel { FeedDetailViewModel(get()) }
 }
