@@ -13,4 +13,10 @@ interface RecyclerViewItemClickListeners {
     interface SearchResultItemClickListener {
         fun onSearchResultItemClick(item: SearchLocationResponse.Item)
     }
+    interface SortingCategoryItemClickListener {
+        fun onSortingCategoryItemClick(adapterPosition: Int)
+    }
+    interface ExploreFeedItemClickListener {
+        fun onExploreFeedItemClick(feedId: Int)
+    }
 }

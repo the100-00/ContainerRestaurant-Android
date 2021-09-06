@@ -34,7 +34,7 @@
             android:paddingHorizontal="16dp"
             android:textColor="@drawable/category_text_selector"
             android:textStyle="bold"
-            android:text="@{item.category.menuKorean}"
+            android:text="@{item.foodCategory.menuKorean}"
             android:checked="@{item.checked}"
             android:onClick="@{()->eventHolder.onCategorySelectionItemClick(item, adapterPosition)}"
             android:layout_marginBottom="10dp"
