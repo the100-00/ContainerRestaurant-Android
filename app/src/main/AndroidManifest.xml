@@ -18,7 +18,8 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
-        <activity android:name=".presentation.feed.detail.FeedDetailActivity"></activity>
+        <activity android:name=".presentation.onBoarding.OnBoardingActivity"></activity>
+        <activity android:name=".presentation.feed.detail.FeedDetailActivity" />
         <activity android:name=".presentation.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
