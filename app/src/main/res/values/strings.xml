@@ -118,6 +118,19 @@
     <string name="feed_image">피드 이미지</string>
     <string name="heart">좋아요</string>
 
+    <string name="on_boarding_title1">누군가가 먼저\n용기낸 식당을 확인해요!</string>
+    <string name="on_boarding_title2">음식별 용기구성\n팁을 얻을 수 있어요.</string>
+    <string name="on_boarding_title3">직접 용기낸 경험담과\n식당을 공유하고</string>
+    <string name="on_boarding_title4">용기낸 횟수를\n캐릭터로 확인해요.</string>
+    <string name="on_boarding_sub_title1">내 주변 15분 거리의 식당들 중\n누군가 먼저 용기냈던 식당을 확인할 수 있어요.</string>
+    <string name="on_boarding_sub_title2">피드에서 포장하려는 음식의\n용기 크기 및 구성 팁을 얻을 수 있어요.</string>
+    <string name="on_boarding_sub_title3">피드 작성으로 용기낸 경험담을 공유하면\n자동으로 지도에 용기낸 식당이 등록돼요.</string>
+    <string name="on_boarding_sub_title4">용기낸 경험담을 공유한 횟수에 따라\n레벨업이 되고 캐릭터가 바뀌어요</string>
+    <string name="on_boarding_file_name1">on_boarding1.json</string>
+    <string name="on_boarding_file_name2">on_boarding2.json</string>
+    <string name="on_boarding_file_name3">on_boarding3.json</string>
+    <string name="on_boarding_file_name4">on_boarding4.json</string>
+
     <string name="restaurant_name_hint">\'식당명\' 또는 \'지역 + 식당명\' 입력</string>
     <string name="search">검색하기</string>
     <string name="welcome_mark">다회용기 환영 마크</string>
@@ -137,5 +150,8 @@
     <string name="take_out_level">포장 난이도</string>
     <string name="main_menu_icon">메인 음식 아이콘</string>
     <string name="comment">댓글</string>
+    <string name="next_step">다음 단계</string>
+    <string name="begin">시작하기</string>
+    <string name="skip"><u>건너뛰기</u></string>
 
 </resources>

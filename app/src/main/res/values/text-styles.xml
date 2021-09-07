@@ -65,6 +65,10 @@
         <item name="android:textColor">@color/gray_07</item>
     </style>
 
+    <style name="TextAppearance.App.B.Gray08">
+        <item name="android:textColor">@color/gray_08</item>
+    </style>
+
     <!-- bold green -->
     <style name="TextAppearance.App.B.Green03">
         <item name="android:textColor">@color/green_03</item>
