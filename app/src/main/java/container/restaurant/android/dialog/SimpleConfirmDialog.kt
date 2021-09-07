@@ -112,8 +112,8 @@ class SimpleConfirmDialog(
 
     //확인, 취소 버튼이 있을 때 사용되는 리스너 인터페이스
     interface MultiEventListener {
-        fun onRightBtnClick(dialogSelf: SimpleConfirmDialog)
         fun onLeftBtnClick(dialogSelf: SimpleConfirmDialog)
+        fun onRightBtnClick(dialogSelf: SimpleConfirmDialog)
     }
 
     //확인 버튼만 있을 때 사용되는 리스너

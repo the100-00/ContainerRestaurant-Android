@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="viewModel"
+            type="container.restaurant.android.presentation.feed.explore.FeedExploreViewModel" />
+    </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -15,40 +21,48 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                style="@style/TextAppearance.App.B.Gray07"
+                android:textAppearance="@style/TextAppearance.App.B.Gray07"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/feed_search"
                 android:textSize="16dp"
+                tools:ignore="SpUsage"
                 android:layout_gravity="center_horizontal" />
         </androidx.appcompat.widget.Toolbar>
         <com.google.android.material.tabs.TabLayout
             style="@style/AppTabLayout"
-            android:id="@+id/tablayout_feed_type"
+            android:id="@+id/tab_layout_feed_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/bg_feed_tab"
+            bind:addTabSelectedListener="@{viewModel.tabSelectedListener}"
+            app:tabIndicatorHeight="2dp"
+            app:tabIndicator="@color/gray_07"
             app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_feed_sort"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="9dp"
-            android:layout_marginTop="14dp"
+            android:paddingHorizontal="16dp"
+            android:layout_marginTop="12dp"
             android:clipChildren="false"
             android:clipToPadding="false"
-            app:layout_constraintTop_toBottomOf="@+id/tablayout_feed_type" />
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:dino_itemLayout="@{@layout/item_sort}"
+            app:dino_items="@{viewModel.sortingCategoryList}"
+            app:dino_vm="@{viewModel}"
+            tools:listitem="@layout/item_sort"
+            app:layout_constraintTop_toBottomOf="@+id/tab_layout_feed_type" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/pager_feed"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="8dp"
             app:layout_constraintTop_toBottomOf="@+id/rv_feed_sort"
             app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <data>
-
-    </data>
 </layout>

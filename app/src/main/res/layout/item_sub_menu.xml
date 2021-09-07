@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="item"
+            type="container.restaurant.android.data.SubMenu" />
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shadow_box"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:textAppearance="@style/TextAppearance.App.B.Gray07"
+                android:textSize="14dp"
+                tools:ignore="SpUsage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="23.5dp"
+                android:gravity="center"
+                android:text="@string/food" />
+
+            <EditText
+                android:id="@+id/et_quantity"
+                android:textSize="14dp"
+                tools:ignore="SpUsage"
+                android:layout_width="229dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="17dp"
+                android:text="@={item.menuName}"
+                android:textColorHint="@color/gray_04"
+                android:fontFamily="@font/spoqa_hans_sans_regular"
+                android:hint="@string/side_count_example_hint"
+                android:backgroundTint="@android:color/transparent"
+                android:importantForAutofill="no"
+                android:inputType="text" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="19dp"
+            android:layout_marginEnd="15dp"
+            android:src="@color/gray_03"
+            tools:ignore="ContentDescription" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:textAppearance="@style/TextAppearance.App.B.Gray07"
+                android:textSize="14dp"
+                tools:ignore="SpUsage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="23.5dp"
+                android:text="@string/container" />
+
+            <EditText
+                android:id="@+id/et_bottle"
+                android:layout_width="229dp"
+                android:textSize="14dp"
+                android:textColorHint="@color/gray_04"
+                android:fontFamily="@font/spoqa_hans_sans_regular"
+                tools:ignore="SpUsage"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="17dp"
+                android:text="@={item.container}"
+                android:hint="@string/side_container_example_hint"
+                android:backgroundTint="@android:color/transparent"
+                android:importantForAutofill="no"
+                android:inputType="text" />
+        </LinearLayout>
+    </LinearLayout>
+
+</layout>

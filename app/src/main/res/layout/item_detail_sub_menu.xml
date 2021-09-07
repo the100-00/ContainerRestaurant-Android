@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+    <data>
+        <variable
+            name="item"
+            type="container.restaurant.android.data.response.FeedDetailResponse.Menu" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp">
+
+        <ImageView
+            android:id="@+id/ic_side_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/main_menu_icon"
+            android:src="@drawable/ic_side_menu"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_side_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:textAppearance="@style/TextAppearance.App.B.Gray07"
+            android:textSize="14dp"
+            android:text="@{item.menuName}"
+            app:layout_constraintBottom_toBottomOf="@id/ic_side_menu"
+            app:layout_constraintStart_toEndOf="@id/ic_side_menu"
+            app:layout_constraintTop_toTopOf="@id/ic_side_menu"
+            tools:ignore="SpUsage"
+            tools:text="신전떡볶이 1인분 로제맛" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.App.B.Gray06"
+            android:textSize="14dp"
+            android:text="@{item.container}"
+            app:layout_constraintStart_toStartOf="@id/tv_side_menu"
+            app:layout_constraintTop_toBottomOf="@id/tv_side_menu"
+            tools:ignore="SpUsage"
+            tools:text="조그만 플라스틱 반찬통 1개" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

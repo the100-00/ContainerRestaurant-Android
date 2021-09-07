@@ -18,6 +18,7 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
+        <activity android:name=".presentation.feed.detail.FeedDetailActivity"></activity>
         <activity android:name=".presentation.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,9 +26,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.feed.write.FeedWriteActivity" />
-        <activity android:name=".presentation.MainActivity"
-            android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name=".presentation.feed.write.FeedWriteActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".presentation.MainActivity"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".presentation.auth.SignUpActivity"
             android:windowSoftInputMode="adjustResize" />

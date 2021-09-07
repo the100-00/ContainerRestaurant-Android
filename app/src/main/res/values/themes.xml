@@ -12,7 +12,6 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/white</item>
         <!-- Customize your theme here. -->
-
     </style>
 
     <style name="BaseTheme" parent="Theme.MaterialComponents.Light.NoActionBar">

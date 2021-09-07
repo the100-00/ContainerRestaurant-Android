@@ -5,10 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import container.restaurant.android.R
-import container.restaurant.android.presentation.feed.FeedFragment
+import container.restaurant.android.presentation.feed.explore.FeedExploreFragment
 import container.restaurant.android.presentation.home.HomeFragment
 import container.restaurant.android.presentation.map.MapsFragment
-import container.restaurant.android.presentation.my.MyFragment
 
 class NavigationController(private val activity: AppCompatActivity) {
 
@@ -20,7 +19,7 @@ class NavigationController(private val activity: AppCompatActivity) {
     }
 
     fun navigateToFeed() {
-        replaceFragment(FeedFragment.newInstance())
+        replaceFragment(FeedExploreFragment.newInstance())
     }
 
     fun navigateToMap() {

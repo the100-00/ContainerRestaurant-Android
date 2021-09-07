@@ -1,24 +1,15 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="33dp"
-    android:height="33dp"
-    android:viewportWidth="33"
-    android:viewportHeight="33">
-  <group>
-    <clip-path
-        android:pathData="M2.1,5.3L30.9,5.3L30.9,27.7L2.1,27.7z"/>
-    <path
-        android:strokeWidth="1"
-        android:pathData="M23.116,8.176c-0.156,-1.211 -1.401,-2.12 -2.647,-2.12h-7.784c-1.245,0 -2.49,0.909 -2.646,2.12 -0.156,1.362 -1.245,2.27 -2.646,2.27H5.524c-1.4,0 -2.646,1.21 -2.646,2.573V24.37c0,1.362 1.245,2.573 2.646,2.573h21.95c1.402,0 2.647,-1.21 2.647,-2.573V13.02c0,-1.362 -1.245,-2.573 -2.646,-2.573h-1.868c-1.246,0 -2.336,-0.908 -2.491,-2.27z"
-        android:strokeLineJoin="round"
-        android:fillColor="#00000000"
-        android:strokeColor="#AEAEAE"
-        android:strokeLineCap="round"/>
-    <path
-        android:strokeWidth="1"
-        android:pathData="M19.691,20.737c-1.712,1.665 -4.515,1.665 -6.227,0 -1.712,-1.665 -1.712,-4.389 0,-6.054s4.515,-1.665 6.227,0c0.778,0.757 1.09,1.665 1.245,2.573"
-        android:strokeLineJoin="round"
-        android:fillColor="#00000000"
-        android:strokeColor="#AEAEAE"
-        android:strokeLineCap="round"/>
-  </group>
+    android:width="20dp"
+    android:height="20dp"
+    android:viewportWidth="20"
+    android:viewportHeight="20">
+  <path
+      android:pathData="M6.9515,1C6.5211,1 6.139,1.2754 6.0029,1.6838L5.3618,3.6068C5.3609,3.6097 5.3599,3.6125 5.359,3.6154H3C1.8954,3.6154 1,4.5108 1,5.6154V16C1,17.1046 1.8954,18 3,18H17.3077C18.4123,18 19.3077,17.1046 19.3077,16V5.6154C19.3077,4.5108 18.4123,3.6154 17.3077,3.6154H14.9487C14.9478,3.6125 14.9468,3.6097 14.9459,3.6068L14.3048,1.6838C14.1687,1.2754 13.7866,1 13.3562,1H6.9515Z"
+      android:fillColor="#AEAEAE"
+      android:fillType="evenOdd"/>
+  <path
+      android:strokeWidth="1"
+      android:pathData="M10.1535,10.1535m-3.4231,0a3.4231,3.4231 0,1 1,6.8462 0a3.4231,3.4231 0,1 1,-6.8462 0"
+      android:fillColor="#AEAEAE"
+      android:strokeColor="#ffffff"/>
 </vector>

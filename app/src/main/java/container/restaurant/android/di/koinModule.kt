@@ -4,9 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import container.restaurant.android.presentation.MainViewModel
 import container.restaurant.android.presentation.NavigationController
 import container.restaurant.android.presentation.auth.AuthViewModel
-import container.restaurant.android.presentation.feed.FeedViewModel
+import container.restaurant.android.presentation.feed.explore.FeedExploreViewModel
 import container.restaurant.android.presentation.feed.all.FeedAllViewModel
 import container.restaurant.android.presentation.feed.category.FeedCategoryViewModel
+import container.restaurant.android.presentation.feed.detail.FeedDetailViewModel
 import container.restaurant.android.presentation.feed.write.FeedWriteViewModel
 import container.restaurant.android.presentation.home.HomeViewModel
 import container.restaurant.android.presentation.map.item.FeedRestaurantViewModel
@@ -20,7 +21,7 @@ val presentationModule = module {
     single { (activity: AppCompatActivity) -> NavigationController(activity) }
     viewModel { MainViewModel() }
     viewModel { HomeViewModel(get(), get()) }
-    viewModel { FeedViewModel() }
+    viewModel { FeedExploreViewModel() }
     viewModel { FeedCategoryViewModel(get(), it[0]) }
     viewModel { FeedAllViewModel() }
     viewModel { FeedWriteViewModel(get()) }
@@ -28,4 +29,5 @@ val presentationModule = module {
     viewModel { MapsViewModel(get()) }
     viewModel { FeedRestaurantViewModel(get()) }
     viewModel { AuthViewModel(get()) }
+    viewModel { FeedDetailViewModel(get()) }
 }
