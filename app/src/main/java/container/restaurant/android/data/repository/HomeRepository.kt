@@ -42,8 +42,8 @@ class HomeRepository(private val homeService: HomeService) {
     }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(Dispatchers.IO)
 
     @WorkerThread
-    suspend fun getBannersInfo() = flow {
-        val response = homeService.bannersInfo()
+    suspend fun getHomeInfo() = flow {
+        val response = homeService.homeInfo()
         response
             .suspendOnSuccess {
                 emit(this)

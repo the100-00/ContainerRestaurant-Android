@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import container.restaurant.android.data.PrefStorage
 import container.restaurant.android.data.repository.HomeRepository
-import container.restaurant.android.data.response.BannersInfoResponse
 import container.restaurant.android.data.response.FeedListResponse
+import container.restaurant.android.data.response.HomeInfoResponse
 import container.restaurant.android.data.response.ProfileResponse
 import container.restaurant.android.util.Event
 import container.restaurant.android.util.handleApiResponse
@@ -23,8 +23,20 @@ internal class HomeViewModel(
     private val _signInWithAccessTokenResult = MutableLiveData<ProfileResponse>()
     val signInWithAccessTokenResult: LiveData<ProfileResponse> = _signInWithAccessTokenResult
 
-    private val _bannerList = MutableLiveData<BannersInfoResponse.BannerInfoDtoList>()
-    val bannerList: LiveData<BannersInfoResponse.BannerInfoDtoList> = _bannerList
+    private val _loginId = MutableLiveData<Int>()
+    val loginId: LiveData<Int> = _loginId
+
+    private val _totalFeedCount= MutableLiveData<Int>()
+    val totalFeedCount: LiveData<Int> = _totalFeedCount
+
+    private val _phrase = MutableLiveData<String>()
+    val phrase:LiveData<String> = _phrase
+
+    private val _latestWriterProfileList = MutableLiveData<List<String>>()
+    val latestWriterProfileList: LiveData<List<String>> = _latestWriterProfileList
+
+    private val _bannerList = MutableLiveData<List<HomeInfoResponse.Banner>>()
+    val bannerList: LiveData<List<HomeInfoResponse.Banner>> = _bannerList
 
     private val _recommendedFeedList = MutableLiveData<List<FeedListResponse.FeedPreviewDtoList.FeedPreviewDto>>()
     val recommendedFeedList: LiveData<List<FeedListResponse.FeedPreviewDtoList.FeedPreviewDto>> = _recommendedFeedList
@@ -71,13 +83,20 @@ internal class HomeViewModel(
         return prefStorage.isUserSignIn
     }
 
-    suspend fun getBannersInfo() {
-        homeRepository.getBannersInfo()
+    suspend fun getHomeInfo() {
+        homeRepository.getHomeInfo()
             .collect { response ->
                 handleApiResponse(
                     response = response,
                     onSuccess = {
-                        _bannerList.value = it.data?.embedded
+                        _userFeedCount.value = it.data?.userFeedCount
+                        _totalFeedCount.value = it.data?.totalFeedCount
+                        _userLevelTitle.value = it.data?.userLevelTitle
+                        _userProfileUrl.value = it.data?.userProfileUrl
+                        _phrase.value = it.data?.phrase
+                        _latestWriterProfileList.value = it.data?.latestWriterProfileList
+                        _bannerList.value = it.data?.bannerList
+
                         Timber.d("it.data : ${it.data}")
                         Timber.d("it.headers : ${it.headers}")
                         Timber.d("it.raw : ${it.raw}")
