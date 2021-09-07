@@ -6,13 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.tabs.TabLayoutMediator
 import container.restaurant.android.databinding.FragmentHomeBinding
 import container.restaurant.android.dialog.SimpleConfirmDialog
 import container.restaurant.android.presentation.auth.KakaoSignInDialogFragment
 import container.restaurant.android.presentation.feed.all.FeedAllActivity
-import container.restaurant.android.presentation.feed.item.ContainerFeedAdapter
 import container.restaurant.android.presentation.home.item.BannerAdapter
 import container.restaurant.android.presentation.user.UserProfileActivity
 import container.restaurant.android.util.observe
@@ -70,7 +68,7 @@ internal class HomeFragment : Fragment() {
     }
 
     private fun addBannerItems() {
-        viewModel.bannerList.value?.bannerInfoDtoList?.let{
+        viewModel.bannerList.value?.let{
             bannerAdapter.addItems(it)
         }
 
@@ -84,7 +82,7 @@ internal class HomeFragment : Fragment() {
 
     private fun getBannersInfo() {
         lifecycleScope.launchWhenCreated {
-            viewModel.getBannersInfo()
+            viewModel.getHomeInfo()
         }
     }
 
