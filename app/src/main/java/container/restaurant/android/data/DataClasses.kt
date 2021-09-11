@@ -14,7 +14,7 @@ data class SubMenu(
 )
 
 data class CategorySelection(
-    var category: Category,
+    var foodCategory: FoodCategory,
     var checked: MutableLiveData<Boolean> = MutableLiveData(false)
 )
 

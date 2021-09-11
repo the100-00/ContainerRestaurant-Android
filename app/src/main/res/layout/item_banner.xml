@@ -25,6 +25,6 @@
     <data>
         <variable
             name="item"
-            type="container.restaurant.android.data.response.BannersInfoResponse.BannerInfoDtoList.BannerInfoDto" />
+            type="container.restaurant.android.data.response.HomeInfoResponse.Banner" />
     </data>
 </layout>

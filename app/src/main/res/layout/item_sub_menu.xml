@@ -18,8 +18,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="9dp"
+            android:layout_height="52dp"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
@@ -41,6 +41,7 @@
                 android:layout_marginStart="17dp"
                 android:text="@={item.menuName}"
                 android:textColorHint="@color/gray_04"
+                android:fontFamily="@font/spoqa_hans_sans_regular"
                 android:hint="@string/side_count_example_hint"
                 android:backgroundTint="@android:color/transparent"
                 android:importantForAutofill="no"
@@ -51,16 +52,14 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginStart="19dp"
-            android:layout_marginTop="9.5dp"
             android:layout_marginEnd="15dp"
-            android:layout_marginBottom="9.5dp"
             android:src="@color/gray_03"
             tools:ignore="ContentDescription" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="9dp"
+            android:layout_height="52dp"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
@@ -78,6 +77,7 @@
                 android:layout_width="229dp"
                 android:textSize="14dp"
                 android:textColorHint="@color/gray_04"
+                android:fontFamily="@font/spoqa_hans_sans_regular"
                 tools:ignore="SpUsage"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="17dp"

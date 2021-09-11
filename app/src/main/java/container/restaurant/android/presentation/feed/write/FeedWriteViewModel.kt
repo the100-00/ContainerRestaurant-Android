@@ -3,16 +3,14 @@ package container.restaurant.android.presentation.feed.write
 import androidx.lifecycle.*
 import container.restaurant.android.data.*
 import container.restaurant.android.data.repository.FeedWriteRepository
-import container.restaurant.android.data.response.FeedListResponse
 import container.restaurant.android.data.response.SearchLocationResponse
 import container.restaurant.android.util.Event
 import container.restaurant.android.util.RecyclerViewItemClickListeners
 import container.restaurant.android.util.handleApiResponse
 import kotlinx.coroutines.flow.collect
-import okhttp3.internal.notify
 import timber.log.Timber
 
-class FeedWriteViewModel(private val feedWriteRepository: FeedWriteRepository) : ViewModel(),
+internal class FeedWriteViewModel(private val feedWriteRepository: FeedWriteRepository) : ViewModel(),
     RecyclerViewItemClickListeners.CategorySelectionItemClickListener,
     RecyclerViewItemClickListeners.FoodPhotoItemClickListener,
     RecyclerViewItemClickListeners.SearchResultItemClickListener{
@@ -74,19 +72,19 @@ class FeedWriteViewModel(private val feedWriteRepository: FeedWriteRepository) :
     var isWelcomed = false
 
     val categoryList = mutableListOf(
-        CategorySelection(Category.KOREAN),
-        CategorySelection(Category.NIGHT_MEAL),
-        CategorySelection(Category.CHINESE),
-        CategorySelection(Category.SCHOOL_FOOD),
-        CategorySelection(Category.FAST_FOOD),
-        CategorySelection(Category.ASIAN_AND_WESTERN),
-        CategorySelection(Category.COFFEE_AND_DESSERT),
-        CategorySelection(Category.JAPANESE),
-        CategorySelection(Category.CHICKEN_AND_PIZZA)
+        CategorySelection(FoodCategory.KOREAN),
+        CategorySelection(FoodCategory.NIGHT_MEAL),
+        CategorySelection(FoodCategory.CHINESE),
+        CategorySelection(FoodCategory.SCHOOL_FOOD),
+        CategorySelection(FoodCategory.FAST_FOOD),
+        CategorySelection(FoodCategory.ASIAN_AND_WESTERN),
+        CategorySelection(FoodCategory.COFFEE_AND_DESSERT),
+        CategorySelection(FoodCategory.JAPANESE),
+        CategorySelection(FoodCategory.CHICKEN_AND_PIZZA)
     )
 
     // 사용자가 선택한 음식 카테고리를 저장하는 변수. 선택되지 않았으면 null임
-    var selectedCategory: Category? = null
+    var selectedFoodCategory: FoodCategory? = null
 
     fun onAddPhotoButtonClick() {
         _isAddPhotoButtonClicked.value = Event(true)
@@ -170,13 +168,13 @@ class FeedWriteViewModel(private val feedWriteRepository: FeedWriteRepository) :
             //이미 체크가 되어있다면 체크 해제
             if (item.checked.value!!) {
                 item.checked.value = false
-                selectedCategory = null
+                selectedFoodCategory = null
             }
             //그렇지 않다면 다른 것이 선택되있거나 아무것도 선택되지 않은 상태 => 지금 아이템만 체크 상태로 변경
             else {
                 categoryList.forEachIndexed { index, categorySelection ->
                     categorySelection.checked.value = (index == adapterPosition)
-                    if (index == adapterPosition) selectedCategory = categorySelection.category
+                    if (index == adapterPosition) selectedFoodCategory = categorySelection.foodCategory
                 }
             }
         }

@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import container.restaurant.android.R
 import container.restaurant.android.databinding.ActivityUserProfileBinding
 import container.restaurant.android.presentation.home.HomeViewModel
+import container.restaurant.android.util.CommUtils
 import container.restaurant.android.util.observe
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -39,18 +40,7 @@ internal class UserProfileActivity : AppCompatActivity() {
             }
             observe(userLevelTitle) { userLevelTitle ->
                 if (userProfileUrl.value == null) {
-                    when (userLevelTitle) {
-                        getString(R.string.empty_profile_lv1) -> userProfileRes.value =
-                            R.drawable.empty_profile_lv1
-                        getString(R.string.empty_profile_lv2) -> userProfileRes.value =
-                            R.drawable.empty_profile_lv2
-                        getString(R.string.empty_profile_lv3) -> userProfileRes.value =
-                            R.drawable.empty_profile_lv3
-                        getString(R.string.empty_profile_lv4) -> userProfileRes.value =
-                            R.drawable.empty_profile_lv4
-                        getString(R.string.empty_profile_lv5) -> userProfileRes.value =
-                            R.drawable.empty_profile_lv5
-                    }
+                    userProfileRes.value = CommUtils.getEmptyProfileResId(applicationContext,userLevelTitle)
                 }
             }
         }
