@@ -18,7 +18,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.hedgehog.ratingbar.RatingBar
+import androidx.activity.result.contract.ActivityResultContracts.*
+//import androidx.activity.registerForActivityResult
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
 import com.naver.maps.map.overlay.Marker
@@ -120,6 +121,9 @@ internal class MapsFragment : Fragment(), OnMapReadyCallback {
 
         initBottomSheet()
 
+        binding.bottomfirst.close.setOnClickListener {
+            bottomSheetBehavior1.state = BottomSheetBehavior.STATE_COLLAPSED
+        }
 
         binding.bottomfirst.btn0.setOnClickListener {
             val intent = Intent(requireContext(), FeedWriteActivity::class.java)
@@ -136,13 +140,13 @@ internal class MapsFragment : Fragment(), OnMapReadyCallback {
         binding.bottomsecond.btn0.setOnClickListener {
             val intent = Intent(requireContext(), FeedWriteActivity::class.java)
             startActivity(intent)
-            bottomSheetBehavior1.state = BottomSheetBehavior.STATE_COLLAPSED
-        }
-
-        binding.bottomsecond.btn1.setOnClickListener{
             bottomSheetBehavior2.state = BottomSheetBehavior.STATE_COLLAPSED
         }
 
+
+        binding.bottomsecond.close.setOnClickListener {
+            bottomSheetBehavior2.state = BottomSheetBehavior.STATE_COLLAPSED
+        }
     }
 
     private fun initBottomSheet() {
@@ -175,6 +179,7 @@ internal class MapsFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun searchAgain() {
+        radius = 2000;
         val latlng: CameraPosition = cp
         viewModel.fetchRes(latlng.target.latitude, latlng.target.longitude, radius)
         latitude = latlng.target.latitude
@@ -214,6 +219,7 @@ internal class MapsFragment : Fragment(), OnMapReadyCallback {
             bottomSheetBehavior2.state = BottomSheetBehavior.STATE_EXPANDED
         } else if (index == 2) {
             Toast.makeText(requireContext(), "이 위치에는 용기낸 식당이 아직 없어요", Toast.LENGTH_LONG).show()
+            radius = 2000;
         }
         binding.btList.visibility = INVISIBLE
     }
@@ -221,7 +227,7 @@ internal class MapsFragment : Fragment(), OnMapReadyCallback {
     //마커 문제
     private fun createMarker(id: Long, lat: Double, lon: Double) {
         val marker = Marker()
-        markers.add(marker) //마커 리스트에 저장. -> 삭제 어디서?
+        markers.add(marker)
         marker.position = LatLng(lat, lon)
         marker.map = naverMap
         marker.icon = OverlayImage.fromResource(R.drawable.ic_map_marker_s)
@@ -230,9 +236,9 @@ internal class MapsFragment : Fragment(), OnMapReadyCallback {
                 it.icon = OverlayImage.fromResource(R.drawable.ic_map_marker_s)
             }
 
-            marker.icon = OverlayImage.fromResource(R.drawable.ic_map_marker)
+            marker.icon = OverlayImage.fromResource(R.drawable.ic_map_marker__2_)
 
-            bottomSheetBehavior.peekHeight = 290
+            bottomSheetBehavior.peekHeight = 322
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
             initRecyclerView(id)
             setupContainerFeedRecycler(id)
@@ -279,6 +285,19 @@ internal class MapsFragment : Fragment(), OnMapReadyCallback {
             cp = currentPosition
         }
     }
+/*
+    class ActivityResultSampleFragment : Fragment() {
+        val requestLocation: () -> Unit = registerForActivityResult(RequestPermission(), ACCESS_FINE_LOCATION
+        ) { isGranted ->
+            locationUtils.initLocation(requireActivity())
+            naverMap.locationSource = locationSource
+            naverMap.locationTrackingMode = LocationTrackingMode.Follow
+        }
+
+        private fun requestLocationAction() {
+            requestLocation()
+        }
+    }*/
 
     private fun checkPermissions() {
         if (ActivityCompat.checkSelfPermission(
@@ -291,26 +310,22 @@ internal class MapsFragment : Fragment(), OnMapReadyCallback {
             locationUtils.initLocation(requireActivity())
     }
 
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        if (locationSource.onRequestPermissionsResult(
-                requestCode, permissions,
-                grantResults
-            )
-        ) {
+        grantResults: IntArray) {
+        if (locationSource.onRequestPermissionsResult(requestCode, permissions, grantResults))
+        {
             if (!locationSource.isActivated) { // 권한 거부됨
                 naverMap.locationTrackingMode = LocationTrackingMode.None
-            } else {
-                locationUtils.initLocation(requireActivity())
-                naverMap.locationSource = locationSource
-                naverMap.locationTrackingMode = LocationTrackingMode.Follow
             }
-            return
+            locationUtils.initLocation(requireActivity())
+            naverMap.locationSource = locationSource
+            naverMap.locationTrackingMode = LocationTrackingMode.Follow
+        return
         }
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
     companion object {

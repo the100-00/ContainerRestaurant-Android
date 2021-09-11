@@ -14,53 +14,58 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-
-        <Button
-            android:id="@+id/bt_reset"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
-            android:backgroundTint="#66000000"
-            android:drawableLeft="@drawable/ic_reset_outline_20_px"
-            android:drawableTint="#FFFFFF"
-            android:text="이 위치에서 검색"
-            android:textColor="#FFFFFF"
-            android:textSize="12sp"
-            app:cornerRadius="50dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/bt_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:drawableLeft="@drawable/ic_list_outline_16_px"
-            android:text="목록보기"
-            android:textColor="#000000"
-            android:textSize="12sp"
-            app:cornerRadius="50dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.944" />
-
-
-        <fragment
-            android:id="@+id/map_fragment"
-            android:name="com.naver.maps.map.MapFragment"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:layout_editor_absoluteX="133dp"
-            tools:layout_editor_absoluteY="0dp" />
+            android:layout_height="match_parent">
 
-        <!-- <com.naver.maps.map.MapView
+
+            <Button
+                android:id="@+id/bt_reset"
+                style="@style/TextAppearance.App.R.Gray01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:backgroundTint="#66000000"
+                android:drawableLeft="@drawable/ic_reset_outline_20_px"
+                android:drawableTint="#FFFFFF"
+                android:text="이 위치에서 찾기"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                app:cornerRadius="50dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/bt_list"
+                style="@style/TextAppearance.App.R.Gray07"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:drawableLeft="@drawable/ic_list_outline_16_px"
+                android:drawablePadding="0dp"
+                android:gravity="center"
+                android:text="목록보기"
+                android:textSize="14sp"
+                app:cornerRadius="50dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.944" />
+
+
+            <fragment
+                android:id="@+id/map_fragment"
+                android:name="com.naver.maps.map.MapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="139dp" />
+
+            <!-- <com.naver.maps.map.MapView
               android:id="@+id/map_view"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
@@ -68,7 +73,7 @@
               app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintStart_toStartOf="parent"
               app:layout_constraintTop_toTopOf="parent" /> -->
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
         <include android:id="@+id/bottomfirst" layout="@layout/fragment_bottom_map"/>
         <include android:id="@+id/bottomsecond" layout="@layout/fragment_bottom_map_2"/>
         <include android:id="@+id/bottomres" layout="@layout/fragment_res"/>

@@ -3,19 +3,14 @@
     <item
         android:id="@android:id/background">
         <bitmap
-            android:src="@drawable/hard_filled_16_px"
-            android:tint="@color/gray_03" />
-    </item>
-
-    <item android:id="@android:id/secondaryProgress">
-        <bitmap
-            android:src="@drawable/hard_filled_16_px"
-            android:tint="@color/gray_03" />
+            android:src="@drawable/a32px"
+            />
     </item>
 
     <item android:id="@android:id/progress">
         <bitmap
-            android:src="@drawable/hard_filled_16_px"
-            android:tint="#18C08D" />
+            android:src="@drawable/b32px"
+
+            />
     </item>
 </layer-list>
