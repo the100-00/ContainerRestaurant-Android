@@ -6,68 +6,77 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="278dp"
+        android:layout_height="300dp"
         android:background="@drawable/radius"
-        app:behavior_peekHeight="0dp"
         app:behavior_draggable="false"
+        app:behavior_peekHeight="0dp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
 
         <TextView
             android:id="@+id/textView2"
-            style="@style/TextAppearance.App.B.Gray07"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="140dp"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="42dp"
             android:layout_marginEnd="140dp"
             android:gravity="center"
             android:text="가까운 곳에\n용기낸 식당이 없어요"
-            android:textColor="@color/black"
+            android:textAppearance="@style/TextAppearance.App.B.Gray07"
             android:textSize="16sp"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_0"
-            style="@style/TextAppearance.App.R.Gray01"
-            android:layout_width="328dp"
-            android:layout_height="60dp"
+            android:layout_width="332dp"
+            android:layout_height="52dp"
             android:layout_marginStart="159dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="18dp"
             android:layout_marginEnd="158dp"
-            android:layout_marginBottom="24dp"
-            android:backgroundTint="#18c08d"
+            android:background="@drawable/button_round_1"
             android:text="내가 1등으로 용기내기"
-            app:cornerRadius="10dp"
-            app:layout_constraintBottom_toTopOf="@+id/btn_1"
+            android:stateListAnimator="@null"
+            android:textAppearance="@style/TextAppearance.App.B.Gray01"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.504"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-        <Button
-            android:id="@+id/btn_1"
-            style="@style/TextAppearance.App.R.Gray07"
-            android:layout_width="328dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="159dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="158dp"
-            android:text="닫기"
-            app:cornerRadius="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_0" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
         <View
             android:id="@+id/view3"
             android:layout_width="410dp"
             android:layout_height="20dp"
-            android:layout_marginTop="192dp"
+            android:layout_marginTop="28dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_0" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="100dp"
+            android:layout_marginBottom="26dp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.49"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            app:srcCompat="@drawable/ic_empty_data_img_map" />
+
+        <ImageView
+            android:id="@+id/close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/close_20px" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

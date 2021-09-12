@@ -6,19 +6,19 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="390dp">
 
         <TextView
             android:id="@+id/textView4"
             android:layout_width="3dp"
             android:layout_height="21dp"
-            android:layout_marginTop="3dp"
-            android:layout_marginEnd="6dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
             android:text="| "
             android:textColor="#cecece"
             android:textSize="14sp"
-            app:layout_constraintEnd_toStartOf="@+id/imageView4"
-            app:layout_constraintTop_toBottomOf="@+id/res_tag" />
+            app:layout_constraintStart_toEndOf="@+id/res_rank"
+            app:layout_constraintTop_toBottomOf="@+id/res_title" />
 
         <TextView
             android:id="@+id/res_title"
@@ -26,49 +26,88 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="@{item.name}"
-            android:textColor="#242424"
-            android:textStyle="bold"
+            android:textAppearance="@style/TextAppearance.App.B.Gray07"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="용기낸 식당" />
 
         <TextView
-            android:id="@+id/res_tag"
-            android:layout_width="335dp"
-            android:layout_height="21dp"
-            android:text="@{item.address}"
-            android:textColor="#cecece"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.21"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/res_title"
-            tools:text="#용기낸 식당" />
-
-        <TextView
             android:id="@+id/res_rank"
+            style="@style/TextAppearance.App.R.Gray06"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="6dp"
+            android:layout_marginStart="160dp"
+            android:layout_marginTop="5dp"
             android:text="@{String.valueOf(item.difficultyAvg)}"
-            android:textColor="#242424"
+            android:textAppearance="@style/TextAppearance.App.R.Gray07"
             android:textSize="12sp"
-            app:layout_constraintEnd_toStartOf="@+id/textView4"
-            app:layout_constraintTop_toBottomOf="@+id/res_tag"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/res_title"
             tools:text="2.1" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView4">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="4dp"
+                app:cardBackgroundColor="@color/gray_02"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="0dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="3dp"
+                    android:text="떡볶이"
+                    android:textAppearance="@style/TextAppearance.App.R.Gray05"
+                    android:textSize="12dp" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/gray_02"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="0dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="3dp"
+                    android:text="튀김분식"
+                    android:textAppearance="@style/TextAppearance.App.R.Gray05"
+                    android:textSize="12dp" />
+
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/res_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="220dp"
-            android:text="@{`+`+ String.valueOf(item.feedCount)+`회`}"
-            android:textColor="#242424"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="2dp"
+            android:text="@{String.valueOf(item.feedCount)}"
+            android:textAppearance="@style/TextAppearance.App.R.Gray05"
+            android:textColor="@color/green_02"
             android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="@+id/view2"
-            app:layout_constraintTop_toBottomOf="@+id/res_tag"
+            app:layout_constraintStart_toEndOf="@+id/imageView4"
+            app:layout_constraintTop_toBottomOf="@+id/res_title"
             tools:text="+3회" />
 
         <ImageButton
@@ -88,71 +127,91 @@
             android:id="@+id/imageView4"
             android:layout_width="14dp"
             android:layout_height="14dp"
-            android:layout_marginTop="6dp"
-            android:layout_marginEnd="5dp"
-            app:layout_constraintEnd_toStartOf="@+id/res_count"
-            app:layout_constraintTop_toBottomOf="@+id/res_tag"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="7dp"
+            app:layout_constraintStart_toEndOf="@+id/textView4"
+            app:layout_constraintTop_toBottomOf="@+id/res_title"
             app:srcCompat="@drawable/ic_feed_outline" />
 
         <RatingBar
             android:id="@+id/rb_difficulty"
             style="@style/starRatingBar"
-            android:layout_width="120dp"
-            android:layout_height="23dp"
-            android:layout_marginEnd="5dp"
+            android:layout_width="160dp"
+            android:layout_height="53dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="16dp"
             android:isIndicator="true"
-            android:numStars="5"
-            android:stepSize="0.1"
             android:rating="@{Float.parseFloat(String.valueOf(item.difficultyAvg))}"
-            android:scaleX="0.65"
-            android:scaleY="0.7"
+            android:scaleX="0.5"
+            android:scaleY="0.5"
+            android:stepSize="0.1"
             android:transformPivotX="120dp"
             app:layout_constraintBottom_toTopOf="@+id/view2"
-            app:layout_constraintEnd_toStartOf="@+id/res_rank"
-            app:layout_constraintTop_toBottomOf="@+id/res_tag"
-            app:layout_constraintVertical_bias="0.277" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/res_title"
+            app:layout_constraintVertical_bias="0.01" />
 
         <View
             android:id="@+id/view2"
             android:layout_width="380dp"
             android:layout_height="1dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="28dp"
             android:layout_marginEnd="16dp"
             android:background="#ececec"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.397"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/res_count" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
-            android:layout_height="18dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="28dp"
             android:text="해당 식당의 다른 피드도 살펴봐요!"
-            android:textColor="#242424"
+            android:textAppearance="@style/TextAppearance.App.B.Gray07"
             android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.01"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view2" />
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
-            android:layout_height="18dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
             android:layout_marginTop="1dp"
             android:text="@{`총 ` + item.feedCount + `개의 용기낸 피드가 있어요.`}"
-            android:textColor="#aeaeae"
+            android:textAppearance="@style/TextAppearance.App.R.Gray05"
             android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.013"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            app:layout_constraintTop_toBottomOf="@+id/textView3"
+            tools:text="총 1개의 용기낸 피드가 있어요." />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:text="포장난이도"
+            android:textAppearance="@style/TextAppearance.App.R.Gray06"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/res_title" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:imageUrl="@{item.image_path}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            app:srcCompat="@drawable/img_level_up" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

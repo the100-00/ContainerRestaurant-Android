@@ -68,17 +68,17 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="center"
-                        android:textAppearance="@style/TextAppearance.App.R.Gray06"
-                        android:paddingVertical="14dp"
                         android:background="?attr/selectableItemBackground"
+                        android:gravity="center"
+                        android:paddingVertical="14dp"
+                        android:textAppearance="@style/TextAppearance.App.R.Gray06"
                         tools:text="취소" />
 
                     <View
                         android:id="@+id/vertical_devider"
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
-                        android:background="@color/gray_03"/>
+                        android:background="@color/gray_03" />
 
                     <!--확인 버튼-->
                     <TextView
@@ -86,10 +86,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:background="?attr/selectableItemBackground"
                         android:gravity="center"
                         android:paddingVertical="14dp"
                         android:textAppearance="@style/TextAppearance.App.B.Green03"
-                        android:background="?attr/selectableItemBackground"
                         tools:text="확인" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
