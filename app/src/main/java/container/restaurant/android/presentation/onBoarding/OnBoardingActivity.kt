@@ -3,6 +3,7 @@ package container.restaurant.android.presentation.onBoarding
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.viewpager2.widget.ViewPager2
@@ -53,9 +54,11 @@ class OnBoardingActivity : AppCompatActivity() {
                 super.onPageSelected(position)
                 if(position<3) {
                     btnNext.text = getString(R.string.next_step)
+                    btnSkip.visibility = View.VISIBLE
                 }
                 else {
                     btnNext.text= getString(R.string.begin)
+                    btnSkip.visibility = View.INVISIBLE
                 }
             }
         })
