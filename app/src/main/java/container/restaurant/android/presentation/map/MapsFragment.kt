@@ -3,6 +3,7 @@ package container.restaurant.android.presentation.map
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,12 +28,14 @@ import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
 import container.restaurant.android.R
 import container.restaurant.android.databinding.FragmentMapBinding
+import container.restaurant.android.presentation.feed.detail.FeedDetailActivity
 import container.restaurant.android.presentation.feed.write.FeedWriteActivity
 import container.restaurant.android.presentation.map.item.*
 import container.restaurant.android.presentation.map.item.ConResAdapter
 import container.restaurant.android.presentation.map.item.FeedRestaurantViewModel
 import container.restaurant.android.presentation.map.item.MapResAdapter
 import container.restaurant.android.presentation.map.item.MapsViewModel
+import container.restaurant.android.util.DataTransfer
 import container.restaurant.android.util.EventObserver
 import container.restaurant.android.util.hide
 import container.restaurant.android.util.show
@@ -48,6 +51,8 @@ internal class MapsFragment : Fragment(), OnMapReadyCallback {
     private lateinit var cp: CameraPosition
     private var latitude: Double = 0.0
     private var longitude: Double = 0.0
+    private var Rlatitude: Double = 0.0
+    private var Rlongitude: Double = 0.0
     private var radius: Int = 2000
     private var index: Int = 0
     private val locationUtils = LocationUtils()
@@ -72,25 +77,11 @@ internal class MapsFragment : Fragment(), OnMapReadyCallback {
         binding.viewModel2 = viewModel2
 
 
-        binding.btList.visibility = INVISIBLE
+        binding.btList.visibility = INVISIBLE //목록보기 버튼 비활성화
         //binding.btReset.visibility = INVISIBLE
         return binding.root
     }
 
-    private fun insertNestedFragment() {
-        nearResFragment = NearResFragment.newInstance(latitude, longitude, radius) {
-            when (it) {
-                0 -> {
-                }
-            }
-        }
-        nearResFragment.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.dialog_fullscreen)
-        nearResFragment.isCancelable = true
-        nearResFragment.show(childFragmentManager, "nearRes")
-
-        //  binding.btList.visibility = INVISIBLE
-        //  binding.btReset.visibility = INVISIBLE
-    }
 
     @SuppressLint("MissingPermission")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -108,48 +99,59 @@ internal class MapsFragment : Fragment(), OnMapReadyCallback {
 
         mapFragment.getMapAsync(this)
 
-        binding.btList.setOnClickListener {
+        binding.btList.setOnClickListener {//목록보기 클릭
             insertNestedFragment()
         }
 
-        binding.btReset.setOnClickListener {
-            markers.forEach {
+        binding.btReset.setOnClickListener {//이 위치에서 검색 클릭
+            markers.forEach { //마커 삭제
                 it.map = null
             }
             searchAgain()
         }
 
-        initBottomSheet()
+        initBottomSheet() //바텀 시트 준비
 
-        binding.bottomfirst.close.setOnClickListener {
+        binding.bottomfirst.close.setOnClickListener {//내 위치에는 용기낸 식당이 없어요(첫번째로 뜨는 바텀시트) 닫기
             bottomSheetBehavior1.state = BottomSheetBehavior.STATE_COLLAPSED
         }
 
-        binding.bottomfirst.btn0.setOnClickListener {
+        binding.bottomfirst.btn0.setOnClickListener {//내 위치에는 용기낸 식당이 없어요(첫번째로 뜨는 바텀시트) 내가 먼저 용기내기
             val intent = Intent(requireContext(), FeedWriteActivity::class.java)
             startActivity(intent)
             bottomSheetBehavior1.state = BottomSheetBehavior.STATE_COLLAPSED
         }
 
-        binding.bottomfirst.btn1.setOnClickListener {
+        binding.bottomfirst.btn1.setOnClickListener {//내 위치에는 용기낸 식당이 없어요(첫번째로 뜨는 바텀시트) 가장 가까운 용기낸 식당 찾기
             radius = 20000;
             Toast.makeText(requireContext(), "반경 20KM에 있는 식당을 검색합니다.", Toast.LENGTH_SHORT).show()
             searchStart()
         }
 
-        binding.bottomsecond.btn0.setOnClickListener {
+        binding.bottomsecond.btn0.setOnClickListener {//가까운 곳에 용기낸 식당이 없어요(두번째로 뜨는 바텀시트) 내가 먼저 용기내기
             val intent = Intent(requireContext(), FeedWriteActivity::class.java)
             startActivity(intent)
             bottomSheetBehavior2.state = BottomSheetBehavior.STATE_COLLAPSED
         }
 
 
-        binding.bottomsecond.close.setOnClickListener {
+        binding.bottomsecond.close.setOnClickListener {//가까운 곳에 용기낸 식당이 없어요(두번째로 뜨는 바텀시트) 닫기
             bottomSheetBehavior2.state = BottomSheetBehavior.STATE_COLLAPSED
         }
     }
 
-    private fun initBottomSheet() {
+    private fun insertNestedFragment() { //목록보기 클릭 시 호출되는 함수
+        nearResFragment = NearResFragment.newInstance(Rlatitude, Rlongitude, radius){}
+
+        nearResFragment.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.dialog_fullscreen)
+        nearResFragment.isCancelable = true
+        nearResFragment.show(childFragmentManager, "nearRes")
+
+        //  binding.btList.visibility = INVISIBLE
+        //  binding.btReset.visibility = INVISIBLE
+    }
+
+    private fun initBottomSheet() {//바텀 시트들 초기화
 
         view?.findViewById<ConstraintLayout>(R.id.bottomfirst)?.let {
             bottomSheetBehavior1 = BottomSheetBehavior.from(it)
@@ -168,33 +170,42 @@ internal class MapsFragment : Fragment(), OnMapReadyCallback {
 
     }
 
-    private fun searchStart() {
+    private fun searchStart() { // 가장 가까운 용기낸 식당 찾기 했을 때 호출되는 함수. 반경 20km 검색
         val latlng: CameraPosition = cp
         viewModel.fetchRes(latlng.target.latitude, latlng.target.longitude, radius)
         latitude = latlng.target.latitude
         longitude = latlng.target.longitude
 
+        Rlatitude = latitude
+        Rlongitude = longitude
+
         index = 1
         bottomSheetBehavior1.state = BottomSheetBehavior.STATE_COLLAPSED
     }
 
-    private fun searchAgain() {
+    private fun searchAgain() { // 이 위치에서 검색 했을 때 호출되는 함수. 반경 2km 검색
         radius = 2000;
         val latlng: CameraPosition = cp
         viewModel.fetchRes(latlng.target.latitude, latlng.target.longitude, radius)
         latitude = latlng.target.latitude
         longitude = latlng.target.longitude
 
+        Rlatitude = latitude
+        Rlongitude = longitude
+
         index = 2
     }
 
-    private fun subscribeMyLocation() {
+    private fun subscribeMyLocation() { //실시간 위치 감지 함수
         locationUtils.getCurrentLocationLatLng().observe(viewLifecycleOwner, EventObserver {
             Timber.e(it.toString())
             viewModel.fetchRes(it.latitude, it.longitude, radius)
             latitude = it.latitude
             longitude = it.longitude
         })
+
+        Rlatitude = latitude
+        Rlongitude = longitude
     }
 
     private fun subscribeResResponse() {
@@ -213,21 +224,22 @@ internal class MapsFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun NRes() {
-        if (index == 0) {
+        binding.btList.visibility = INVISIBLE
+        if (index == 0) {//처음 검색했을 떄 용기낸 식당이 없을 때 -> 내 위치에 용기낸 식당이 없어요(첫번째 바텀시트) 띄우기
             bottomSheetBehavior1.state = BottomSheetBehavior.STATE_EXPANDED
-        } else if (index == 1) {
+        } else if (index == 1) {//반경 20km 용기낸 식당을 찾지 못했을 때 -> 가까운 용기낸 식당이 없어요(두번째 바텀시트) 띄우기
             bottomSheetBehavior2.state = BottomSheetBehavior.STATE_EXPANDED
-        } else if (index == 2) {
+        } else if (index == 2) {//이 위치에서 검색 했을 때 용기낸 식당을 찾지 못헀을 경우
             Toast.makeText(requireContext(), "이 위치에는 용기낸 식당이 아직 없어요", Toast.LENGTH_LONG).show()
             radius = 2000;
         }
-        binding.btList.visibility = INVISIBLE
     }
 
     //마커 문제
     private fun createMarker(id: Long, lat: Double, lon: Double) {
         val marker = Marker()
         markers.add(marker)
+
         marker.position = LatLng(lat, lon)
         marker.map = naverMap
         marker.icon = OverlayImage.fromResource(R.drawable.ic_map_marker_s)
@@ -325,7 +337,7 @@ internal class MapsFragment : Fragment(), OnMapReadyCallback {
             naverMap.locationTrackingMode = LocationTrackingMode.Follow
         return
         }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        super.onRequestPermissionsResult(requestCode, permissions,grantResults)
     }
 
     companion object {
