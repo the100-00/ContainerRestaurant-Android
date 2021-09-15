@@ -14,6 +14,7 @@ import container.restaurant.android.databinding.FragmentKakaoSigninBinding
 import container.restaurant.android.presentation.user.UserProfileActivity
 import container.restaurant.android.util.DataTransfer
 import container.restaurant.android.util.EventObserver
+import container.restaurant.android.util.OnCloseListener
 import container.restaurant.android.util.observe
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
@@ -26,6 +27,12 @@ internal class KakaoSignInDialogFragment : DialogFragment() {
 
     private lateinit var provider: String
     private lateinit var accessToken: String
+
+    private var onCloseListener: OnCloseListener? = null
+
+    fun setOnCloseListener(onCloseListener: OnCloseListener) {
+        this.onCloseListener = onCloseListener
+    }
 
     private val kakaoUserApi by lazy {
         UserApiClient.instance
@@ -114,6 +121,7 @@ internal class KakaoSignInDialogFragment : DialogFragment() {
             }
         }
         binding.imgClose.setOnClickListener {
+            onCloseListener?.onClose()
             dismissAllowingStateLoss()
         }
     }

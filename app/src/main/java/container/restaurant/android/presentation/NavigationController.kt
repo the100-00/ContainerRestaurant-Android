@@ -8,6 +8,7 @@ import container.restaurant.android.R
 import container.restaurant.android.presentation.feed.explore.FeedExploreFragment
 import container.restaurant.android.presentation.home.HomeFragment
 import container.restaurant.android.presentation.map.MapsFragment
+import timber.log.Timber
 
 class NavigationController(private val activity: AppCompatActivity) {
 
@@ -31,22 +32,30 @@ class NavigationController(private val activity: AppCompatActivity) {
     }
 
     private fun replaceFragment(fragment: Fragment) {
-        val transaction = fragmentManager
-            .beginTransaction()
-            .replace(containerId, fragment, "")
 
-        if (fragmentManager.isStateSaved) {
-            transaction.commitAllowingStateLoss()
-        } else {
-            transaction.commit()
+        val currentFragmentName =
+            fragmentManager.findFragmentById(containerId)?.javaClass?.simpleName
+        val fragmentName = fragment::class.java.simpleName
+        if (currentFragmentName != fragmentName) {
+            val transaction = fragmentManager
+                .beginTransaction()
+                .replace(containerId, fragment, "")
+
+            if (fragmentManager.isStateSaved) {
+                transaction.commitAllowingStateLoss()
+            } else {
+                transaction.commit()
+            }
         }
     }
 
-    private fun replaceFragmentNavGraph(@NavigationRes navGraph: Int){
+    private fun replaceFragmentNavGraph(@NavigationRes navGraph: Int) {
         val host = NavHostFragment.create(navGraph)
+
         fragmentManager.beginTransaction()
-            .replace(containerId, host)
+            .add(containerId, host)
             .setPrimaryNavigationFragment(host)
             .commit()
+
     }
 }

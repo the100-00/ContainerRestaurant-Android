@@ -12,8 +12,10 @@ import container.restaurant.android.databinding.FragmentMyHomeBinding
 import container.restaurant.android.presentation.auth.KakaoSignInDialogFragment
 import container.restaurant.android.presentation.base.BaseFragment
 import container.restaurant.android.util.EventObserver
+import container.restaurant.android.util.OnCloseListener
 import container.restaurant.android.util.observe
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 class MyHomeFragment : BaseFragment() {
 
@@ -42,7 +44,15 @@ class MyHomeFragment : BaseFragment() {
 
     private fun logInCheck() {
         if (!viewModel.isUserSignIn()) {
-            KakaoSignInDialogFragment().show(childFragmentManager, "KakaoSignInDialogFragment")
+            val kakaoSignInDialogFragment = KakaoSignInDialogFragment()
+            kakaoSignInDialogFragment.setOnCloseListener(object: OnCloseListener {
+                override fun onClose() {
+                    parentFragmentManager.beginTransaction()
+                        .remove(this@MyHomeFragment)
+                        .commit()
+                }
+            })
+            kakaoSignInDialogFragment.show(childFragmentManager, "KakaoSignInDialogFragment")
         } else {
             lifecycleScope.launchWhenCreated {
                 viewModel.getUserInfo()
