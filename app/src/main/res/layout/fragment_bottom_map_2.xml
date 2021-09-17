@@ -7,7 +7,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:background="@drawable/radius"
+        android:background="@drawable/radius24"
         app:behavior_draggable="false"
         app:behavior_peekHeight="0dp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
@@ -30,14 +30,14 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_0"
-            android:layout_width="332dp"
+            android:layout_width="340dp"
             android:layout_height="52dp"
             android:layout_marginStart="159dp"
             android:layout_marginTop="18dp"
             android:layout_marginEnd="158dp"
             android:background="@drawable/button_round_1"
-            android:text="내가 1등으로 용기내기"
             android:stateListAnimator="@null"
+            android:text="내가 1등으로 용기내기"
             android:textAppearance="@style/TextAppearance.App.B.Gray01"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.504"

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,6 +40,11 @@ internal class NearResFragment(val itemClick: (Int) -> Unit) : DialogFragment() 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_res_near, container, false)
         val view = binding.root
 
+
+        if(radius == 20000){
+            binding.textView7.setText("반경 20km 용기낸 식당")
+        }
+
         binding.imageButton.setOnClickListener{
             itemClick(0)
             dialog?.dismiss()
@@ -54,7 +60,7 @@ internal class NearResFragment(val itemClick: (Int) -> Unit) : DialogFragment() 
         binding.rvNearRes.run {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
-            viewModel.fetchRes(lattitude, longitude, 2000)
+            viewModel.fetchRes(lattitude, longitude, radius)
             viewModel.resResponse.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 it?._embedded?.let {
                    nearResAdapter.setItems(it.restaurantNearInfoDtoList)
