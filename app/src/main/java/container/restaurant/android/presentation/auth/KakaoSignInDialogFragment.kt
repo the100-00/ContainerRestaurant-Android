@@ -1,5 +1,6 @@
 package container.restaurant.android.presentation.auth
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -112,6 +113,12 @@ internal class KakaoSignInDialogFragment : DialogFragment() {
 
     }
 
+    //다이얼로그 바깥 쪽 터치 시 호출됨
+    override fun onCancel(dialog: DialogInterface) {
+        super.onCancel(dialog)
+        onCloseListener?.onClose()
+    }
+
     private fun setOnClickListeners() {
         binding.tvKakaoLogin.setOnClickListener {
             if (kakaoUserApi.isKakaoTalkLoginAvailable(requireContext())) {
@@ -120,6 +127,8 @@ internal class KakaoSignInDialogFragment : DialogFragment() {
                 kakaoUserApi.loginWithKakaoAccount(requireContext(), callback = callback)
             }
         }
+
+        //dismiss 는 cancel 과 다른 것 확인함!
         binding.imgClose.setOnClickListener {
             onCloseListener?.onClose()
             dismissAllowingStateLoss()

@@ -15,7 +15,6 @@ import container.restaurant.android.util.EventObserver
 import container.restaurant.android.util.OnCloseListener
 import container.restaurant.android.util.observe
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 class MyHomeFragment : BaseFragment() {
 
@@ -45,11 +44,9 @@ class MyHomeFragment : BaseFragment() {
     private fun logInCheck() {
         if (!viewModel.isUserSignIn()) {
             val kakaoSignInDialogFragment = KakaoSignInDialogFragment()
-            kakaoSignInDialogFragment.setOnCloseListener(object: OnCloseListener {
+            kakaoSignInDialogFragment.setOnCloseListener(object : OnCloseListener {
                 override fun onClose() {
-                    parentFragmentManager.beginTransaction()
-                        .remove(this@MyHomeFragment)
-                        .commit()
+                    parentFragment?.parentFragmentManager?.popBackStack()
                 }
             })
             kakaoSignInDialogFragment.show(childFragmentManager, "KakaoSignInDialogFragment")
@@ -114,8 +111,7 @@ class MyHomeFragment : BaseFragment() {
                     viewModel.userNickName.value!!
                 )
                 findNavController().navigate(directions)
-            }
-            else {
+            } else {
                 Toast.makeText(requireContext(), "유효하지 않은 아이디와 닉네임입니다.", Toast.LENGTH_LONG).show()
             }
         }

@@ -10,7 +10,7 @@ import container.restaurant.android.presentation.home.HomeFragment
 import container.restaurant.android.presentation.map.MapsFragment
 import timber.log.Timber
 
-class NavigationController(private val activity: AppCompatActivity) {
+class NavigationController(activity: AppCompatActivity) {
 
     private val containerId = R.id.container
     private val fragmentManager = activity.supportFragmentManager
@@ -36,10 +36,12 @@ class NavigationController(private val activity: AppCompatActivity) {
         val currentFragmentName =
             fragmentManager.findFragmentById(containerId)?.javaClass?.simpleName
         val fragmentName = fragment::class.java.simpleName
+        Timber.d("currentFragment : $currentFragmentName")
+        Timber.d("fragment : $fragmentName")
         if (currentFragmentName != fragmentName) {
             val transaction = fragmentManager
                 .beginTransaction()
-                .replace(containerId, fragment, "")
+                .replace(containerId, fragment, fragment::class.java.simpleName)
 
             if (fragmentManager.isStateSaved) {
                 transaction.commitAllowingStateLoss()
@@ -50,12 +52,17 @@ class NavigationController(private val activity: AppCompatActivity) {
     }
 
     private fun replaceFragmentNavGraph(@NavigationRes navGraph: Int) {
-        val host = NavHostFragment.create(navGraph)
-
-        fragmentManager.beginTransaction()
-            .add(containerId, host)
-            .setPrimaryNavigationFragment(host)
-            .commit()
-
+        val currentFragmentName =
+            fragmentManager.findFragmentById(containerId)?.javaClass?.simpleName
+        val fragmentName = NavHostFragment::class.java.simpleName
+        // 마이페이지 화면 상태에서 또 마이페이지 탭을 클릭하면 새로고침 안하도록 함(fragmentManager 백스택이용)
+        if(currentFragmentName != fragmentName) {
+            val host = NavHostFragment.create(navGraph)
+            fragmentManager.beginTransaction()
+                .add(containerId, host, NavHostFragment::class.java.simpleName)
+                .addToBackStack(null)
+                .setPrimaryNavigationFragment(host)
+                .commit()
+        }
     }
 }

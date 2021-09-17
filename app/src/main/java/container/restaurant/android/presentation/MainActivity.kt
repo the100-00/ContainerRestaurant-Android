@@ -1,18 +1,21 @@
 package container.restaurant.android.presentation
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.annotation.IdRes
 import androidx.annotation.MenuRes
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.NavHostFragment
 import container.restaurant.android.R
 import container.restaurant.android.databinding.ActivityMainBinding
 import container.restaurant.android.presentation.base.BaseActivity
+import container.restaurant.android.presentation.feed.explore.FeedExploreFragment
 import container.restaurant.android.presentation.feed.write.FeedWriteActivity
+import container.restaurant.android.presentation.home.HomeFragment
+import container.restaurant.android.presentation.map.MapsFragment
 import container.restaurant.android.util.observe
 import org.koin.android.ext.android.inject
-import org.koin.core.parameter.parametersOf
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 internal class MainActivity : BaseActivity() {
 
@@ -28,6 +31,7 @@ internal class MainActivity : BaseActivity() {
             }
     }
 
+    @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         with(viewModel) {
@@ -36,6 +40,23 @@ internal class MainActivity : BaseActivity() {
             }
         }
 
+        //백 스택을 이용하여 마이 페이지 로그인 취소 시 이전 탭으로 돌아가도록 설정
+        supportFragmentManager.addOnBackStackChangedListener {
+            //마이 페이지 상태가 아닐 때만 탭 변경하도록 함
+            if(supportFragmentManager.findFragmentByTag(NavHostFragment::class.java.simpleName)==null){
+                when {
+                    supportFragmentManager.findFragmentByTag(HomeFragment::class.java.simpleName)!=null -> {
+                        binding.bottomNav.selectedItemId = BottomNavItem.HOME.menuId
+                    }
+                    supportFragmentManager.findFragmentByTag(FeedExploreFragment::class.java.simpleName)!=null -> {
+                        binding.bottomNav.selectedItemId = BottomNavItem.FEED.menuId
+                    }
+                    supportFragmentManager.findFragmentByTag(MapsFragment::class.java.simpleName)!=null -> {
+                        binding.bottomNav.selectedItemId = BottomNavItem.MAP.menuId
+                    }
+                }
+            }
+        }
         setupBottomNav(savedInstanceState)
     }
 
