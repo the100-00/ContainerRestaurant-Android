@@ -36,8 +36,14 @@ class NavigationController(activity: AppCompatActivity) {
         val currentFragmentName =
             fragmentManager.findFragmentById(containerId)?.javaClass?.simpleName
         val fragmentName = fragment::class.java.simpleName
-        Timber.d("currentFragment : $currentFragmentName")
-        Timber.d("fragment : $fragmentName")
+
+        //마이페이지가 보여지고 있으면 backStack에서 마이페이지 제거
+        val navHostFragmentName = NavHostFragment::class.java.simpleName
+        if(currentFragmentName==navHostFragmentName){
+            fragmentManager.popBackStack()
+        }
+
+        //홈 탭에서 홈 탭을 또 누르면 새로고침 안되도록 설정(피드, 지도도 마찬가지)
         if (currentFragmentName != fragmentName) {
             val transaction = fragmentManager
                 .beginTransaction()
@@ -54,9 +60,9 @@ class NavigationController(activity: AppCompatActivity) {
     private fun replaceFragmentNavGraph(@NavigationRes navGraph: Int) {
         val currentFragmentName =
             fragmentManager.findFragmentById(containerId)?.javaClass?.simpleName
-        val fragmentName = NavHostFragment::class.java.simpleName
+        val navHostFragmentName = NavHostFragment::class.java.simpleName
         // 마이페이지 화면 상태에서 또 마이페이지 탭을 클릭하면 새로고침 안하도록 함(fragmentManager 백스택이용)
-        if(currentFragmentName != fragmentName) {
+        if (currentFragmentName != navHostFragmentName) {
             val host = NavHostFragment.create(navGraph)
             fragmentManager.beginTransaction()
                 .add(containerId, host, NavHostFragment::class.java.simpleName)
