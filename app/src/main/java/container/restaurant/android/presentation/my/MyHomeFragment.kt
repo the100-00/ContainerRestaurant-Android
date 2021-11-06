@@ -1,10 +1,13 @@
 package container.restaurant.android.presentation.my
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import container.restaurant.android.R
@@ -44,6 +47,47 @@ class MyHomeFragment : BaseFragment() {
     }
 
     private fun logInCheck() {
+        // 가입 완료후 업데이트 할 정보
+        fun updateData() {
+            with(viewModel) {
+                userNickName.value = userNickName.value
+                userFeedCount.value = userFeedCount.value
+                userProfileUrl.value = userProfileUrl.value
+                userLevelTitle.value = userLevelTitle.value
+                userScrapCount.value = userScrapCount.value
+                userId.value = userId.value
+                userEmail.value = userEmail.value
+                userBookmarkedCount.value = userBookmarkedCount.value
+            }
+        }
+        val signUpResultLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()){
+            updateData()
+        }
+
+        // 프로젝트에 저장된 토큰 없을 때
+        if (!authViewModel.isUserSignIn()) {
+            val kakaoSignInDialogFragment = KakaoSignInDialogFragment()
+            kakaoSignInDialogFragment.setOnCloseListener(object : OnCloseListener {
+                override fun onClose() {
+                    parentFragment?.parentFragmentManager?.popBackStack()
+                }
+            })
+            observeKakaoFragmentData(
+                requireActivity(),
+                kakaoSignInDialogFragment,
+                signUpResultLauncher
+            )
+            kakaoSignInDialogFragment.show(childFragmentManager, "KakaoSignInDialogFragment")
+        }
+
+        // 프로젝트에 저장된 토큰 있을 때
+        else {
+            lifecycleScope.launchWhenCreated {
+                ifAlreadySignIn(authViewModel, requireActivity())
+            }
+        }
+
         // 로그인 성공 했을 때 동작
         val onSignInSuccess: (UserInfoResponse) -> Unit = {
             Timber.d("signInSuccess At MyHomeFragment")
@@ -58,24 +102,7 @@ class MyHomeFragment : BaseFragment() {
                 userBookmarkedCount.value = it.bookmarkedCount
             }
         }
-
-        // 프로젝트에 저장된 토큰 없을 때
-        if(!authViewModel.isUserSignIn()) {
-            val kakaoSignInDialogFragment = KakaoSignInDialogFragment()
-            kakaoSignInDialogFragment.setOnCloseListener(object : OnCloseListener {
-                override fun onClose() {
-                    parentFragment?.parentFragmentManager?.popBackStack()
-                }
-            })
-            authViewModel.observeKakaoFragmentData(requireActivity(), kakaoSignInDialogFragment, onSignInSuccess = onSignInSuccess)
-            kakaoSignInDialogFragment.show(childFragmentManager, "KakaoSignInDialogFragment")
-        }
-        // 프로젝트에 저장된 토큰 있을 때
-        else {
-            lifecycleScope.launchWhenCreated {
-                authViewModel.ifAlreadySignIn(requireActivity(), onSignInSuccess)
-            }
-        }
+        observeAuthViewModelUserInfo(viewLifecycleOwner, authViewModel, onSignInSuccess)
     }
 
     private fun observeData() {

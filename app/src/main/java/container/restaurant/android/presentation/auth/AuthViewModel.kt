@@ -1,10 +1,8 @@
 package container.restaurant.android.presentation.auth
 
-import android.content.Intent
-import android.widget.Toast
-import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.*
-import com.kakao.sdk.user.UserApiClient
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.StatusCode
 import container.restaurant.android.R
@@ -14,12 +12,14 @@ import container.restaurant.android.data.request.UpdateProfileRequest
 import container.restaurant.android.data.response.NicknameDuplicationCheckResponse
 import container.restaurant.android.data.response.ProfileResponse
 import container.restaurant.android.data.response.UserInfoResponse
-import container.restaurant.android.util.*
+import container.restaurant.android.util.Event
+import container.restaurant.android.util.SingleLiveEvent
+import container.restaurant.android.util.handleApiResponse
 import kotlinx.coroutines.flow.collect
 import timber.log.Timber
 import java.util.regex.Pattern
 
-internal class AuthViewModel(
+class AuthViewModel(
     private val prefStorage: PrefStorage,
     private val authRepository: AuthRepository
 ) : ViewModel() {
@@ -34,6 +34,7 @@ internal class AuthViewModel(
         }
     }
 
+    val userInfoResponse = MutableLiveData<UserInfoResponse>()
     val infoMessage = MutableLiveData<String>()
 
     private val _signInWithAccessTokenResult = MutableLiveData<ProfileResponse>()
@@ -162,7 +163,7 @@ internal class AuthViewModel(
         ).collect { response ->
             when (response) {
                 is ApiResponse.Success -> {
-                    if(response.data?.token != null && response.data?.id != null) {
+                    if (response.data?.token != null && response.data?.id != null) {
                         storeUserTokenAndId("Bearer ${response.data?.token}", response.data?.id!!)
                     }
                     _isGenerateAccessTokenSuccess.call()
@@ -184,25 +185,29 @@ internal class AuthViewModel(
         }
     }
 
-    suspend fun signInWithAccessToken(onNicknameNull: () -> Unit = {}, onSignInSuccess: (UserInfoResponse) -> Unit={}, onInvalidToken:()->Unit = {}) {
+    suspend fun signInWithAccessToken(
+        onNicknameNull: () -> Unit = {},
+        onSignInSuccess: (UserInfoResponse) -> Unit = {},
+        onInvalidToken: () -> Unit = {}
+    ) {
         Timber.d("prefStorage.tokenBearer ${prefStorage.tokenBearer}")
         authRepository.signInWithAccessToken(prefStorage.tokenBearer)
             .collect { response ->
                 handleApiResponse(response = response,
                     onSuccess = {
-                        if(it.data?.nickname == null) {
+                        if (it.data?.nickname == null) {
                             onNicknameNull()
                             _isNicknameNull.call()
-                        }
-                        else {
+                        } else {
                             it.data?.let { userInfoResponse ->
                                 onSignInSuccess(userInfoResponse)
+                                this.userInfoResponse.value = it.data
                             }
                             _isSignInWithAccessTokenSuccess.call()
                         }
                     },
                     onError = {
-                        if(it.statusCode== StatusCode.Unauthorized) {
+                        if (it.statusCode == StatusCode.Unauthorized) {
                             onInvalidToken()
                         }
                     }
@@ -210,78 +215,12 @@ internal class AuthViewModel(
             }
     }
 
-    suspend fun ifAlreadySignIn(fragmentActivity: FragmentActivity, onSignInSuccess: (UserInfoResponse) -> Unit) {
-        signInWithAccessToken(
-            onInvalidToken = {
-                kakaoLogin(fragmentActivity) {token, err ->
-                    if (err != null) {
-                        Timber.e(err, "카카오 인증 실패")
-                        Toast.makeText(fragmentActivity, "카카오 인증 실패", Toast.LENGTH_LONG).show()
-                    } else if (token != null) {
-                        UserApiClient.instance.me { userKakao, err2 ->
-                            if (err2 != null) {
-                                Timber.e(err2, "카카오 사용자 정보 요청 실패")
-                                Toast.makeText(fragmentActivity, "카카오 사용자 정보 요청 실패", Toast.LENGTH_LONG).show()
-                            } else if (userKakao != null) {
-                                Timber.d("카카오 인증 성공")
-                                val provider = Provider.KAKAO.providerStr
-                                val kakaoAccessToken = token.accessToken
-                                fragmentActivity.lifecycleScope.launchWhenCreated {
-                                    generateAccessToken(
-                                        provider,
-                                        kakaoAccessToken
-                                    )
-                                    observeNewTokenGeneratedData(fragmentActivity, onSignInSuccess)
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            onSignInSuccess = onSignInSuccess
-        )
-    }
-
-    private fun observeNewTokenGeneratedData(fragmentActivity: FragmentActivity, onSignInSuccess: (UserInfoResponse) -> Unit) {
-        isGenerateAccessTokenSuccess.observe(fragmentActivity) {
-            fragmentActivity.lifecycleScope.launchWhenCreated {
-                signInWithAccessToken(onSignInSuccess = onSignInSuccess)
-            }
-        }
-    }
-
-    // 프로젝트에 저장된 토큰이 없을 때 로직
-    fun observeKakaoFragmentData(fragmentActivity: FragmentActivity, kakaoSignInDialogFragment: KakaoSignInDialogFragment, onSignInSuccess: (UserInfoResponse) -> Unit) {
-        fragmentActivity.lifecycleScope.launchWhenCreated {
-            kakaoSignInDialogFragment.whenCreated {
-                with(kakaoSignInDialogFragment.viewModel) {
-                    isGenerateAccessTokenSuccess.observe(fragmentActivity) {
-                        fragmentActivity.lifecycleScope.launchWhenCreated {
-                            signInWithAccessToken(
-                                onNicknameNull = {
-                                    fragmentActivity.startActivity(
-                                        Intent(
-                                            fragmentActivity,
-                                            SignUpActivity::class.java
-                                        )
-                                    )
-                                    kakaoSignInDialogFragment.dismiss()
-                                },
-                                onSignInSuccess = {
-                                    onSignInSuccess(it)
-                                    kakaoSignInDialogFragment.dismiss()
-                                }
-                            )
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-
     suspend fun updateProfile(updateProfileRequest: UpdateProfileRequest? = null) {
-        authRepository.updateProfile(prefStorage.tokenBearer, prefStorage.userId, updateProfileRequest)
+        authRepository.updateProfile(
+            prefStorage.tokenBearer,
+            prefStorage.userId,
+            updateProfileRequest
+        )
             .collect { response ->
                 handleApiResponse(
                     response = response,

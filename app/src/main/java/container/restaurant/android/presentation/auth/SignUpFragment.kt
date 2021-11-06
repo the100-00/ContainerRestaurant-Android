@@ -83,6 +83,7 @@ internal class SignUpFragment : Fragment() {
             }
         })
 
+        // 회원 가입이 완료되면 입력된 닉네임을 등록하고 액티비티 종료
         viewModel.isGenerateAccessTokenSuccess.observe(viewLifecycleOwner) {
             lifecycleScope.launchWhenCreated {
                 viewModel.updateProfile(UpdateProfileRequest(nicknameEditing.value))

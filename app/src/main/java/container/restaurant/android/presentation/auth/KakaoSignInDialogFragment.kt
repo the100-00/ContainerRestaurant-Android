@@ -17,7 +17,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 
-internal class KakaoSignInDialogFragment : DialogFragment() {
+class KakaoSignInDialogFragment : DialogFragment() {
 
     private lateinit var binding: FragmentKakaoSigninBinding
     val viewModel: AuthViewModel by viewModel()
