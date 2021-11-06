@@ -47,6 +47,21 @@ class MyHomeFragment : BaseFragment() {
     }
 
     private fun logInCheck() {
+        // 로그인 성공 했을 때 동작
+        val onSignInSuccess: (UserInfoResponse) -> Unit = {
+            Timber.d("signInSuccess At MyHomeFragment")
+            with(viewModel) {
+                userNickName.value = it.nickname
+                userFeedCount.value = it.feedCount
+                userProfileUrl.value = it.profile
+                userLevelTitle.value = it.levelTitle
+                userScrapCount.value = it.scrapCount
+                userId.value = it.id
+                userEmail.value = it.email
+                userBookmarkedCount.value = it.bookmarkedCount
+            }
+        }
+
         // 가입 완료후 업데이트 할 정보
         fun updateData() {
             with(viewModel) {
@@ -79,6 +94,8 @@ class MyHomeFragment : BaseFragment() {
                 signUpResultLauncher
             )
             kakaoSignInDialogFragment.show(childFragmentManager, "KakaoSignInDialogFragment")
+
+            observeAuthViewModelUserInfo(viewLifecycleOwner, kakaoSignInDialogFragment.viewModel, onSignInSuccess)
         }
 
         // 프로젝트에 저장된 토큰 있을 때
@@ -88,20 +105,6 @@ class MyHomeFragment : BaseFragment() {
             }
         }
 
-        // 로그인 성공 했을 때 동작
-        val onSignInSuccess: (UserInfoResponse) -> Unit = {
-            Timber.d("signInSuccess At MyHomeFragment")
-            with(viewModel) {
-                userNickName.value = it.nickname
-                userFeedCount.value = it.feedCount
-                userProfileUrl.value = it.profile
-                userLevelTitle.value = it.levelTitle
-                userScrapCount.value = it.scrapCount
-                userId.value = it.id
-                userEmail.value = it.email
-                userBookmarkedCount.value = it.bookmarkedCount
-            }
-        }
         observeAuthViewModelUserInfo(viewLifecycleOwner, authViewModel, onSignInSuccess)
     }
 

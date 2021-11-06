@@ -97,7 +97,7 @@ class KakaoSignInDialogFragment : DialogFragment() {
         onCloseListener?.onClose()
     }
 
-    fun kakaoLogin() {
+    private fun kakaoLogin() {
         if (kakaoUserApi.isKakaoTalkLoginAvailable(requireContext())) {
             kakaoUserApi.loginWithKakaoTalk(requireContext(), callback = kakaoCallback)
         } else {
