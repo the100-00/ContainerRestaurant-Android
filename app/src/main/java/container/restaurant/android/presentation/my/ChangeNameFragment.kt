@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import container.restaurant.android.R
 import container.restaurant.android.data.request.UpdateProfileRequest
@@ -80,6 +81,7 @@ class ChangeNameFragment : BaseFragment() {
         viewModel.isCompleteButtonClicked.observe(viewLifecycleOwner, EventObserver {
             lifecycleScope.launchWhenCreated {
                 viewModel.updateProfile(UpdateProfileRequest(nicknameEditing.value))
+                findNavController().popBackStack()
             }
         })
     }
