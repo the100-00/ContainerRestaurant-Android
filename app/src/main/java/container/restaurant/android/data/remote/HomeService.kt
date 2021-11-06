@@ -3,10 +3,7 @@ package container.restaurant.android.data.remote
 import com.skydoves.sandwich.ApiResponse
 import container.restaurant.android.data.request.SignInWithAccessTokenRequest
 import container.restaurant.android.data.response.*
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface HomeService {
     @POST("/api/user/login")
@@ -15,7 +12,7 @@ interface HomeService {
     ): ApiResponse<ProfileResponse>
 
     @GET("/api/home")
-    suspend fun homeInfo() : ApiResponse<HomeInfoResponse>
+    suspend fun homeInfo(@Header("Authorization") tokenBearer: String) : ApiResponse<HomeInfoResponse>
 
     @GET("/api/feed/recommend")
     suspend fun recommendedFeedList() : ApiResponse<FeedListResponse>

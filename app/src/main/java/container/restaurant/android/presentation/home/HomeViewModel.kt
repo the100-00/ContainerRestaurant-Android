@@ -82,7 +82,7 @@ internal class HomeViewModel(
     }
 
     suspend fun getHomeInfo() {
-        homeRepository.getHomeInfo()
+        homeRepository.getHomeInfo(prefStorage.tokenBearer)
             .collect { response ->
                 handleApiResponse(
                     response = response,
