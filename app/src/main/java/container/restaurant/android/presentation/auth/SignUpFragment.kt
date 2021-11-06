@@ -67,11 +67,6 @@ internal class SignUpFragment : Fragment() {
             }
         }
 
-        observe(viewModel.signedUpId) { id ->
-            viewModel.storeUserId(id)
-            startActivity(UserProfileActivity.getIntent(requireContext()))
-            activity?.finish()
-        }
 
         viewModel.errorMessageId.observe(viewLifecycleOwner, EventObserver {
             Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
@@ -82,7 +77,7 @@ internal class SignUpFragment : Fragment() {
         viewModel.isCompleteButtonClicked.observe(viewLifecycleOwner, EventObserver {
             lifecycleScope.launchWhenCreated {
                 if(provider!=null && accessToken!=null){
-                    viewModel.signUpWithAccessToken(provider!!, accessToken!!)
+                    viewModel.generateAccessToken(provider!!, accessToken!!)
                 }
             }
         })

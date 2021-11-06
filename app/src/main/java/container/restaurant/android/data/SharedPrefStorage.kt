@@ -9,7 +9,7 @@ import kotlin.reflect.KProperty
 
 interface PrefStorage {
     var isUserSignIn: Boolean
-    var userId: Int
+    var tokenBearer: String
     var isOnBoardingFirst: Boolean
 }
 
@@ -22,7 +22,7 @@ internal class SharedPrefStorage(
     }
 
     override var isUserSignIn by BooleanPreference(prefs, IS_USER_LOGIN)
-    override var userId by IntPreference(prefs, USER_ID)
+    override var tokenBearer by StringPreference(prefs, USER_ID)
     override var isOnBoardingFirst by BooleanPreference(prefs, IS_ON_BOARDING_FIRST, true)
 
     companion object {
@@ -60,5 +60,19 @@ internal class IntPreference(
 
     override fun setValue(thisRef: Any, property: KProperty<*>, value: Int) {
         preferences.value.edit { putInt(name, value) }
+    }
+}
+
+internal class StringPreference(
+    private val preferences: Lazy<SharedPreferences>,
+    private val name: String,
+    private val defaultValue: String = ""
+) : ReadWriteProperty<Any, String> {
+    override fun getValue(thisRef: Any, property: KProperty<*>): String {
+        return preferences.value.getString(name, defaultValue)!!
+    }
+
+    override fun setValue(thisRef: Any, property: KProperty<*>, value: String) {
+        return preferences.value.edit { putString(name, value) }
     }
 }

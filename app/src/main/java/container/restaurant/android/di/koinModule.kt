@@ -28,6 +28,6 @@ val presentationModule = module {
     viewModel { MyViewModel(get(), get()) }
     viewModel { MapsViewModel(get()) }
     viewModel { FeedRestaurantViewModel(get()) }
-    viewModel { AuthViewModel(get()) }
+    viewModel { AuthViewModel(get(), get()) }
     viewModel { FeedDetailViewModel(get()) }
 }

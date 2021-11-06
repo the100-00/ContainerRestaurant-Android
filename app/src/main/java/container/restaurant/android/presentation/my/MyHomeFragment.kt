@@ -1,26 +1,32 @@
 package container.restaurant.android.presentation.my
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.whenCreated
 import androidx.navigation.fragment.findNavController
+import com.kakao.sdk.user.UserApiClient
 import container.restaurant.android.R
+import container.restaurant.android.data.response.UserInfoResponse
 import container.restaurant.android.databinding.FragmentMyHomeBinding
+import container.restaurant.android.presentation.auth.AuthViewModel
 import container.restaurant.android.presentation.auth.KakaoSignInDialogFragment
+import container.restaurant.android.presentation.auth.SignUpActivity
 import container.restaurant.android.presentation.base.BaseFragment
-import container.restaurant.android.util.EventObserver
-import container.restaurant.android.util.OnCloseListener
-import container.restaurant.android.util.observe
+import container.restaurant.android.util.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 class MyHomeFragment : BaseFragment() {
 
     private lateinit var binding: FragmentMyHomeBinding
 
     private val viewModel: MyViewModel by viewModel()
+    private val authViewModel: AuthViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,17 +48,66 @@ class MyHomeFragment : BaseFragment() {
     }
 
     private fun logInCheck() {
-        if (!viewModel.isUserSignIn()) {
+        val onSignInSuccess: (UserInfoResponse) -> Unit = {
+            Timber.d("signInSuccess At MyHomeFragment")
+            with(viewModel) {
+                userNickName.value = it.nickname
+                userFeedCount.value = it.feedCount
+                userProfileUrl.value = it.profile
+                userLevelTitle.value = it.levelTitle
+                userScrapCount.value = it.scrapCount
+                userId.value = it.id
+                userEmail.value = it.email
+                userBookmarkedCount.value = it.bookmarkedCount
+            }
+        }
+
+        // 프로젝트에 저장된 토큰 없을 때
+        if(!authViewModel.isUserSignIn()) {
             val kakaoSignInDialogFragment = KakaoSignInDialogFragment()
             kakaoSignInDialogFragment.setOnCloseListener(object : OnCloseListener {
                 override fun onClose() {
                     parentFragment?.parentFragmentManager?.popBackStack()
                 }
             })
+            authViewModel.observeKakaoFragmentData(requireActivity(), kakaoSignInDialogFragment, onSignInSuccess = onSignInSuccess)
             kakaoSignInDialogFragment.show(childFragmentManager, "KakaoSignInDialogFragment")
-        } else {
+        }
+        // 프로젝트에 저장된 토큰 있을 때
+        else {
             lifecycleScope.launchWhenCreated {
-                viewModel.getUserInfo()
+                authViewModel.ifAlreadySignIn(requireActivity(), onSignInSuccess)
+            }
+        }
+    }
+
+    // 프로젝트에 저장된 토큰이 없을 때 로직
+    private fun observeKakaoFragmentData(kakaoSignInDialogFragment: KakaoSignInDialogFragment) {
+        lifecycleScope.launchWhenCreated {
+            kakaoSignInDialogFragment.whenCreated {
+                with(kakaoSignInDialogFragment.viewModel) {
+                    isGenerateAccessTokenSuccess.observe(viewLifecycleOwner) {
+                        lifecycleScope.launchWhenCreated {
+                            signInWithAccessToken(
+                                onNicknameNull = {
+                                    startActivity(
+                                        Intent(
+                                            requireContext(),
+                                            SignUpActivity::class.java
+                                        )
+                                    )
+                                    kakaoSignInDialogFragment.dismiss()
+                                },
+                                onSignInSuccess = {
+                                    lifecycleScope.launchWhenCreated {
+                                        viewModel.getMyInfo()
+                                    }
+                                    kakaoSignInDialogFragment.dismiss()
+                                }
+                            )
+                        }
+                    }
+                }
             }
         }
     }
@@ -140,6 +195,4 @@ class MyHomeFragment : BaseFragment() {
         val directions = MyHomeFragmentDirections.actionMyHomeFragmentToMySettingFragment()
         findNavController().navigate(directions)
     }
-
-
 }

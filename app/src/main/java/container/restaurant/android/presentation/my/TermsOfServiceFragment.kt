@@ -35,17 +35,15 @@ class TermsOfServiceFragment : Fragment() {
 
     private fun observeData() {
         with(viewModel) {
-            onTermsOfServiceLoad.observe(viewLifecycleOwner) {
-                if(it) {
-                    binding.layoutLoading.visibility = View.GONE
-                }
-            }
+
         }
     }
 
     private fun getTermsOfService() {
         lifecycleScope.launchWhenCreated {
-            viewModel.getTermsOfService()
+            viewModel.getTermsOfService {
+                binding.layoutLoading.visibility = View.GONE
+            }
         }
     }
 }

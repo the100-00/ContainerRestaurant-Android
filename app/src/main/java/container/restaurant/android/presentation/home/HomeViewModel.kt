@@ -142,58 +142,58 @@ internal class HomeViewModel(
     }
 
     suspend fun getUserFeedList() {
-        homeRepository.getUserFeedList(prefStorage.userId)
-            .collect { response ->
-                handleApiResponse(
-                    response = response,
-                    onSuccess = {
-                        _userFeedList.value = it.data?.embedded?.feedPreviewDtoList
-                        Timber.d("list value : ${userFeedList.value}")
-                    },
-                    onError = {
-                        Timber.d("it.errorBody : ${it.errorBody}")
-                        Timber.d("it.headers : ${it.headers}")
-                        Timber.d("it.raw : ${it.raw}")
-                        Timber.d("it.response : ${it.response}")
-                        Timber.d("it.statusCode : ${it.statusCode}")
-                    },
-                    onException = {
-                        Timber.d("it.message : ${it.message}")
-                        Timber.d("it.exception : ${it.exception}")
-                    }
-                )
-            }
+//        homeRepository.getUserFeedList(prefStorage.token)
+//            .collect { response ->
+//                handleApiResponse(
+//                    response = response,
+//                    onSuccess = {
+//                        _userFeedList.value = it.data?.embedded?.feedPreviewDtoList
+//                        Timber.d("list value : ${userFeedList.value}")
+//                    },
+//                    onError = {
+//                        Timber.d("it.errorBody : ${it.errorBody}")
+//                        Timber.d("it.headers : ${it.headers}")
+//                        Timber.d("it.raw : ${it.raw}")
+//                        Timber.d("it.response : ${it.response}")
+//                        Timber.d("it.statusCode : ${it.statusCode}")
+//                    },
+//                    onException = {
+//                        Timber.d("it.message : ${it.message}")
+//                        Timber.d("it.exception : ${it.exception}")
+//                    }
+//                )
+//            }
     }
 
     suspend fun getUserInfo() {
-        homeRepository.getUserInfo(prefStorage.userId)
-            .collect { response ->
-                handleApiResponse(
-                    response = response,
-                    onSuccess = {
-                        _userNickName.value = it.data?.nickname
-                        _userFeedCount.value = it.data?.feedCount
-                        _userProfileUrl.value = it.data?.profile
-                        _userLevelTitle.value = it.data?.levelTitle
-                        Timber.d("userInfo value ${it.data}")
-                        Timber.d("_userNickName value ${_userNickName.value}")
-                        Timber.d("_userLevelTitle value ${_userLevelTitle.value}")
-                        Timber.d("_userFeedCount value ${_userFeedCount.value}")
-                        Timber.d("_userProfileUrl value ${_userProfileUrl.value}")
-                    },
-                    onError = {
-                        Timber.d("it.errorBody : ${it.errorBody}")
-                        Timber.d("it.headers : ${it.headers}")
-                        Timber.d("it.raw : ${it.raw}")
-                        Timber.d("it.response : ${it.response}")
-                        Timber.d("it.statusCode : ${it.statusCode}")
-                    },
-                    onException = {
-                        Timber.d("it.message : ${it.message}")
-                        Timber.d("it.exception : ${it.exception}")
-                    }
-                )
-            }
+//        homeRepository.getUserInfo(prefStorage.token)
+//            .collect { response ->
+//                handleApiResponse(
+//                    response = response,
+//                    onSuccess = {
+//                        _userNickName.value = it.data?.nickname
+//                        _userFeedCount.value = it.data?.feedCount
+//                        _userProfileUrl.value = it.data?.profile
+//                        _userLevelTitle.value = it.data?.levelTitle
+//                        Timber.d("userInfo value ${it.data}")
+//                        Timber.d("_userNickName value ${_userNickName.value}")
+//                        Timber.d("_userLevelTitle value ${_userLevelTitle.value}")
+//                        Timber.d("_userFeedCount value ${_userFeedCount.value}")
+//                        Timber.d("_userProfileUrl value ${_userProfileUrl.value}")
+//                    },
+//                    onError = {
+//                        Timber.d("it.errorBody : ${it.errorBody}")
+//                        Timber.d("it.headers : ${it.headers}")
+//                        Timber.d("it.raw : ${it.raw}")
+//                        Timber.d("it.response : ${it.response}")
+//                        Timber.d("it.statusCode : ${it.statusCode}")
+//                    },
+//                    onException = {
+//                        Timber.d("it.message : ${it.message}")
+//                        Timber.d("it.exception : ${it.exception}")
+//                    }
+//                )
+//            }
     }
 
 }

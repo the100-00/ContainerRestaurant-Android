@@ -41,6 +41,11 @@ interface MyService {
         @Path("userId") userId: Int
     ) : ApiResponse<UserInfoResponse>
 
+    @GET("/api/user")
+    suspend fun myInfo(
+        @Header("Authorization") tokenBearer: String
+    ): ApiResponse<UserInfoResponse>
+
     @GET("/api/contract")
     suspend fun contract() : ApiResponse<ContractResponse>
 

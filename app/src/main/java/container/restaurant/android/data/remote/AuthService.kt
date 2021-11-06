@@ -7,13 +7,14 @@ import container.restaurant.android.data.request.UpdateProfileRequest
 import container.restaurant.android.data.response.NicknameDuplicationCheckResponse
 import container.restaurant.android.data.response.ProfileResponse
 import container.restaurant.android.data.response.SignUpWithAccessTokenResponse
+import container.restaurant.android.data.response.UserInfoResponse
 import retrofit2.http.*
 
 interface AuthService {
-    @POST("/api/user/login")
+    @GET("/api/user")
     suspend fun signInWithAccessToken(
-        @Body signInWithAccessTokenRequest: SignInWithAccessTokenRequest
-    ): ApiResponse<ProfileResponse>
+        @Header("Authorization") tokenBearer: String
+    ): ApiResponse<UserInfoResponse>
 
     @GET("/api/user/nickname/exists")
     suspend fun nicknameDuplicationCheck(
@@ -21,7 +22,7 @@ interface AuthService {
     ): ApiResponse<NicknameDuplicationCheckResponse>
 
     @POST("/api/user")
-    suspend fun signUpWithAccessToken(
+    suspend fun generateAccessToken(
         @Body signUpWithAccessTokenRequest: SignUpWithAccessTokenRequest
     ): ApiResponse<SignUpWithAccessTokenResponse>
 

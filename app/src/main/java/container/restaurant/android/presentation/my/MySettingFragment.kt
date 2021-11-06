@@ -8,8 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import container.restaurant.android.databinding.FragmentMySettingBinding
 import container.restaurant.android.dialog.SimpleConfirmDialog
-import container.restaurant.android.presentation.auth.KakaoSignInDialogFragment
-import container.restaurant.android.presentation.user.UserProfileActivity
 import container.restaurant.android.util.EventObserver
 import container.restaurant.android.util.observe
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -95,7 +93,6 @@ class MySettingFragment : Fragment() {
                     showSignOutConfirmDialog()
                 }
             })
-
             isWithdrawalButtonClicked.observe(viewLifecycleOwner, EventObserver {
                 if(it) {
                     showWithdrawalConfirmDialog()

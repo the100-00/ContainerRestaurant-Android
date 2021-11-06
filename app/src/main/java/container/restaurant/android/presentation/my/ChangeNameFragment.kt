@@ -17,7 +17,6 @@ import container.restaurant.android.dialog.AlertDialog
 import container.restaurant.android.presentation.auth.AuthViewModel
 import container.restaurant.android.presentation.base.BaseFragment
 import container.restaurant.android.presentation.user.UserProfileActivity
-import container.restaurant.android.util.DataTransfer
 import container.restaurant.android.util.EventObserver
 import container.restaurant.android.util.observe
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -72,11 +71,6 @@ class ChangeNameFragment : BaseFragment() {
             }
         }
 
-        observe(viewModel.signedUpId) { id ->
-            viewModel.storeUserId(id)
-            startActivity(UserProfileActivity.getIntent(requireContext()))
-            activity?.finish()
-        }
 
         viewModel.errorMessageId.observe(viewLifecycleOwner, EventObserver {
             Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()

@@ -10,8 +10,8 @@ import kotlinx.coroutines.flow.flowOn
 class MyRepository(private val myService: MyService) {
 
     @WorkerThread
-    suspend fun getUserInfo(userId: Int) = flow {
-        val response = myService.userInfo(userId)
+    suspend fun getUserInfo(tokenBearer: String) = flow {
+        val response = myService.myInfo(tokenBearer)
         response
             .suspendOnSuccess {
                 emit(this)

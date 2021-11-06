@@ -4,12 +4,12 @@ import androidx.annotation.WorkerThread
 import com.skydoves.sandwich.*
 import container.restaurant.android.data.PrefStorage
 import container.restaurant.android.data.remote.AuthService
-import container.restaurant.android.data.request.SignInWithAccessTokenRequest
 import container.restaurant.android.data.request.SignUpWithAccessTokenRequest
 import container.restaurant.android.data.request.UpdateProfileRequest
 import container.restaurant.android.data.response.NicknameDuplicationCheckResponse
 import container.restaurant.android.data.response.ProfileResponse
 import container.restaurant.android.data.response.SignUpWithAccessTokenResponse
+import container.restaurant.android.data.response.UserInfoResponse
 import container.restaurant.android.util.ErrorResponseMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -19,12 +19,8 @@ import timber.log.Timber
 interface AuthRepository {
     fun isUserSignIn(): Boolean
     suspend fun signInWithAccessToken(
-        provider: String,
-        accessToken: String,
-        onStart: () -> Unit,
-        onComplete: () -> Unit,
-        onError: (String?) -> Unit
-    ): Flow<ApiResponse<ProfileResponse>>
+        tokenBearer: String
+    ): Flow<ApiResponse<UserInfoResponse>>
 
     suspend fun nicknameDuplicationCheck(
         nickname: String,
@@ -33,7 +29,7 @@ interface AuthRepository {
         onError: (String?) -> Unit
     ): Flow<ApiResponse<NicknameDuplicationCheckResponse>>
 
-    suspend fun signUpWithAccessToken(
+    suspend fun generateAccessToken(
         provider: String,
         accessToken: String
     ): Flow<ApiResponse<SignUpWithAccessTokenResponse>>
@@ -43,7 +39,7 @@ interface AuthRepository {
         , updateProfileRequest: UpdateProfileRequest? = null
     ): Flow<ApiResponse<ProfileResponse>>
 
-    fun storeUserId(id: Int)
+    fun storeUserToken(id: String)
 }
 
 internal class AuthDataRepository(
@@ -57,15 +53,11 @@ internal class AuthDataRepository(
 
     @WorkerThread
     override suspend fun signInWithAccessToken(
-        provider: String,
-        accessToken: String,
-        onStart: () -> Unit,
-        onComplete: () -> Unit,
-        onError: (String?) -> Unit
+        tokenBearer: String,
     ) = flow {
         Timber.d("AuthDataRepository signInWithAccessToken called")
         val response =
-            authService.signInWithAccessToken(SignInWithAccessTokenRequest(provider, accessToken))
+            authService.signInWithAccessToken(tokenBearer)
         response
             .suspendOnSuccess {
                 Timber.d("signInWithAccessToken onSuccess")
@@ -74,14 +66,12 @@ internal class AuthDataRepository(
             .suspendOnError {
                 Timber.d("signInWithAccessToken onError")
                 emit(this)
-                map(ErrorResponseMapper) { onError(message) }
             }
             .suspendOnException {
                 Timber.d("signInWithAccessToken onException")
                 emit(this)
-                onError(message)
             }
-    }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(Dispatchers.IO)
+    }.flowOn(Dispatchers.IO)
 
     // 입력한 onError 상관 없이 에러 로그 나옴, onStart랑 onCompletion은 나오는데 sandwich시리즈가 결과가 안나옴
     // sandwich 시리즈는 response의 응답인데, onStart랑 onCompletion은 flow의 콜백임
@@ -116,11 +106,11 @@ internal class AuthDataRepository(
             }
     }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(Dispatchers.IO)
 
-    override suspend fun signUpWithAccessToken(
+    override suspend fun generateAccessToken(
         provider: String,
         accessToken: String
     ): Flow<ApiResponse<SignUpWithAccessTokenResponse>> = flow {
-        authService.signUpWithAccessToken(SignUpWithAccessTokenRequest(provider, accessToken))
+        authService.generateAccessToken(SignUpWithAccessTokenRequest(provider, accessToken))
             .suspendOnSuccess {
                 emit(this)
             }
@@ -145,8 +135,8 @@ internal class AuthDataRepository(
             }
     }.flowOn(Dispatchers.IO)
 
-    override fun storeUserId(id: Int) {
+    override fun storeUserToken(token: String) {
         prefStorage.isUserSignIn = true
-        prefStorage.userId = id
+        prefStorage.tokenBearer = token
     }
 }
