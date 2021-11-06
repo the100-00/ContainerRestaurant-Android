@@ -8,20 +8,30 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import container.restaurant.android.databinding.FragmentMySettingBinding
 import container.restaurant.android.dialog.SimpleConfirmDialog
+import container.restaurant.android.presentation.MainActivity
+import container.restaurant.android.presentation.NavigationController
 import container.restaurant.android.util.EventObserver
 import container.restaurant.android.util.observe
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class MySettingFragment : Fragment() {
+
+    private val navigationController: NavigationController by inject { parametersOf(this) }
 
     private lateinit var binding: FragmentMySettingBinding
 
     private val viewModel: MyViewModel by viewModel()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = FragmentMySettingBinding.inflate(inflater, container, false)
-            .apply{
-                this.viewModel =  this@MySettingFragment.viewModel
+            .apply {
+                this.viewModel = this@MySettingFragment.viewModel
                 this.lifecycleOwner = this@MySettingFragment
             }
         return binding.root
@@ -32,7 +42,7 @@ class MySettingFragment : Fragment() {
         observeData()
     }
 
-    private fun showSignOutConfirmDialog(){
+    private fun showSignOutConfirmDialog() {
         val dialog = SimpleConfirmDialog(
             titleStr = "정말 로그아웃 하시겠어요?",
             rightBtnStr = "취소",
@@ -45,13 +55,18 @@ class MySettingFragment : Fragment() {
 
             override fun onLeftBtnClick(dialogSelf: SimpleConfirmDialog) {
                 //Todo 로그아웃 동작
+                MainActivity.BottomNavItem.HOME.navigate.invoke(navigationController)
+                if(activity is MainActivity) {
+                    (activity as MainActivity).binding?.bottomNav?.selectedItemId = MainActivity.BottomNavItem.HOME.menuId
+                }
+                viewModel.logOut()
                 dialogSelf.dismiss()
             }
         })
-        dialog.show(childFragmentManager,"SimpleConfirmDialog")
+        dialog.show(childFragmentManager, "SimpleConfirmDialog")
     }
 
-    private fun showWithdrawalConfirmDialog(){
+    private fun showWithdrawalConfirmDialog() {
         val dialog = SimpleConfirmDialog(
             titleStr = "계정 탈퇴 시 다시 되돌릴 수 없습니다.\n정말 탈퇴하시겠어요?",
             rightBtnStr = "취소",
@@ -67,34 +82,37 @@ class MySettingFragment : Fragment() {
                 dialogSelf.dismiss()
             }
         })
-        dialog.show(childFragmentManager,"SimpleConfirmDialog")
+        dialog.show(childFragmentManager, "SimpleConfirmDialog")
     }
 
     private fun observeData() {
-        with(viewModel){
+        with(viewModel) {
             observe(isBackButtonClicked) {
-                val directions = MySettingFragmentDirections.actionMySettingFragmentToMyHomeFragment()
+                val directions =
+                    MySettingFragmentDirections.actionMySettingFragmentToMyHomeFragment()
                 findNavController().navigate(directions)
             }
             isPrivacyPolicyButtonClicked.observe(viewLifecycleOwner, EventObserver {
-                if(it) {
-                    val directions = MySettingFragmentDirections.actionMySettingFragmentToPrivacyPolicyFragment()
+                if (it) {
+                    val directions =
+                        MySettingFragmentDirections.actionMySettingFragmentToPrivacyPolicyFragment()
                     findNavController().navigate(directions)
                 }
             })
             isTermsOfPolicyButtonClicked.observe(viewLifecycleOwner, EventObserver {
-                if(it) {
-                    val directions = MySettingFragmentDirections.actionMySettingFragmentToTermsOfServiceFragment()
+                if (it) {
+                    val directions =
+                        MySettingFragmentDirections.actionMySettingFragmentToTermsOfServiceFragment()
                     findNavController().navigate(directions)
                 }
             })
             isSignOutButtonClicked.observe(viewLifecycleOwner, EventObserver {
-                if(it) {
+                if (it) {
                     showSignOutConfirmDialog()
                 }
             })
             isWithdrawalButtonClicked.observe(viewLifecycleOwner, EventObserver {
-                if(it) {
+                if (it) {
                     showWithdrawalConfirmDialog()
                 }
             })

@@ -5,6 +5,7 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.skydoves.sandwich.StatusCode
+import container.restaurant.android.data.IntPreference
 import container.restaurant.android.data.PrefStorage
 import container.restaurant.android.data.repository.AuthRepository
 import container.restaurant.android.data.repository.MyRepository
@@ -85,10 +86,10 @@ class MyViewModel(private val prefStorage: PrefStorage, private val myRepository
     private fun isPrivacyPolicyLoadDone(): Boolean =
         (privacyPolicyTitle.value != null && privacyPolicyArticle.value != null)
 
-
-
-    fun isUserSignIn(): Boolean {
-        return prefStorage.isUserSignIn
+    fun logOut() {
+        prefStorage.isUserSignIn = false
+        prefStorage.userId = 0
+        prefStorage.tokenBearer = ""
     }
 
     suspend fun getMyInfo(onInvalidToken:()->Unit = {}) {
@@ -234,14 +235,6 @@ class MyViewModel(private val prefStorage: PrefStorage, private val myRepository
 //            }
     }
 
-//    fun updateProfile(id: Int, nickname: String, profile: String) = myRepository.updateProfile(
-//        id = id,
-//        nickname = nickname,
-//        profile = profile,
-//        onStart = { viewLoading.postValue(true) },
-//        onComplete = { viewLoading.postValue(false) },
-//        onError = { getErrorMsg.postValue(it) }
-//    ).asLiveData()
     /** 클릭 이벤트 **/
     private val _isSettingButtonClicked = MutableLiveData<Event<Boolean>>()
     val isSettingButtonClicked: LiveData<Event<Boolean>> = _isSettingButtonClicked

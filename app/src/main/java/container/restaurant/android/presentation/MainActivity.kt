@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
+import androidx.annotation.IdRes
 import androidx.annotation.MenuRes
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.NavHostFragment
@@ -26,7 +27,7 @@ internal class MainActivity : BaseActivity() {
 
     private val viewModel: MainViewModel by viewModel()
 
-    private val binding by lazy {
+    internal val binding by lazy {
         DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
             .apply {
                 lifecycleOwner = this@MainActivity
@@ -77,7 +78,7 @@ internal class MainActivity : BaseActivity() {
     }
 
     enum class BottomNavItem(
-        @MenuRes val menuId: Int,
+        @IdRes @MenuRes val menuId: Int,
         val navigate: NavigationController.() -> Unit
     ) {
         HOME(R.id.home, {
