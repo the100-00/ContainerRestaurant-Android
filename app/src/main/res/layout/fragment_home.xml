@@ -111,6 +111,8 @@
                                 android:layout_width="36dp"
                                 android:layout_height="36dp"
                                 bind:imageUrlWithBaseUrl="@{viewModel.userProfileUrl}"
+                                bind:emptyProfileRes="@{viewModel.userProfileRes}"
+                                android:contentDescription="@string/home_my_profile_img"
                                 />
                         </androidx.cardview.widget.CardView>
 

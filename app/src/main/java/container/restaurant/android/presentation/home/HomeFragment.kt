@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.tabs.TabLayoutMediator
+import container.restaurant.android.R
 import container.restaurant.android.databinding.FragmentHomeBinding
 import container.restaurant.android.dialog.SimpleConfirmDialog
 import container.restaurant.android.presentation.auth.KakaoSignInDialogFragment
@@ -14,6 +15,7 @@ import container.restaurant.android.presentation.feed.all.FeedAllActivity
 import container.restaurant.android.presentation.home.item.BannerAdapter
 import container.restaurant.android.presentation.user.UserProfileActivity
 import container.restaurant.android.util.observe
+import container.restaurant.android.util.setUserProfileResByLevelTitle
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 internal class HomeFragment : Fragment() {
@@ -56,6 +58,11 @@ internal class HomeFragment : Fragment() {
             isNavToMyContainerFeedClicked.observe(viewLifecycleOwner) {
                 showMyContainerConfirmDialog()
             }
+            userLevelTitle.observe(viewLifecycleOwner) { userLevelTitle ->
+                if (userProfileUrl.value == null) {
+                    setUserProfileResByLevelTitle(requireContext(), userProfileRes, userLevelTitle)
+                }
+            }
         }
 
         observe(viewModel.bannerList) {
@@ -65,6 +72,8 @@ internal class HomeFragment : Fragment() {
         observe(viewModel.recommendedFeedList){
 
         }
+
+
     }
 
     private fun addBannerItems() {

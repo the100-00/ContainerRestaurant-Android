@@ -137,18 +137,7 @@ class MyHomeFragment : BaseFragment() {
             })
             observe(userLevelTitle) { userLevelTitle ->
                 if (userProfileUrl.value == null) {
-                    when (userLevelTitle) {
-                        getString(R.string.empty_profile_lv1) -> userProfileRes.value =
-                            R.drawable.empty_profile_lv1
-                        getString(R.string.empty_profile_lv2) -> userProfileRes.value =
-                            R.drawable.empty_profile_lv2
-                        getString(R.string.empty_profile_lv3) -> userProfileRes.value =
-                            R.drawable.empty_profile_lv3
-                        getString(R.string.empty_profile_lv4) -> userProfileRes.value =
-                            R.drawable.empty_profile_lv4
-                        getString(R.string.empty_profile_lv5) -> userProfileRes.value =
-                            R.drawable.empty_profile_lv5
-                    }
+                    setUserProfileResByLevelTitle(requireContext(), userProfileRes, userLevelTitle)
                 }
             }
         }

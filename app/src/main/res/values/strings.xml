@@ -153,5 +153,6 @@
     <string name="next_step">다음 단계</string>
     <string name="begin">시작하기</string>
     <string name="skip"><u>건너뛰기</u></string>
+    <string name="home_my_profile_img">내 프로필 이미지</string>
 
 </resources>

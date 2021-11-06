@@ -1,5 +1,6 @@
 package container.restaurant.android.util
 
+import android.content.Context
 import android.content.Intent
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -8,6 +9,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenCreated
+import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 import container.restaurant.android.data.response.UserInfoResponse
 import container.restaurant.android.presentation.auth.AuthViewModel
@@ -98,5 +100,14 @@ fun observeAuthViewModelUserInfo(lifecycleOwner: LifecycleOwner, authViewModel: 
                 onSignInSuccess(it)
             }
         }
+    }
+}
+
+fun kakaoLogin(context: Context, callback:(OAuthToken?, Throwable?) -> Unit) {
+    val kakaoUserApi = UserApiClient.instance
+    if (kakaoUserApi.isKakaoTalkLoginAvailable(context)) {
+        kakaoUserApi.loginWithKakaoTalk(context, callback = callback)
+    } else {
+        kakaoUserApi.loginWithKakaoAccount(context, callback = callback)
     }
 }

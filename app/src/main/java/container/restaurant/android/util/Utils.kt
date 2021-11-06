@@ -1,14 +1,20 @@
 package container.restaurant.android.util
 
 import android.content.Context
-import com.kakao.sdk.auth.model.OAuthToken
-import com.kakao.sdk.user.UserApiClient
+import androidx.lifecycle.MutableLiveData
+import container.restaurant.android.R
 
-fun kakaoLogin(context: Context, callback:(OAuthToken?, Throwable?) -> Unit) {
-    val kakaoUserApi = UserApiClient.instance
-    if (kakaoUserApi.isKakaoTalkLoginAvailable(context)) {
-        kakaoUserApi.loginWithKakaoTalk(context, callback = callback)
-    } else {
-        kakaoUserApi.loginWithKakaoAccount(context, callback = callback)
+fun setUserProfileResByLevelTitle(context: Context, userProfileRes: MutableLiveData<Int>, userLevelTitle: String?) {
+    when(userLevelTitle) {
+        context.getString(R.string.empty_profile_lv1) -> userProfileRes.value =
+            R.drawable.empty_profile_lv1
+        context.getString(R.string.empty_profile_lv2) -> userProfileRes.value =
+            R.drawable.empty_profile_lv2
+        context.getString(R.string.empty_profile_lv3) -> userProfileRes.value =
+            R.drawable.empty_profile_lv3
+        context.getString(R.string.empty_profile_lv4) -> userProfileRes.value =
+            R.drawable.empty_profile_lv4
+        context.getString(R.string.empty_profile_lv5) -> userProfileRes.value =
+            R.drawable.empty_profile_lv5
     }
 }
