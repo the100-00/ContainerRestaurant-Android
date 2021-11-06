@@ -122,6 +122,13 @@ fun ImageView.setEmptyProfileRes(@DrawableRes res: Int) {
         .into(this)
 }
 
+@BindingAdapter("bind:homeIcRes")
+fun ImageView.setIcRes(@DrawableRes res: Int) {
+    Glide.with(this)
+        .load(res)
+        .into(this)
+}
+
 @BindingAdapter("bind:emptyProfileRes")
 fun CircleImageView.setEmptyProfileRes(@DrawableRes res: Int) {
     Glide.with(this)

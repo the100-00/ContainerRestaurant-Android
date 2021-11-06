@@ -44,19 +44,17 @@ internal class HomeViewModel(
     private val _userFeedList = MutableLiveData<List<FeedListResponse.FeedPreviewDtoList.FeedPreviewDto>>()
     val userFeedList: LiveData<List<FeedListResponse.FeedPreviewDtoList.FeedPreviewDto>> = _userFeedList
 
-    private val _userNickName = MutableLiveData<String>()
-    val userNickName: LiveData<String> = _userNickName
+    val userNickName = MutableLiveData<String>()
 
-    private val _userProfileUrl = MutableLiveData<String>()
-    val userProfileUrl: LiveData<String> = _userProfileUrl
+    val userProfileUrl = MutableLiveData<String>()
 
     val userProfileRes = MutableLiveData<Int>()
 
-    private val _userLevelTitle = MutableLiveData<String>()
-    val userLevelTitle: LiveData<String> = _userLevelTitle
+    val userLevelTitle = MutableLiveData<String>()
 
-    private val _userFeedCount = MutableLiveData<Int>()
-    val userFeedCount: LiveData<Int> = _userFeedCount
+    val userFeedCount = MutableLiveData<Int>()
+
+    val homeIconResByUserLevel = MutableLiveData<Int>()
 
     private val _isNavToAllContainerFeedClicked = MutableLiveData<Event<Boolean>>()
     val isNavToAllContainerFeedClicked: LiveData<Event<Boolean>> = _isNavToAllContainerFeedClicked
@@ -89,10 +87,10 @@ internal class HomeViewModel(
                 handleApiResponse(
                     response = response,
                     onSuccess = {
-                        _userFeedCount.value = it.data?.userFeedCount
+                        userFeedCount.value = it.data?.userFeedCount
                         _totalFeedCount.value = it.data?.totalFeedCount
-                        _userLevelTitle.value = it.data?.userLevelTitle
-                        _userProfileUrl.value = it.data?.userProfileUrl
+                        userLevelTitle.value = it.data?.userLevelTitle
+                        userProfileUrl.value = it.data?.userProfileUrl
                         _phrase.value = it.data?.phrase
                         _latestWriterProfileList.value = it.data?.latestWriterProfileList
                         _bannerList.value = it.data?.bannerList
