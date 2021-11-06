@@ -10,6 +10,7 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import container.restaurant.android.R
+import container.restaurant.android.data.request.UpdateProfileRequest
 import container.restaurant.android.databinding.FragmentSignUpBinding
 import container.restaurant.android.presentation.user.UserProfileActivity
 import container.restaurant.android.util.DataTransfer
@@ -19,13 +20,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.filter
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 internal class SignUpFragment : Fragment() {
 
     private lateinit var binding: FragmentSignUpBinding
 
-    private val viewModel: AuthViewModel by sharedViewModel()
+    val viewModel: AuthViewModel by viewModel()
 
     private val nicknameEditing = MutableStateFlow("")
 
@@ -81,6 +82,13 @@ internal class SignUpFragment : Fragment() {
                 }
             }
         })
+
+        viewModel.isGenerateAccessTokenSuccess.observe(viewLifecycleOwner) {
+            lifecycleScope.launchWhenCreated {
+                viewModel.updateProfile(UpdateProfileRequest(nicknameEditing.value))
+                requireActivity().finish()
+            }
+        }
     }
 
     //버튼 활성화 설정

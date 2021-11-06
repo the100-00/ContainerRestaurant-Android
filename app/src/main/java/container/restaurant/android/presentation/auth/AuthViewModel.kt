@@ -2,7 +2,6 @@ package container.restaurant.android.presentation.auth
 
 import android.content.Intent
 import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.*
 import com.kakao.sdk.user.UserApiClient
@@ -163,8 +162,8 @@ internal class AuthViewModel(
         ).collect { response ->
             when (response) {
                 is ApiResponse.Success -> {
-                    response.data?.token?.let {
-                        storeUserToken("Bearer $it")
+                    if(response.data?.token != null && response.data?.id != null) {
+                        storeUserTokenAndId("Bearer ${response.data?.token}", response.data?.id!!)
                     }
                     _isGenerateAccessTokenSuccess.call()
                 }
@@ -281,8 +280,8 @@ internal class AuthViewModel(
     }
 
 
-    suspend fun updateProfile(userId: Int, updateProfileRequest: UpdateProfileRequest? = null) {
-        authRepository.updateProfile(userId, updateProfileRequest)
+    suspend fun updateProfile(updateProfileRequest: UpdateProfileRequest? = null) {
+        authRepository.updateProfile(prefStorage.tokenBearer, prefStorage.userId, updateProfileRequest)
             .collect { response ->
                 handleApiResponse(
                     response = response,
@@ -293,33 +292,7 @@ internal class AuthViewModel(
             }
     }
 
-    suspend fun getMyInfo(onInvalidToken:()->Unit = {}) {
-        authRepository.signInWithAccessToken(prefStorage.tokenBearer)
-            .collect { response ->
-                handleApiResponse(
-                    response = response,
-                    onSuccess = {
-
-                    },
-                    onError = {
-                        Timber.d("it.errorBody : ${it.errorBody}")
-                        Timber.d("it.headers : ${it.headers}")
-                        Timber.d("it.raw : ${it.raw}")
-                        Timber.d("it.response : ${it.response}")
-                        Timber.d("it.statusCode : ${it.statusCode}")
-                        if(it.statusCode== StatusCode.Unauthorized) {
-                            onInvalidToken()
-                        }
-                    },
-                    onException = {
-                        Timber.d("it.message : ${it.message}")
-                        Timber.d("it.exception : ${it.exception}")
-                    }
-                )
-            }
-    }
-
-    private fun storeUserToken(token: String) {
-        authRepository.storeUserToken(token)
+    private fun storeUserTokenAndId(token: String, id: Int) {
+        authRepository.storeUserTokenAndId(token, id)
     }
 }

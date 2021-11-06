@@ -35,11 +35,12 @@ interface AuthRepository {
     ): Flow<ApiResponse<SignUpWithAccessTokenResponse>>
 
     suspend fun updateProfile(
+        tokenBearer: String,
         userId: Int
         , updateProfileRequest: UpdateProfileRequest? = null
     ): Flow<ApiResponse<ProfileResponse>>
 
-    fun storeUserToken(id: String)
+    fun storeUserTokenAndId(token: String, userId: Int)
 }
 
 internal class AuthDataRepository(
@@ -122,8 +123,8 @@ internal class AuthDataRepository(
             }
     }.flowOn(Dispatchers.IO)
 
-    override suspend fun updateProfile(userId: Int, updateProfileRequest: UpdateProfileRequest?): Flow<ApiResponse<ProfileResponse>> = flow {
-        authService.updateProfile(userId, updateProfileRequest)
+    override suspend fun updateProfile(tokenBearer: String, userId: Int, updateProfileRequest: UpdateProfileRequest?): Flow<ApiResponse<ProfileResponse>> = flow {
+        authService.updateProfile(tokenBearer, userId, updateProfileRequest)
             .suspendOnSuccess {
                 emit(this)
             }
@@ -135,8 +136,9 @@ internal class AuthDataRepository(
             }
     }.flowOn(Dispatchers.IO)
 
-    override fun storeUserToken(token: String) {
+    override fun storeUserTokenAndId(token: String, userId: Int) {
         prefStorage.isUserSignIn = true
         prefStorage.tokenBearer = token
+        prefStorage.userId = userId
     }
 }

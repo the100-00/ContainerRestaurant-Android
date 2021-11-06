@@ -10,6 +10,7 @@ import kotlin.reflect.KProperty
 interface PrefStorage {
     var isUserSignIn: Boolean
     var tokenBearer: String
+    var userId: Int
     var isOnBoardingFirst: Boolean
 }
 
@@ -22,12 +23,14 @@ internal class SharedPrefStorage(
     }
 
     override var isUserSignIn by BooleanPreference(prefs, IS_USER_LOGIN)
-    override var tokenBearer by StringPreference(prefs, USER_ID)
+    override var userId by IntPreference(prefs, USER_ID)
+    override var tokenBearer by StringPreference(prefs, TOKEN_BEARER)
     override var isOnBoardingFirst by BooleanPreference(prefs, IS_ON_BOARDING_FIRST, true)
 
     companion object {
         private const val PREFS_NAME = "container-android"
         private const val IS_USER_LOGIN = "IS_USER_LOGIN"
+        private const val TOKEN_BEARER = "TOKEN_BEARER"
         private const val USER_ID =  "USER_ID"
         private const val IS_ON_BOARDING_FIRST = "IS_ON_BOARDING_FIRST"
     }

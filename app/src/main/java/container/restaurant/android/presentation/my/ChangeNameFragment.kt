@@ -79,7 +79,7 @@ class ChangeNameFragment : BaseFragment() {
 
         viewModel.isCompleteButtonClicked.observe(viewLifecycleOwner, EventObserver {
             lifecycleScope.launchWhenCreated {
-                viewModel.updateProfile(args.userId, UpdateProfileRequest(nicknameEditing.value))
+                viewModel.updateProfile(UpdateProfileRequest(nicknameEditing.value))
             }
         })
     }

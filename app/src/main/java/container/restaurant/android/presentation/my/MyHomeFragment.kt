@@ -1,21 +1,17 @@
 package container.restaurant.android.presentation.my
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.whenCreated
 import androidx.navigation.fragment.findNavController
-import com.kakao.sdk.user.UserApiClient
 import container.restaurant.android.R
 import container.restaurant.android.data.response.UserInfoResponse
 import container.restaurant.android.databinding.FragmentMyHomeBinding
 import container.restaurant.android.presentation.auth.AuthViewModel
 import container.restaurant.android.presentation.auth.KakaoSignInDialogFragment
-import container.restaurant.android.presentation.auth.SignUpActivity
 import container.restaurant.android.presentation.base.BaseFragment
 import container.restaurant.android.util.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -48,6 +44,7 @@ class MyHomeFragment : BaseFragment() {
     }
 
     private fun logInCheck() {
+        // 로그인 성공 했을 때 동작
         val onSignInSuccess: (UserInfoResponse) -> Unit = {
             Timber.d("signInSuccess At MyHomeFragment")
             with(viewModel) {
@@ -77,37 +74,6 @@ class MyHomeFragment : BaseFragment() {
         else {
             lifecycleScope.launchWhenCreated {
                 authViewModel.ifAlreadySignIn(requireActivity(), onSignInSuccess)
-            }
-        }
-    }
-
-    // 프로젝트에 저장된 토큰이 없을 때 로직
-    private fun observeKakaoFragmentData(kakaoSignInDialogFragment: KakaoSignInDialogFragment) {
-        lifecycleScope.launchWhenCreated {
-            kakaoSignInDialogFragment.whenCreated {
-                with(kakaoSignInDialogFragment.viewModel) {
-                    isGenerateAccessTokenSuccess.observe(viewLifecycleOwner) {
-                        lifecycleScope.launchWhenCreated {
-                            signInWithAccessToken(
-                                onNicknameNull = {
-                                    startActivity(
-                                        Intent(
-                                            requireContext(),
-                                            SignUpActivity::class.java
-                                        )
-                                    )
-                                    kakaoSignInDialogFragment.dismiss()
-                                },
-                                onSignInSuccess = {
-                                    lifecycleScope.launchWhenCreated {
-                                        viewModel.getMyInfo()
-                                    }
-                                    kakaoSignInDialogFragment.dismiss()
-                                }
-                            )
-                        }
-                    }
-                }
             }
         }
     }

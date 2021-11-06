@@ -28,6 +28,7 @@ interface AuthService {
 
     @PATCH("/api/user/{userId}")
     suspend fun updateProfile(
+        @Header("Authorization") tokenBearer: String,
         @Path("userId") userId: Int,
         @Body updateProfileRequest: UpdateProfileRequest? = null
     ): ApiResponse<ProfileResponse>
