@@ -26,4 +26,7 @@ interface HomeService {
     suspend fun userInfo(
         @Path("userId") userId: Int
     ) : ApiResponse<UserInfoResponse>
+
+    @GET("/api/statistics/total-container")
+    suspend fun getAllCourage() : ApiResponse<AllCourageResponse>
 }

@@ -4,11 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import container.restaurant.android.R
 import container.restaurant.android.databinding.ActivityFeedAllBinding
 import container.restaurant.android.presentation.user.UserProfileActivity
@@ -20,14 +18,6 @@ internal class FeedAllActivity : AppCompatActivity() {
 
     private val viewModel: FeedAllViewModel by viewModel()
 
-    private val mostFeedUserAdapter by lazy {
-        MostFeedUserAdapter(viewModel::onClickUser)
-    }
-
-    private val feedUserAdapter by lazy {
-        FeedUserAdapter(viewModel::onClickUser)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView<ActivityFeedAllBinding>(this, R.layout.activity_feed_all)
@@ -36,11 +26,17 @@ internal class FeedAllActivity : AppCompatActivity() {
                 viewModel = this@FeedAllActivity.viewModel
             }
 
+        observeData()
+        initData()
+    }
+
+    private fun observeData() {
+
         with(viewModel) {
-            close.observe(this@FeedAllActivity) {
+            isCloseClicked.observe(this@FeedAllActivity) {
                 finish()
             }
-            showHelpDialog.observe(this@FeedAllActivity) {
+            isHelpClicked.observe(this@FeedAllActivity) {
                 FeedAllHelpDialogFragment().show(supportFragmentManager, "FeedAllHelpDialogFragment")
             }
             navToUserProfile.observe(this@FeedAllActivity) {
@@ -48,62 +44,14 @@ internal class FeedAllActivity : AppCompatActivity() {
             }
         }
 
-        setupMostFeedUserRecycler()
-        setupFeedUserRecycler()
-        // dummy
-        mostFeedUserAdapter.setItems(
-            listOf(
-                FeedUser("", "neal", "level"),
-                FeedUser("", "neal", "level"),
-                FeedUser("", "neal", "level"),
-                FeedUser("", "neal", "level"),
-                FeedUser("", "neal", "level"),
-                FeedUser("", "neal", "level"),
-                FeedUser("", "neal", "level"),
-                FeedUser("", "neal", "level"),
-                FeedUser("", "neal", "level"),
-                FeedUser("", "neal", "level")
-            )
-        )
-        feedUserAdapter.setItems(
-            listOf(
-                FeedUser("", "neal", "level"),
-                FeedUser("", "neal", "level"),
-                FeedUser("", "neal", "level"),
-                FeedUser("", "neal", "level"),
-                FeedUser("", "neal", "level"),
-                FeedUser("", "neal", "level"),
-                FeedUser("", "neal", "level"),
-                FeedUser("", "neal", "level"),
-                FeedUser("", "neal", "level"),
-                FeedUser("", "neal", "level"),
-                FeedUser("", "neal", "level"),
-                FeedUser("", "neal", "level"),
-                FeedUser("", "neal", "level"),
-                FeedUser("", "neal", "level"),
-                FeedUser("", "neal", "level"),
-                FeedUser("", "neal", "level"),
-                FeedUser("", "neal", "level"),
-                FeedUser("", "neal", "level"),
-                FeedUser("", "neal", "level"),
-                FeedUser("", "neal", "level")
-            )
-        )
     }
 
-    private fun setupMostFeedUserRecycler() {
-        with(binding.rvMostFeedUser) {
-            layoutManager = LinearLayoutManager(this@FeedAllActivity, LinearLayoutManager.HORIZONTAL, false)
-            adapter = mostFeedUserAdapter
+    private fun initData() {
+        lifecycleScope.launchWhenCreated {
+            viewModel.getAllContainer()
         }
     }
 
-    private fun setupFeedUserRecycler() {
-        with(binding.rvFeedUser) {
-            layoutManager = GridLayoutManager(this@FeedAllActivity, 4)
-            adapter = feedUserAdapter
-        }
-    }
 
     companion object {
         fun getIntent(context: Context) = Intent(context, FeedAllActivity::class.java)

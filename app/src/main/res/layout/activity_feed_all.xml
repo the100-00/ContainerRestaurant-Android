@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="container.restaurant.android.presentation.feed.all.FeedAllViewModel" />
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -85,6 +94,13 @@
                         android:id="@+id/rv_most_feed_user"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        tools:listitem="@layout/item_most_feed_user"
+                        tools:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        bind:dino_itemLayout="@{@layout/item_most_feed_user}"
+                        bind:dino_items="@{viewModel.topWriters}"
+                        bind:dino_vm="@{viewModel}"
                         android:layout_marginTop="11dp"
                         android:layout_marginBottom="11dp" />
                 </LinearLayout>
@@ -109,7 +125,7 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="6dp"
                     android:layout_marginEnd="20dp"
-                    android:text="지금까지 총 99명이 99번의 용기를 내주셨어요! "
+                    android:text="@{`지금까지 총 ` + viewModel.writerCount + `명이` + viewModel.feedCount + `번의 용기를 내주셨어요!`}"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_all_feed_subtitle" />
 
@@ -120,6 +136,13 @@
                     android:layout_marginStart="14dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="14dp"
+                    tools:listitem="@layout/item_feed_user"
+                    tools:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="4"
+                    bind:dino_itemLayout="@{@layout/item_feed_user}"
+                    bind:dino_items="@{viewModel.latestWriters}"
+                    bind:dino_vm="@{viewModel}"
                     android:nestedScrollingEnabled="false"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
@@ -128,10 +151,5 @@
         </androidx.core.widget.NestedScrollView>
     </LinearLayout>
 
-    <data>
 
-        <variable
-            name="viewModel"
-            type="container.restaurant.android.presentation.feed.all.FeedAllViewModel" />
-    </data>
 </layout>

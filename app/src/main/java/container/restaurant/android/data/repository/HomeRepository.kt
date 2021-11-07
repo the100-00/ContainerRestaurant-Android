@@ -72,6 +72,21 @@ class HomeRepository(private val homeService: HomeService) {
     }.flowOn(Dispatchers.IO)
 
     @WorkerThread
+    suspend fun getAllCourage() = flow {
+        val response = homeService.getAllCourage()
+        response
+            .suspendOnSuccess {
+                emit(this)
+            }
+            .suspendOnError {
+                emit(this)
+            }
+            .suspendOnException {
+                emit(this)
+            }
+    }.flowOn(Dispatchers.IO)
+
+    @WorkerThread
     suspend fun getUserFeedList(userId: Int) = flow {
         val response = homeService.userFeedList(userId)
         response

@@ -23,7 +23,7 @@ val presentationModule = module {
     viewModel { HomeViewModel(get(), get()) }
     viewModel { FeedExploreViewModel() }
     viewModel { FeedCategoryViewModel(get(), it[0]) }
-    viewModel { FeedAllViewModel() }
+    viewModel { FeedAllViewModel(get()) }
     viewModel { FeedWriteViewModel(get()) }
     viewModel { MyViewModel(get(), get()) }
     viewModel { MapsViewModel(get()) }
