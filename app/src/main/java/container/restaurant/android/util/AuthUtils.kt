@@ -4,9 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenCreated
 import com.kakao.sdk.auth.model.OAuthToken
@@ -15,9 +15,6 @@ import container.restaurant.android.data.response.UserInfoResponse
 import container.restaurant.android.presentation.auth.AuthViewModel
 import container.restaurant.android.presentation.auth.KakaoSignInDialogFragment
 import container.restaurant.android.presentation.auth.SignUpActivity
-import container.restaurant.android.util.Provider
-import container.restaurant.android.util.kakaoLogin
-import container.restaurant.android.util.observe
 import timber.log.Timber
 
 /**
@@ -95,11 +92,14 @@ suspend fun ifAlreadySignIn(
 
 fun observeAuthViewModelUserInfo(lifecycleOwner: LifecycleOwner, authViewModel: AuthViewModel, onSignInSuccess: (UserInfoResponse) -> Unit) {
     with(authViewModel) {
-        userInfoResponse.observe(lifecycleOwner) {
-            if(it!=null){
-                onSignInSuccess(it)
+        userInfoResponse.observe(lifecycleOwner, object : Observer<UserInfoResponse> {
+            override fun onChanged(it: UserInfoResponse?) {
+                if(it!=null){
+                    onSignInSuccess(it)
+                    userInfoResponse.removeObserver(this)
+                }
             }
-        }
+        })
     }
 }
 

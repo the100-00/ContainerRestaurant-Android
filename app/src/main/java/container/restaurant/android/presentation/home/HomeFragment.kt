@@ -1,5 +1,6 @@
 package container.restaurant.android.presentation.home
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,11 +17,11 @@ import container.restaurant.android.dialog.SimpleConfirmDialog
 import container.restaurant.android.presentation.auth.AuthViewModel
 import container.restaurant.android.presentation.auth.KakaoSignInDialogFragment
 import container.restaurant.android.presentation.feed.all.FeedAllActivity
+import container.restaurant.android.presentation.feed.write.FeedWriteActivity
 import container.restaurant.android.presentation.home.item.BannerAdapter
 import container.restaurant.android.presentation.user.UserProfileActivity
 import container.restaurant.android.util.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 internal class HomeFragment : Fragment() {
 
@@ -32,6 +33,29 @@ internal class HomeFragment : Fragment() {
     private val authViewModel: AuthViewModel by viewModel()
 
     private lateinit var binding: FragmentHomeBinding
+
+    // 가입 완료후 업데이트 할 정보
+    private fun updateData() {
+        lifecycleScope.launchWhenCreated {
+            viewModel.getHomeInfo()
+        }
+    }
+    private val signUpResultLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+        updateData()
+    }
+
+    // 피드 쓰기 결과 받고 업데이트 해야함
+    private val feedWriteResultLauncher: ActivityResultLauncher<Intent> =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if(it.resultCode == Activity.RESULT_OK) {
+                lifecycleScope.launchWhenCreated {
+                    viewModel.getHomeInfo()
+                }
+            }
+        }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,7 +85,7 @@ internal class HomeFragment : Fragment() {
                 startActivity(FeedAllActivity.getIntent(requireContext()))
             }
             isNavToMyContainerFeedClicked.observe(viewLifecycleOwner) {
-                showMyContainerConfirmDialog()
+                logInCheckAndSeeMyCourage()
             }
             userLevelTitle.observe(viewLifecycleOwner) { userLevelTitle ->
                 if (userProfileUrl.value == null) {
@@ -75,7 +99,7 @@ internal class HomeFragment : Fragment() {
             addBannerItems()
         }
 
-        observe(viewModel.recommendedFeedList){
+        observe(viewModel.recommendedFeedList) {
 
         }
 
@@ -83,13 +107,13 @@ internal class HomeFragment : Fragment() {
     }
 
     private fun addBannerItems() {
-        viewModel.bannerList.value?.let{
+        viewModel.bannerList.value?.let {
             bannerAdapter.addItems(it)
         }
 
     }
 
-    private fun setUpBannerView(){
+    private fun setUpBannerView() {
         binding.pagerIntroBanner.adapter = bannerAdapter
         TabLayoutMediator(binding.tablayoutIndicator, binding.pagerIntroBanner) { _, _ ->
         }.attach()
@@ -107,7 +131,7 @@ internal class HomeFragment : Fragment() {
         }
     }
 
-    private fun showMyContainerConfirmDialog(){
+    private fun showMyContainerConfirmDialog() {
         val dialog = SimpleConfirmDialog(
             titleStr = "용기낸 경험을 들려주시겠어요?",
             rightBtnStr = "네, 좋아요!",
@@ -116,10 +140,13 @@ internal class HomeFragment : Fragment() {
         dialog.setMultiEventListener(object : SimpleConfirmDialog.MultiEventListener {
             override fun onRightBtnClick(dialogSelf: SimpleConfirmDialog) {
                 dialogSelf.dismiss()
-                if(!viewModel.isUserSignIn()){
-                    KakaoSignInDialogFragment().show(childFragmentManager, "KakaoSignInDialogFragment")
+                if (!viewModel.isUserSignIn()) {
+                    KakaoSignInDialogFragment().show(
+                        childFragmentManager,
+                        "KakaoSignInDialogFragment"
+                    )
                 } else {
-                  startActivity(UserProfileActivity.getIntent(requireContext()))
+                    feedWriteResultLauncher.launch(Intent(requireContext(), FeedWriteActivity::class.java))
                 }
             }
 
@@ -127,31 +154,24 @@ internal class HomeFragment : Fragment() {
                 dialogSelf.dismiss()
             }
         })
-        dialog.show(childFragmentManager,"SimpleConfirmDialog")
+        dialog.show(childFragmentManager, "SimpleConfirmDialog")
     }
 
-    private fun logInCheck() {
+    private fun logInCheckAndSeeMyCourage() {
         // 로그인 성공 했을 때 동작
         val onSignInSuccess: (UserInfoResponse) -> Unit = {
-            Timber.d("signInSuccess At MyHomeFragment")
-            with(viewModel) {
-                userNickName.value = it.nickname
-                userFeedCount.value = it.feedCount
-                userProfileUrl.value = it.profile
-                userLevelTitle.value = it.levelTitle
+            if (it.feedCount == 0) {
+                showMyContainerConfirmDialog()
+            }
+            // 사용자 피드보여주기
+            else {
+                startActivity(UserProfileActivity.getIntent(requireContext()))
+            }
+            lifecycleScope.launchWhenCreated {
+                viewModel.getHomeInfo()
             }
         }
 
-        // 가입 완료후 업데이트 할 정보
-        fun updateData() {
-            with(viewModel) {
-
-            }
-        }
-        val signUpResultLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()){
-            updateData()
-        }
 
         // 프로젝트에 저장된 토큰 없을 때
         if (!authViewModel.isUserSignIn()) {
@@ -168,7 +188,11 @@ internal class HomeFragment : Fragment() {
             )
             kakaoSignInDialogFragment.show(childFragmentManager, "KakaoSignInDialogFragment")
 
-            observeAuthViewModelUserInfo(viewLifecycleOwner, kakaoSignInDialogFragment.viewModel, onSignInSuccess)
+            observeAuthViewModelUserInfo(
+                viewLifecycleOwner,
+                kakaoSignInDialogFragment.viewModel,
+                onSignInSuccess
+            )
         }
 
         // 프로젝트에 저장된 토큰 있을 때
@@ -177,7 +201,6 @@ internal class HomeFragment : Fragment() {
                 ifAlreadySignIn(authViewModel, requireActivity())
             }
         }
-
         observeAuthViewModelUserInfo(viewLifecycleOwner, authViewModel, onSignInSuccess)
     }
 
