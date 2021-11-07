@@ -22,10 +22,11 @@
         android:background="?attr/selectableItemBackground">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:src="@drawable/img_level_up"
-            bind:imageUrlWithBaseUrl="@{item.profileUrl}"
+            bind:levelTitle="@{item.levelTitle}"
+            bind:profileUrl="@{item.profileUrl}"
             android:adjustViewBounds="true" />
 
         <TextView

@@ -104,7 +104,7 @@ fun ImageView.setImageUrlWithoutBaseUrl(url: String?) {
 }
 
 @BindingAdapter("bind:imageUrlWithOutBaseUrl")
-fun CircleImageView.setImageUrlWithoutBaseUrl(url: String?){
+fun CircleImageView.setImageUrlWithoutBaseUrl(url: String?) {
     url?.let {
         val baseUrl = BASE_URL.substring(0, BASE_URL.lastIndex)
         val fullUrl = "$baseUrl$url"
@@ -138,11 +138,8 @@ fun CircleImageView.setEmptyProfileRes(@DrawableRes res: Int) {
 
 
 @BindingAdapter(
-    value = ["bind:spannableText"
-        , "bind:spannableBold"
-        , "bind:spannableBoldStart"
-        , "bind:spannableBoldEnd"]
-    , requireAll = false
+    value = ["bind:spannableText", "bind:spannableBold", "bind:spannableBoldStart", "bind:spannableBoldEnd"],
+    requireAll = false
 )
 fun TextView.setSpannableString(
     text: String,
@@ -199,14 +196,14 @@ fun ImageView.setEmptyFeedBackgroundSetup(boolean: String) {
 
 @BindingAdapter("bind:htmlText")
 fun TextView.setHtmlText(htmlText: String?) {
-    htmlText?.let{
+    htmlText?.let {
         text = HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_LEGACY)
     }
 }
 
 @BindingAdapter("bind:stripHtmlText")
 fun TextView.setStrippedHtmlText(htmlText: String?) {
-    htmlText?.let{
+    htmlText?.let {
         text = HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_LEGACY).toString()
     }
 }
@@ -222,45 +219,72 @@ fun ImageView.setBitmap(bitmap: Bitmap) {
 
 @BindingAdapter("bind:feedCategorySelected")
 fun TextView.setFeedCategorySelected(boolean: Boolean?) {
-    if(boolean == true) {
+    if (boolean == true) {
         isSelected = true
         setTypeface(typeface, Typeface.BOLD)
-    }
-    else {
+    } else {
         isSelected = false
         setTypeface(Typeface.create(typeface, Typeface.NORMAL), Typeface.NORMAL)
     }
 }
 
 @BindingAdapter("bind:addTabSelectedListener")
-fun TabLayout.addTabSelectedListener(listener: TabLayout.OnTabSelectedListener){
+fun TabLayout.addTabSelectedListener(listener: TabLayout.OnTabSelectedListener) {
     addOnTabSelectedListener(listener)
 }
 
 @BindingAdapter("bind:registerOnPageChangeCallback")
-fun ViewPager2.registerOnPageChangeCallback(onPageChangeCallback: ViewPager2.OnPageChangeCallback){
+fun ViewPager2.registerOnPageChangeCallback(onPageChangeCallback: ViewPager2.OnPageChangeCallback) {
     registerOnPageChangeCallback(onPageChangeCallback)
 }
 
 @BindingAdapter("bind:setRating")
-fun RatingBar.setRating(rating: Int){
+fun RatingBar.setRating(rating: Int) {
     setStar(rating.toFloat())
 }
 
 @BindingAdapter("bind:clickable")
-fun RatingBar.setClickable(boolean: String){
+fun RatingBar.setClickable(boolean: String) {
     setmClickable(boolean.toBoolean())
 }
 
+@BindingAdapter(value = ["bind:levelTitle", "bind:profileUrl"], requireAll = true)
+fun ImageView.setIcByLevelTitle(levelTitle: String, profileUrl: String?) {
+    if (profileUrl == null) {
+        @DrawableRes var drawableRes: Int? = null
+        when (levelTitle) {
+            context.getString(R.string.empty_profile_lv1) -> drawableRes =
+                R.drawable.empty_profile_lv1
+            context.getString(R.string.empty_profile_lv2) -> drawableRes=
+                R.drawable.empty_profile_lv2
+            context.getString(R.string.empty_profile_lv3) -> drawableRes =
+                R.drawable.empty_profile_lv3
+            context.getString(R.string.empty_profile_lv4) -> drawableRes =
+                R.drawable.empty_profile_lv4
+            context.getString(R.string.empty_profile_lv5) -> drawableRes =
+                R.drawable.empty_profile_lv5
+
+        }
+        Glide.with(this)
+            .load(drawableRes)
+            .into(this)
+    }
+    else {
+        Glide.with(this)
+            .load(profileUrl)
+            .into(this)
+    }
+}
+
 @BindingAdapter("bind:difficultyIntToText")
-fun TextView.setDifficultyText(rating: Int){
+fun TextView.setDifficultyText(rating: Int) {
     visibility = View.VISIBLE
-    when(rating){
-        1-> text = resources.getString(R.string.difficulty_lv1)
-        2-> text = resources.getString(R.string.difficulty_lv2)
-        3-> text = resources.getString(R.string.difficulty_lv3)
-        4-> text = resources.getString(R.string.difficulty_lv4)
-        5-> text = resources.getString(R.string.difficulty_lv5)
+    when (rating) {
+        1 -> text = resources.getString(R.string.difficulty_lv1)
+        2 -> text = resources.getString(R.string.difficulty_lv2)
+        3 -> text = resources.getString(R.string.difficulty_lv3)
+        4 -> text = resources.getString(R.string.difficulty_lv4)
+        5 -> text = resources.getString(R.string.difficulty_lv5)
         else -> visibility = View.GONE
     }
 }
