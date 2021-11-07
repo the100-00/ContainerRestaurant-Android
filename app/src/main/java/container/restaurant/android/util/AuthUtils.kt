@@ -28,23 +28,26 @@ fun observeKakaoFragmentData(
     fragmentActivity.lifecycleScope.launchWhenCreated {
         kakaoSignInDialogFragment.whenCreated {
             with(kakaoSignInDialogFragment.viewModel) {
-                isGenerateAccessTokenSuccess.observe(fragmentActivity) {
-                    fragmentActivity.lifecycleScope.launchWhenCreated {
-                        signInWithAccessToken(
-                            onNicknameNull = {
-                                signUpResultLauncher.launch(
-                                    Intent(
-                                        fragmentActivity,
-                                        SignUpActivity::class.java
-                                    ))
-                                kakaoSignInDialogFragment.dismiss()
-                            },
-                            onSignInSuccess = {
-                                kakaoSignInDialogFragment.dismiss()
-                            }
-                        )
+                isGenerateAccessTokenSuccess.observe(fragmentActivity, object: Observer<Void> {
+                    override fun onChanged(t: Void?) {
+                        fragmentActivity.lifecycleScope.launchWhenCreated {
+                            signInWithAccessToken(
+                                onNicknameNull = {
+                                    signUpResultLauncher.launch(
+                                        Intent(
+                                            fragmentActivity,
+                                            SignUpActivity::class.java
+                                        ))
+                                    kakaoSignInDialogFragment.dismiss()
+                                },
+                                onSignInSuccess = {
+                                    kakaoSignInDialogFragment.dismiss()
+                                }
+                            )
+                        }
+                        isGenerateAccessTokenSuccess.removeObserver(this)
                     }
-                }
+                })
             }
         }
     }

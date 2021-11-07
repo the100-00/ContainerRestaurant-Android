@@ -1,15 +1,16 @@
 package container.restaurant.android.presentation
 
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import retrofit2.Retrofit
+import container.restaurant.android.util.SingleLiveEvent
 
 internal class MainViewModel : ViewModel() {
 
-    val navToFeed = MutableLiveData<Unit>()
+    private val _isFeedWriteClicked = SingleLiveEvent<Void>()
+    val isFeedWriteClicked:LiveData<Void> = _isFeedWriteClicked
 
-    fun onClickNavToWriteFeed() {
-        navToFeed.value = Unit
+    fun onFeedWriteClick() {
+        _isFeedWriteClicked.call()
     }
 
     override fun onCleared() {

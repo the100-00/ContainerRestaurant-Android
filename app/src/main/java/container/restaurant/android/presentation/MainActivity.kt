@@ -4,28 +4,34 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.IdRes
 import androidx.annotation.MenuRes
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import container.restaurant.android.R
+import container.restaurant.android.data.response.UserInfoResponse
 import container.restaurant.android.databinding.ActivityMainBinding
+import container.restaurant.android.presentation.auth.AuthViewModel
+import container.restaurant.android.presentation.auth.KakaoSignInDialogFragment
 import container.restaurant.android.presentation.base.BaseActivity
 import container.restaurant.android.presentation.feed.explore.FeedExploreFragment
 import container.restaurant.android.presentation.feed.write.FeedWriteActivity
 import container.restaurant.android.presentation.home.HomeFragment
 import container.restaurant.android.presentation.map.MapsFragment
-import container.restaurant.android.util.observe
+import container.restaurant.android.util.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
+import timber.log.Timber
 
 internal class MainActivity : BaseActivity() {
 
     private val navigationController: NavigationController by inject { parametersOf(this) }
 
     private val viewModel: MainViewModel by viewModel()
+    private val authViewModel: AuthViewModel by viewModel()
 
     internal val binding by lazy {
         DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
@@ -35,12 +41,22 @@ internal class MainActivity : BaseActivity() {
             }
     }
 
+    // 가입 완료후 업데이트 할 정보
+    private fun updateData() {
+        startActivity(FeedWriteActivity.getIntent(this@MainActivity))
+    }
+    private val signUpResultLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+        updateData()
+    }
+
     @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         with(viewModel) {
-            observe(navToFeed) {
-                startActivity(FeedWriteActivity.getIntent(this@MainActivity))
+            isFeedWriteClicked.observe(this@MainActivity) {
+                logInAndFeedWrite()
             }
         }
 
@@ -63,6 +79,41 @@ internal class MainActivity : BaseActivity() {
         }
         setupBottomNav(savedInstanceState)
     }
+
+    private fun logInAndFeedWrite() {
+        // 로그인 성공 했을 때 동작
+        val onSignInSuccess: (UserInfoResponse) -> Unit = {
+            Timber.d("signInSuccess")
+            startActivity(FeedWriteActivity.getIntent(this@MainActivity))
+        }
+
+        // 프로젝트에 저장된 토큰 없을 때
+        if (!authViewModel.isUserSignIn()) {
+            Timber.d("user not signIn")
+            val kakaoSignInDialogFragment = KakaoSignInDialogFragment()
+            observeKakaoFragmentData(
+                this@MainActivity,
+                kakaoSignInDialogFragment,
+                signUpResultLauncher
+            )
+            kakaoSignInDialogFragment.show(supportFragmentManager, "KakaoSignInDialogFragment")
+
+            observeAuthViewModelUserInfo(
+                this@MainActivity,
+                kakaoSignInDialogFragment.viewModel,
+                onSignInSuccess
+            )
+        }
+
+        // 프로젝트에 저장된 토큰 있을 때
+        else {
+            lifecycleScope.launchWhenCreated {
+                ifAlreadySignIn(authViewModel, this@MainActivity)
+            }
+        }
+        observeAuthViewModelUserInfo(this@MainActivity, authViewModel, onSignInSuccess)
+    }
+
 
     private fun setupBottomNav(savedInstanceState: Bundle?) {
         binding.bottomNav.itemIconTintList = null
