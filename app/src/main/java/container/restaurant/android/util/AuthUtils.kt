@@ -45,6 +45,7 @@ fun observeKakaoFragmentData(
                                 }
                             )
                         }
+                        // 옵저빙 뒤에는 현재 옵저버를 제거해줌
                         isGenerateAccessTokenSuccess.removeObserver(this)
                     }
                 })
@@ -99,6 +100,7 @@ fun observeAuthViewModelUserInfo(lifecycleOwner: LifecycleOwner, authViewModel: 
             override fun onChanged(it: UserInfoResponse?) {
                 if(it!=null){
                     onSignInSuccess(it)
+                    // 옵저빙 뒤에는 현재 옵저버를 제거해줌
                     userInfoResponse.removeObserver(this)
                 }
             }
