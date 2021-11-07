@@ -124,6 +124,7 @@ internal class MainActivity : BaseActivity() {
             true
         }
         if (savedInstanceState == null) {
+            BottomNavItem.HOME.navigate.invoke(navigationController)
             binding.bottomNav.selectedItemId = R.id.home
         }
     }
