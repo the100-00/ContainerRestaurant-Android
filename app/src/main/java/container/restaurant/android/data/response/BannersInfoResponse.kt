@@ -9,9 +9,15 @@ data class HomeInfoResponse(
     @SerializedName("myLevelTitle") val userLevelTitle: String,
     @SerializedName("myProfile") val userProfileUrl: String,
     @SerializedName("phrase") val phrase: String,
-    @SerializedName("latestWriterProfile") val latestWriterProfileList: List<String>,
+    @SerializedName("latestWriterProfile") val latestWriterProfileList: List<WriterProfile>,
     @SerializedName("banners") val bannerList: List<Banner>
 ) {
+    data class WriterProfile(
+        @SerializedName("id") val userId: Int,
+        @SerializedName("levelTitle") val levelTitle: String,
+        @SerializedName("nickname") val nickname: String,
+        @SerializedName("profile") val profileImgUrl: String
+    )
     data class Banner(
         @SerializedName("bannerURL") val bannerUrl: String,
         @SerializedName("contentURL") val contentUrl: String,

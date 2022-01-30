@@ -23,7 +23,8 @@ import timber.log.Timber
 fun observeKakaoFragmentData(
     fragmentActivity: FragmentActivity,
     kakaoSignInDialogFragment: KakaoSignInDialogFragment,
-    signUpResultLauncher: ActivityResultLauncher<Intent>
+    signUpResultLauncher: ActivityResultLauncher<Intent>,
+    onSignInSuccess: (UserInfoResponse) -> Unit
 ) {
     fragmentActivity.lifecycleScope.launchWhenCreated {
         kakaoSignInDialogFragment.whenCreated {
@@ -41,6 +42,7 @@ fun observeKakaoFragmentData(
                                     kakaoSignInDialogFragment.dismiss()
                                 },
                                 onSignInSuccess = {
+                                    onSignInSuccess(it)
                                     kakaoSignInDialogFragment.dismiss()
                                 }
                             )

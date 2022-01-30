@@ -51,7 +51,6 @@ internal class MainActivity : BaseActivity() {
         updateData()
     }
 
-    @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         with(viewModel) {
@@ -94,7 +93,8 @@ internal class MainActivity : BaseActivity() {
             observeKakaoFragmentData(
                 this@MainActivity,
                 kakaoSignInDialogFragment,
-                signUpResultLauncher
+                signUpResultLauncher,
+                onSignInSuccess
             )
             kakaoSignInDialogFragment.show(supportFragmentManager, "KakaoSignInDialogFragment")
 

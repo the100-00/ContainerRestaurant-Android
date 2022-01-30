@@ -91,9 +91,10 @@ class MyHomeFragment : BaseFragment() {
             observeKakaoFragmentData(
                 requireActivity(),
                 kakaoSignInDialogFragment,
-                signUpResultLauncher
+                signUpResultLauncher,
+                onSignInSuccess = onSignInSuccess
             )
-            kakaoSignInDialogFragment.show(childFragmentManager, "KakaoSignInDialogFragment")
+            kakaoSignInDialogFragment.show(childFragmentManager, kakaoSignInDialogFragment.tag)
 
             observeAuthViewModelUserInfo(viewLifecycleOwner, kakaoSignInDialogFragment.viewModel, onSignInSuccess)
         }

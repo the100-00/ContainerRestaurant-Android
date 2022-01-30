@@ -184,9 +184,10 @@ internal class HomeFragment : Fragment() {
             observeKakaoFragmentData(
                 requireActivity(),
                 kakaoSignInDialogFragment,
-                signUpResultLauncher
+                signUpResultLauncher,
+                onSignInSuccess
             )
-            kakaoSignInDialogFragment.show(childFragmentManager, "KakaoSignInDialogFragment")
+            kakaoSignInDialogFragment.show(childFragmentManager, kakaoSignInDialogFragment.tag)
 
             observeAuthViewModelUserInfo(
                 viewLifecycleOwner,

@@ -32,8 +32,8 @@ internal class HomeViewModel(
     private val _phrase = MutableLiveData<String>()
     val phrase:LiveData<String> = _phrase
 
-    private val _latestWriterProfileList = MutableLiveData<List<String>>()
-    val latestWriterProfileList: LiveData<List<String>> = _latestWriterProfileList
+    private val _latestWriterProfileList = MutableLiveData<List<HomeInfoResponse.WriterProfile>>()
+    val latestWriterProfileList: LiveData<List<HomeInfoResponse.WriterProfile>> = _latestWriterProfileList
 
     private val _bannerList = MutableLiveData<List<HomeInfoResponse.Banner>>()
     val bannerList: LiveData<List<HomeInfoResponse.Banner>> = _bannerList
