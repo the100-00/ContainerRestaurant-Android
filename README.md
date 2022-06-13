@@ -1,4 +1,4 @@
-<div align="center">
+<div align>
 
   
   ![image](https://user-images.githubusercontent.com/52526003/173365458-d08d5a5b-ccf9-4577-9469-8e7a7ec44ebc.png)<Br>
@@ -13,8 +13,8 @@
   ### Info
   사이드 프로젝트 동아리 <strong>Fun.D</strong>에서 진행한 팀 프로젝트입니다. <br>
   안드로이드 앱 프론트 개발 - <strong>지도</strong> 파트를 담당했습니다.<br>
-    <strong>Naver Map API</strong>를 사용하여 현재 위치 정보와 사용자들이 공유한 식당 정보를 검색합니다.<br>
-    2km 이내에 용기낸 식당(사용자들이 공유한 식당)이 있다면 지도에 <strong>마커</strong>를 띄우고, 식당 목록을 보여줍니다.<br>
+    <strong>Naver Map API</strong>를 사용하여 현재 위치 정보와  식당 정보를 검색합니다.<br>
+    2km 이내에 용기낸 식당이 있다면 지도에 <strong>마커</strong>를 띄우고, 식당 목록을 보여줍니다.<br>
     식당 정보와 함께 사용자들의 공유 내역을 보여줍니다.<br>
   
    ### 사용언어 및 툴
