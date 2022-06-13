@@ -25,10 +25,7 @@
   
  
    ### 개발 화면 및 기능
-![image](https://user-images.githubusercontent.com/52526003/173378306-49498321-e916-4de4-b227-3f3b7491009e.png)
-  
-  
-  ![image](https://user-images.githubusercontent.com/52526003/173380217-09ce0f66-bd95-429d-84a8-809a48946496.png)
+![image](https://user-images.githubusercontent.com/52526003/173382626-2e9f9e1b-56e8-4a35-abc7-1824e9fd2623.png)
 
   
 </div>
