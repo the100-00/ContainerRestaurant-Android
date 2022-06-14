@@ -2,7 +2,7 @@
 
   
   ![image](https://user-images.githubusercontent.com/52526003/173365458-d08d5a5b-ccf9-4577-9469-8e7a7ec44ebc.png)<Br>
- 
+  <a href = "https://drive.google.com/file/d/1t4TxppAxW2kGNkapUYRMr4JYd6SHlUoG/view?usp=sharing">용기낸 식당 최종 발표자료</a>
   
   # 용기낸 식당 - 안드로이드 프론트 개발
   
@@ -22,6 +22,7 @@
   <img alt="Kotlin" src ="https://img.shields.io/badge/Kotlin-blueviolet.svg?&style=for-the-badge&logo=Kotlin&logoColor=white"/>
   ![Android Studio](https://img.shields.io/badge/Android%20Studio-3DDC84.svg?style=for-the-badge&logo=android-studio&logoColor=white)
 
+  ### 
    ### 팀 구성 및 회의
  ![image](https://user-images.githubusercontent.com/52526003/173383375-77185263-0fe0-4bea-adb7-2c47298796e7.png)
 
