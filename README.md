@@ -2,13 +2,14 @@
 
   
   ![image](https://user-images.githubusercontent.com/52526003/173365458-d08d5a5b-ccf9-4577-9469-8e7a7ec44ebc.png)<Br>
-  <a href = "https://drive.google.com/file/d/1t4TxppAxW2kGNkapUYRMr4JYd6SHlUoG/view?usp=sharing">용기낸 식당 최종 발표자료</a>
   
   # 용기낸 식당 - 안드로이드 프론트 개발
   
   ### Service
   제로웨이스트 앱 서비스 <strong>용기낸 식당</strong>은 일회용기 없는 포장 문화를 위해 다회용기 사용이 가능한 식당 정보를 제공합니다.<br>
   다회용기 사용을 시도해본 식당을 <strong>용기낸 식당</strong>이라고하며, 용기낸 경험을 다른 사용자들과 공유하며 다회용기 사용을 권장하는 서비스입니다. <br>
+  <a href = "https://drive.google.com/file/d/1t4TxppAxW2kGNkapUYRMr4JYd6SHlUoG/view?usp=sharing">용기낸 식당 최종 발표자료</a>
+  <br>
   
   ### Info
   사이드 프로젝트 동아리 <strong>Fun.D</strong>에서 진행한 팀 프로젝트입니다. 
