@@ -27,7 +27,7 @@
    ### 팀 구성 및 회의
  ![image](https://user-images.githubusercontent.com/52526003/173383375-77185263-0fe0-4bea-adb7-2c47298796e7.png)
 
-   ### 개발 화면 및 기능
+   ### 개발 기능 및 
 ![image](https://user-images.githubusercontent.com/52526003/173382626-2e9f9e1b-56e8-4a35-abc7-1824e9fd2623.png)
 
   
